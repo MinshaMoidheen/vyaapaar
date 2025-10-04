@@ -30,6 +30,8 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { DeleteConfirmationDialog } from '@/components/ui/delete-confirmation-dialog'
 
 interface Item {
   id: string
@@ -217,12 +219,14 @@ interface ItemsListProps {
 }
 
 export function ItemsList({ onAddItem }: ItemsListProps) {
+  const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [items, setItems] = useState<Item[]>([]) // Start with empty array
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [sortField, setSortField] = useState<keyof Item>('name')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
+  const [deletingId, setDeletingId] = useState<string | null>(null)
 
   // Add sample data when component mounts (for demo purposes)
   const addSampleData = () => {
@@ -287,6 +291,25 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
   const handleItemsPerPageChange = (newItemsPerPage: number) => {
     setItemsPerPage(newItemsPerPage)
     setCurrentPage(1)
+  }
+
+  const handleDeleteItem = async (itemId: string) => {
+    setDeletingId(itemId)
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // Remove item from state
+      setItems(prev => prev.filter(item => item.id !== itemId))
+      
+      // Show success message (you can add a toast notification here)
+      console.log('Item deleted successfully')
+    } catch (error) {
+      console.error('Error deleting item:', error)
+      // Show error message (you can add a toast notification here)
+    } finally {
+      setDeletingId(null)
+    }
   }
 
 
@@ -470,31 +493,41 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
-                          <Eye className="mr-2 h-4 w-4" />
-                          View Details
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Edit className="mr-2 h-4 w-4" />
-                          Edit Item
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Package className="mr-2 h-4 w-4" />
-                          Manage Stock
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                          <Trash2 className="mr-2 h-4 w-4" />
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className="flex items-center gap-2">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="sm">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={() => router.push(`/items/${item.id}`)}>
+                            <Eye className="mr-2 h-4 w-4" />
+                            View Details
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => router.push(`/items/${item.id}/edit`)}>
+                            <Edit className="mr-2 h-4 w-4" />
+                            Edit Item
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Package className="mr-2 h-4 w-4" />
+                            Manage Stock
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                      <DeleteConfirmationDialog
+                        title="Delete Item"
+                        description="Are you sure you want to delete this item?"
+                        itemName={item.name}
+                        onConfirm={() => handleDeleteItem(item.id)}
+                        isLoading={deletingId === item.id}
+                        trigger={
+                          <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        }
+                      />
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
