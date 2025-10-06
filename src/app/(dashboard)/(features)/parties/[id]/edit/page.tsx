@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
@@ -11,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowLeft, Save, X, Info, Calendar, Plus, Minus } from 'lucide-react'
+import { useGetPartyByIdQuery, useUpdatePartyMutation } from '@/store/api/partyApi'
 
 interface Party {
   id: string
@@ -18,9 +19,9 @@ interface Party {
   gstin?: string
   phone?: string
   email?: string
-  balance: number
-  type: 'customer' | 'supplier'
-  status: 'active' | 'inactive'
+  balance?: number
+  type?: 'customer' | 'supplier'
+  status?: 'active' | 'inactive'
   billingAddress?: string
   shippingAddress?: string
   openingBalance?: number
@@ -39,63 +40,47 @@ interface Party {
   additionalField3?: string
 }
 
-// Mock data - in real app this would come from API
-const mockParty: Party = {
-  id: '1',
-  name: 'Minsha Electronics',
-  gstin: '29ABCDE1234F1Z5',
-  phone: '+91 98765 43210',
-  email: 'minsha@electronics.com',
-  balance: 600.00,
-  type: 'customer',
-  status: 'active',
-  billingAddress: '123 Electronics Street, Bangalore, Karnataka 560001',
-  shippingAddress: '123 Electronics Street, Bangalore, Karnataka 560001',
-  openingBalance: 500.00,
-  creditLimit: 10000.00,
-  gstType: 'registered',
-  state: 'karnataka',
-  shippingState: 'karnataka',
-  shippingCity: 'Bangalore',
-  shippingPincode: '560001',
-  shippingCountry: 'India',
-  asOfDate: '2024-01-15',
-  noLimit: false,
-  customLimitValue: 10000,
-  additionalField1: 'Field 1 Value',
-  additionalField2: 'Field 2 Value',
-  additionalField3: 'Field 3 Value'
-}
-
 export default function PartyEditPage() {
   const params = useParams()
+  const id = String((params as any).id)
   const router = useRouter()
+  const { data: fetchedParty, isLoading } = useGetPartyByIdQuery(id)
+  const [updateParty, { isLoading: saving }] = useUpdatePartyMutation()
   const [party, setParty] = useState<Party | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [saving, setSaving] = useState(false)
   const [activeTab, setActiveTab] = useState('gst-address')
   const [noLimit, setNoLimit] = useState(true)
   const [showShippingAddress, setShowShippingAddress] = useState(false)
 
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setParty(mockParty)
-      setNoLimit(mockParty.noLimit || true)
-      setShowShippingAddress(!!mockParty.shippingAddress)
-      setLoading(false)
-    }, 1000)
-  }, [params.id])
+    if (fetchedParty) {
+      setParty(fetchedParty)
+      setNoLimit(!(fetchedParty.customLimitValue && fetchedParty.customLimitValue > 0))
+      setShowShippingAddress(!!fetchedParty.shippingAddress)
+    }
+  }, [fetchedParty])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSaving(true)
-    
-    // Simulate API call
-    setTimeout(() => {
-      setSaving(false)
-      router.push(`/parties/${params.id}`)
-    }, 2000)
+    if (!party) return
+    await updateParty({
+      id,
+      name: party.name,
+      gstin: party.gstin,
+      phone: party.phone,
+      email: party.email,
+      billingAddress: party.billingAddress,
+      shippingAddress: showShippingAddress ? party.shippingAddress : undefined,
+      openingBalance: party.openingBalance,
+      gstType: party.gstType,
+      state: party.state,
+      asOfDate: party.asOfDate,
+      noLimit,
+      customLimitValue: noLimit ? undefined : party.customLimitValue,
+      additionalField1: party.additionalField1,
+      additionalField2: party.additionalField2,
+      additionalField3: party.additionalField3,
+    }).unwrap()
+    router.push(`/parties/${id}`)
   }
 
   const handleInputChange = (field: keyof Party, value: any) => {
@@ -104,7 +89,7 @@ export default function PartyEditPage() {
     }
   }
 
-  if (loading) {
+  if (isLoading || !party) {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="text-center">

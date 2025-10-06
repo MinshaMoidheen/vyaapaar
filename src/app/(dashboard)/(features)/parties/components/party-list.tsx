@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -32,6 +32,7 @@ import {
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { DeleteConfirmationDialog } from '@/components/ui/delete-confirmation-dialog'
+import { useDeletePartyMutation, useGetPartiesQuery } from '@/store/api/partyApi'
 
 interface Party {
   id: string
@@ -39,9 +40,9 @@ interface Party {
   gstin?: string
   phone?: string
   email?: string
-  balance: number
-  type: 'customer' | 'supplier'
-  status: 'active' | 'inactive'
+  balance?: number
+  type?: 'customer' | 'supplier'
+  status?: 'active' | 'inactive'
 }
 
 interface Transaction {
@@ -53,129 +54,7 @@ interface Transaction {
   balance: number
 }
 
-// Mock data - in real app this would come from API/database
-const mockParties: Party[] = [
-  {
-    id: '1',
-    name: 'Minsha Electronics',
-    gstin: '29ABCDE1234F1Z5',
-    phone: '+91 98765 43210',
-    email: 'minsha@electronics.com',
-    balance: 600.00,
-    type: 'customer',
-    status: 'active'
-  },
-  {
-    id: '2',
-    name: 'Tech Solutions Ltd',
-    gstin: '27FGHIJ5678K9L2',
-    phone: '+91 87654 32109',
-    email: 'info@techsolutions.com',
-    balance: -1200.50,
-    type: 'supplier',
-    status: 'active'
-  },
-  {
-    id: '3',
-    name: 'Global Trading Co',
-    gstin: '33MNOPQ9012R3S4',
-    phone: '+91 76543 21098',
-    email: 'contact@globaltrading.com',
-    balance: 0.00,
-    type: 'customer',
-    status: 'inactive'
-  },
-  {
-    id: '4',
-    name: 'Rajesh Kumar & Sons',
-    gstin: '07ABCDE1234F1Z5',
-    phone: '+91 91234 56789',
-    email: 'rajesh@kumarsons.com',
-    balance: 2500.75,
-    type: 'customer',
-    status: 'active'
-  },
-  {
-    id: '5',
-    name: 'Metro Hardware Store',
-    gstin: '19FGHIJ5678K9L2',
-    phone: '+91 98765 12345',
-    email: 'metro@hardware.com',
-    balance: -850.25,
-    type: 'supplier',
-    status: 'active'
-  },
-  {
-    id: '6',
-    name: 'Digital Marketing Agency',
-    gstin: '33MNOPQ9012R3S4',
-    phone: '+91 87654 98765',
-    email: 'hello@digitalagency.com',
-    balance: 15000.00,
-    type: 'customer',
-    status: 'active'
-  },
-  {
-    id: '7',
-    name: 'Office Supplies Inc',
-    gstin: '12ABCDE1234F1Z5',
-    phone: '+91 76543 21098',
-    email: 'orders@officesupplies.com',
-    balance: -3200.00,
-    type: 'supplier',
-    status: 'active'
-  },
-  {
-    id: '8',
-    name: 'Local Restaurant',
-    gstin: '29FGHIJ5678K9L2',
-    phone: '+91 91234 56789',
-    email: 'orders@localrestaurant.com',
-    balance: 450.50,
-    type: 'customer',
-    status: 'inactive'
-  },
-  {
-    id: '9',
-    name: 'Construction Materials Co',
-    gstin: '07MNOPQ9012R3S4',
-    phone: '+91 98765 43210',
-    email: 'sales@constructionmaterials.com',
-    balance: -5500.75,
-    type: 'supplier',
-    status: 'active'
-  },
-  {
-    id: '10',
-    name: 'Fashion Boutique',
-    gstin: '19ABCDE1234F1Z5',
-    phone: '+91 87654 32109',
-    email: 'info@fashionboutique.com',
-    balance: 1200.00,
-    type: 'customer',
-    status: 'active'
-  },
-  {
-    id: '11',
-    name: 'Medical Equipment Ltd',
-    gstin: '33FGHIJ5678K9L2',
-    phone: '+91 76543 21098',
-    email: 'sales@medicalequipment.com',
-    balance: -1800.25,
-    type: 'supplier',
-    status: 'active'
-  },
-  {
-    id: '12',
-    name: 'Book Store Chain',
-    gstin: '12MNOPQ9012R3S4',
-    phone: '+91 91234 56789',
-    email: 'orders@bookstore.com',
-    balance: 750.00,
-    type: 'customer',
-    status: 'inactive'
-  }
-]
+// removed mock list; data comes from API
 
 // Mock transaction data
 const mockTransactions: Transaction[] = [
@@ -205,21 +84,17 @@ interface PartyListProps {
 export function PartyList({ onAddParty }: PartyListProps) {
   const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
-  const [parties, setParties] = useState<Party[]>([]) // Start with empty array
+  const { data: parties = [], isLoading, isError, refetch } = useGetPartiesQuery()
+  const [deleteParty, { isLoading: deleting }] = useDeletePartyMutation()
   const [selectedParty, setSelectedParty] = useState<Party | null>(null)
   const [transactions, setTransactions] = useState<Transaction[]>(mockTransactions)
   const [deletingId, setDeletingId] = useState<string | null>(null)
 
-  // Add sample data when component mounts (for demo purposes)
-  const addSampleData = () => {
-    setParties(mockParties)
-    setSelectedParty(mockParties[0]) // Select first party by default
-  }
-
-  // Add a new party (this would be called from the modal)
-  const addNewParty = (newParty: Party) => {
-    setParties(prev => [...prev, newParty])
-  }
+  useEffect(() => {
+    if (parties.length && !selectedParty) {
+      setSelectedParty(parties[0])
+    }
+  }, [parties])
 
   const formatBalance = (balance: number) => {
     const formatted = Math.abs(balance).toFixed(2)
@@ -245,14 +120,8 @@ export function PartyList({ onAddParty }: PartyListProps) {
   const handleDeleteParty = async (partyId: string) => {
     setDeletingId(partyId)
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Remove party from state
-      setParties(prev => prev.filter(party => party.id !== partyId))
-      
-      // Show success message (you can add a toast notification here)
-      console.log('Party deleted successfully')
+      await deleteParty(partyId).unwrap()
+      if (selectedParty?.id === partyId) setSelectedParty(null)
     } catch (error) {
       console.error('Error deleting party:', error)
       // Show error message (you can add a toast notification here)
@@ -282,19 +151,18 @@ export function PartyList({ onAddParty }: PartyListProps) {
 
         {/* Party List */}
         <div className="flex-1 overflow-y-auto">
-          {parties.length === 0 ? (
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12 px-4">Loading...</div>
+          ) : isError ? (
+            <div className="flex items-center justify-center py-12 px-4">Failed to load parties</div>
+          ) : parties.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 px-4">
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto">
                   <Search className="h-8 w-8 text-gray-400" />
                 </div>
                 <h3 className="text-lg font-medium text-gray-900">No parties found</h3>
-                <p className="text-gray-500 text-sm">Get started by adding your first party or loading sample data.</p>
-                <div className="flex gap-2">
-                  <Button onClick={addSampleData} variant="outline" size="sm">
-                    Load Sample Data
-                  </Button>
-                </div>
+                <p className="text-gray-500 text-sm">Get started by adding your first party.</p>
               </div>
             </div>
           ) : (

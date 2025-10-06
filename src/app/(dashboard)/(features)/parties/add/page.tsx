@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowLeft, Save, X, Info, Calendar, Plus, Minus } from 'lucide-react'
-import { addParty } from '../actions'
+import { useAddPartyMutation } from '@/store/api/partyApi'
 
 interface PartyFormData {
   partyName: string
@@ -32,6 +32,7 @@ interface PartyFormData {
 
 export default function AddPartyPage() {
   const router = useRouter()
+  const [addParty, { isLoading: isSaving }] = useAddPartyMutation()
   const [activeTab, setActiveTab] = useState('gst-address')
   const [noLimit, setNoLimit] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -62,21 +63,25 @@ export default function AddPartyPage() {
     setIsSubmitting(true)
     
     try {
-      // Create FormData object for server action
-      const formDataObj = new FormData()
-      Object.entries(formData).forEach(([key, value]) => {
-        formDataObj.append(key, value)
-      })
-      formDataObj.append('noLimit', noLimit.toString())
-      formDataObj.append('showShippingAddress', showShippingAddress.toString())
-
-      const result = await addParty(formDataObj)
-      if (result.success) {
-        router.push('/parties')
-      } else {
-        // Handle error
-        console.error(result.error)
+      const payload = {
+        name: formData.partyName,
+        gstin: formData.gstin,
+        phone: formData.phoneNumber,
+        email: formData.email,
+        billingAddress: formData.billingAddress,
+        shippingAddress: showShippingAddress ? formData.shippingAddress : undefined,
+        openingBalance: formData.openingBalance ? Number(formData.openingBalance) : undefined,
+        gstType: formData.gstType,
+        state: formData.state,
+        asOfDate: formData.asOfDate,
+        noLimit,
+        customLimitValue: noLimit ? undefined : (formData.customLimitValue ? Number(formData.customLimitValue) : undefined),
+        additionalField1: formData.additionalField1,
+        additionalField2: formData.additionalField2,
+        additionalField3: formData.additionalField3,
       }
+      await addParty(payload).unwrap()
+      router.push('/parties')
     } catch (error) {
       console.error('Error submitting form:', error)
     } finally {
@@ -89,17 +94,25 @@ export default function AddPartyPage() {
     setIsSubmitting(true)
     
     try {
-      // Create FormData object for server action
-      const formDataObj = new FormData()
-      Object.entries(formData).forEach(([key, value]) => {
-        formDataObj.append(key, value)
-      })
-      formDataObj.append('noLimit', noLimit.toString())
-      formDataObj.append('showShippingAddress', showShippingAddress.toString())
-
-      const result = await addParty(formDataObj)
-      if (result.success) {
-        // Reset form for new entry
+      const payload = {
+        name: formData.partyName,
+        gstin: formData.gstin,
+        phone: formData.phoneNumber,
+        email: formData.email,
+        billingAddress: formData.billingAddress,
+        shippingAddress: showShippingAddress ? formData.shippingAddress : undefined,
+        openingBalance: formData.openingBalance ? Number(formData.openingBalance) : undefined,
+        gstType: formData.gstType,
+        state: formData.state,
+        asOfDate: formData.asOfDate,
+        noLimit,
+        customLimitValue: noLimit ? undefined : (formData.customLimitValue ? Number(formData.customLimitValue) : undefined),
+        additionalField1: formData.additionalField1,
+        additionalField2: formData.additionalField2,
+        additionalField3: formData.additionalField3,
+      }
+      await addParty(payload).unwrap()
+      // Reset form for new entry
         setFormData({
           partyName: '',
           gstin: '',
@@ -119,10 +132,6 @@ export default function AddPartyPage() {
         setActiveTab('gst-address')
         setNoLimit(true)
         setShowShippingAddress(false)
-      } else {
-        // Handle error
-        console.error(result.error)
-      }
     } catch (error) {
       console.error('Error submitting form:', error)
     } finally {
@@ -165,7 +174,7 @@ export default function AddPartyPage() {
             className="bg-purple-600 hover:bg-purple-700"
           >
             <Save className="mr-2 h-4 w-4" />
-            {isSubmitting ? 'Saving...' : 'Save'}
+            {isSubmitting || isSaving ? 'Saving...' : 'Save'}
           </Button>
         </div>
       </div>

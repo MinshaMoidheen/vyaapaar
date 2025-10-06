@@ -1,6 +1,5 @@
-'use client'
+"use client"
 
-import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -19,6 +18,7 @@ import {
   Trash2
 } from 'lucide-react'
 import { DeleteConfirmationDialog } from '@/components/ui/delete-confirmation-dialog'
+import { useDeletePartyMutation, useGetPartyByIdQuery } from '@/store/api/partyApi'
 
 interface Party {
   id: string
@@ -26,49 +26,23 @@ interface Party {
   gstin?: string
   phone?: string
   email?: string
-  balance: number
-  type: 'customer' | 'supplier'
-  status: 'active' | 'inactive'
+  balance?: number
+  type?: 'customer' | 'supplier'
+  status?: 'active' | 'inactive'
   billingAddress?: string
   shippingAddress?: string
   openingBalance?: number
   creditLimit?: number
-  createdAt: string
-  updatedAt: string
-}
-
-// Mock data - in real app this would come from API
-const mockParty: Party = {
-  id: '1',
-  name: 'Minsha Electronics',
-  gstin: '29ABCDE1234F1Z5',
-  phone: '+91 98765 43210',
-  email: 'minsha@electronics.com',
-  balance: 600.00,
-  type: 'customer',
-  status: 'active',
-  billingAddress: '123 Electronics Street, Bangalore, Karnataka 560001',
-  shippingAddress: '123 Electronics Street, Bangalore, Karnataka 560001',
-  openingBalance: 500.00,
-  creditLimit: 10000.00,
-  createdAt: '2024-01-15',
-  updatedAt: '2024-01-20'
+  createdAt?: string
+  updatedAt?: string
 }
 
 export default function PartyDetailPage() {
   const params = useParams()
+  const id = String((params as any).id)
   const router = useRouter()
-  const [party, setParty] = useState<Party | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [deleting, setDeleting] = useState(false)
-
-  useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setParty(mockParty)
-      setLoading(false)
-    }, 1000)
-  }, [params.id])
+  const { data: party, isLoading } = useGetPartyByIdQuery(id)
+  const [deleteParty, { isLoading: deleting }] = useDeletePartyMutation()
 
   const formatBalance = (balance: number) => {
     const formatted = Math.abs(balance).toFixed(2)
@@ -82,25 +56,15 @@ export default function PartyDetailPage() {
   }
 
   const handleDeleteParty = async () => {
-    setDeleting(true)
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Navigate back to parties list
+      await deleteParty(id).unwrap()
       router.push('/parties')
-      
-      // Show success message (you can add a toast notification here)
-      console.log('Party deleted successfully')
     } catch (error) {
       console.error('Error deleting party:', error)
-      // Show error message (you can add a toast notification here)
-    } finally {
-      setDeleting(false)
     }
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="text-center">
@@ -274,8 +238,8 @@ export default function PartyDetailPage() {
             <CardContent className="space-y-4">
               <div>
                 <label className="text-sm font-medium text-gray-500">Current Balance</label>
-                <p className={`text-2xl font-bold ${getBalanceColor(party.balance)}`}>
-                  {formatBalance(party.balance)}
+                <p className={`text-2xl font-bold ${getBalanceColor(party.balance || 0)}`}>
+                  {formatBalance(party.balance || 0)}
                 </p>
               </div>
               <Separator />
@@ -301,11 +265,11 @@ export default function PartyDetailPage() {
             <CardContent className="space-y-4">
               <div>
                 <label className="text-sm font-medium text-gray-500">Created At</label>
-                <p className="text-lg">{new Date(party.createdAt).toLocaleDateString()}</p>
+                <p className="text-lg">{party.createdAt ? new Date(party.createdAt).toLocaleDateString() : '—'}</p>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-500">Last Updated</label>
-                <p className="text-lg">{new Date(party.updatedAt).toLocaleDateString()}</p>
+                <p className="text-lg">{party.updatedAt ? new Date(party.updatedAt).toLocaleDateString() : '—'}</p>
               </div>
             </CardContent>
           </Card>
