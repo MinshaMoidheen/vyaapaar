@@ -167,6 +167,32 @@ export default function InvoiceSuccessPage() {
     }
   }
 
+  // Print function
+  const printInvoice = () => {
+    if (!invoiceRef.current) return
+    const content = invoiceRef.current.innerHTML
+    const printWindow = window.open('', '_blank', 'width=800,height=600')
+    if (!printWindow) return
+    printWindow.document.open()
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Invoice ${invoiceData.invoiceNo}</title>
+          <style>
+            /* Basic print styles to preserve layout */
+            body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; margin: 0; padding: 24px; }
+            .grid { display: grid; }
+          </style>
+        </head>
+        <body>
+          <div>${content}</div>
+          <script>window.focus(); window.print(); window.close();<\/script>
+        </body>
+      </html>
+    `)
+    printWindow.document.close()
+  }
+
   const formatAmountInWords = (amount: number) => {
     const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']
     const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']
@@ -330,7 +356,7 @@ export default function InvoiceSuccessPage() {
           <Settings className="mr-2 h-4 w-4" />
           Edit Company Details
         </Button>
-        <Button variant="outline" className="border-purple-600 text-purple-600 hover:bg-purple-50">
+        <Button variant="outline" className="border-purple-600 text-purple-600 hover:bg-purple-50" onClick={printInvoice}>
           <Printer className="mr-2 h-4 w-4" />
           Print
         </Button>

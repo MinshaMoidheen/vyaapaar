@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -42,6 +42,7 @@ export default function DetailEstimatePage() {
   const params = useParams()
   const router = useRouter()
   const estimateId = params.id
+  const estimateRef = useRef<HTMLDivElement>(null)
 
   const [estimateDetail, setEstimateDetail] = useState<EstimateDetail | null>(null)
   const [loading, setLoading] = useState(true)
@@ -156,6 +157,65 @@ export default function DetailEstimatePage() {
   const totalGST = calculateTotalGST()
   const finalTotal = subtotal + totalGST + estimateDetail.roundOff
 
+  const downloadPDF = async () => {
+    if (!estimateRef.current) return
+    try {
+      const html2canvas = (await import('html2canvas')).default
+      const jsPDF = (await import('jspdf')).default
+      const canvas = await html2canvas(estimateRef.current, {
+        useCORS: true,
+        allowTaint: true,
+        background: '#ffffff'
+      })
+      const imgWidth = 210
+      const pageHeight = 295
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+      let heightLeft = imgHeight
+      const pdf = new jsPDF('p', 'mm', 'a4')
+      let position = 0
+      pdf.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight)
+      heightLeft -= pageHeight
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight
+        pdf.addPage()
+        pdf.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight)
+        heightLeft -= pageHeight
+      }
+      const filename = `Estimate_${estimateDetail.estimateNumber}_${estimateDetail.date}.pdf`
+      pdf.save(filename)
+    } catch (error) {
+      console.error('Error generating PDF:', error)
+      alert('Error generating PDF. Please try again.')
+    }
+  }
+
+  const printEstimate = () => {
+    if (!estimateRef.current) return
+    const content = estimateRef.current.innerHTML
+    const printWindow = window.open('', '_blank', 'width=800,height=600')
+    if (!printWindow) return
+    printWindow.document.open()
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Estimate ${estimateDetail.estimateNumber}</title>
+          <style>
+            body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; margin: 0; padding: 24px; }
+            .grid { display: grid; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { padding: 8px; border-bottom: 1px solid #eee; text-align: left; }
+            .text-right { text-align: right; }
+          </style>
+        </head>
+        <body>
+          <div>${content}</div>
+          <script>window.focus(); window.print(); window.close();<\/script>
+        </body>
+      </html>
+    `)
+    printWindow.document.close()
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -173,15 +233,15 @@ export default function DetailEstimatePage() {
               <Edit className="h-4 w-4 mr-2" />
               Edit
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={() => { /* share */ }}>
               <Share2 className="h-4 w-4 mr-2" />
               Share
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={downloadPDF}>
               <Download className="h-4 w-4 mr-2" />
               Download
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={printEstimate}>
               <Printer className="h-4 w-4 mr-2" />
               Print
             </Button>
@@ -190,7 +250,7 @@ export default function DetailEstimatePage() {
       </div>
 
       {/* Main Content */}
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-6" ref={estimateRef}>
         {/* Estimate Information */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Customer Details */}
