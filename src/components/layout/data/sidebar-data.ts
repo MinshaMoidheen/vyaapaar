@@ -57,13 +57,13 @@ export const sidebarData: SidebarData = {
               icon: IconPlus,
             },
             {
-              title: 'Whatsapp Connect',
-              url: '/parties/whatsapp',
+              title: 'WhatsApp Connect',
+              url: '/parties/whatsapp-connect',
               icon: IconBrandWhatsapp,
             },
             {
               title: 'Vyapar Network',
-              url: '/parties/network',
+              url: '/parties/vyapar-network',
               icon: IconNetwork,
             },
           ],
@@ -72,12 +72,47 @@ export const sidebarData: SidebarData = {
           title: 'Items',
           url: '/items',
           icon: IconShoppingBag,
-          badge: '+',
+          // badge: '+',
         },
         {
           title: 'Sale',
-          url: '/sale',
           icon: IconPercentage,
+          items: [
+            {
+              title: 'Sale Invoices',
+              url: '/sales',
+              
+            },
+            {
+              title: 'Estimate/ Quotation',
+              url: '/sales/estimate',
+              
+            },
+            {
+              title: 'Proforma Invoice',
+              url: '/sales/proforma',
+            },
+            {
+              title: 'Payment-In',
+              url: '/sales/payment-in',
+              
+            },
+            {
+              title: 'Sale Order',
+              url: '/sales/order',
+              // icon: IconPlus,
+            },
+            {
+              title: 'Delivery Challan',
+              url: '/sales/delivery',
+              
+            },
+            {
+              title: 'Sale Return/ Credit Note',
+              url: '/sales/return',
+             
+            },
+          ],
         },
         {
           title: 'Purchase & Expense',
