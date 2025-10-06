@@ -85,7 +85,7 @@ export const sidebarData: SidebarData = {
             },
             {
               title: 'Estimate/ Quotation',
-              url: '/sales/estimate',
+              url: '/sales/estimates',
               
             },
             {
