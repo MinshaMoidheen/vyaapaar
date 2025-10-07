@@ -115,7 +115,7 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Purchase & Expense',
+          title: 'Purchase & Exp..',
           icon: IconShoppingCart,
           items: [
             {
