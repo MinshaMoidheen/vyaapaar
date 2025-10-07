@@ -139,15 +139,15 @@ export function PartyList({ onAddParty }: PartyListProps) {
          
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <Input
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Input
               placeholder="Search Party Name"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
         </div>
+      </div>
 
         {/* Party List */}
         <div className="flex-1 overflow-y-auto">
@@ -157,15 +157,15 @@ export function PartyList({ onAddParty }: PartyListProps) {
             <div className="flex items-center justify-center py-12 px-4">Failed to load parties</div>
           ) : parties.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 px-4">
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto">
-                  <Search className="h-8 w-8 text-gray-400" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900">No parties found</h3>
-                <p className="text-gray-500 text-sm">Get started by adding your first party.</p>
-              </div>
+          <div className="text-center space-y-4">
+            <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto">
+              <Search className="h-8 w-8 text-gray-400" />
             </div>
-          ) : (
+            <h3 className="text-lg font-medium text-gray-900">No parties found</h3>
+                <p className="text-gray-500 text-sm">Get started by adding your first party.</p>
+          </div>
+        </div>
+      ) : (
             <div className="space-y-1 p-2">
               {filteredParties.map((party) => (
                 <div
@@ -181,7 +181,7 @@ export function PartyList({ onAddParty }: PartyListProps) {
                     <div className="flex-1 min-w-0">
                       <div className="font-medium text-gray-900 truncate">{party.name}</div>
                       <div className="text-sm text-gray-500">Amount: {formatBalance(party.balance)}</div>
-                    </div>
+                  </div>
                     <div className="flex items-center gap-1">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -213,10 +213,10 @@ export function PartyList({ onAddParty }: PartyListProps) {
                       </DropdownMenu>
                     </div>
                   </div>
-                </div>
+                    </div>
               ))}
-            </div>
-          )}
+        </div>
+      )}
         </div>
       </div>
 
@@ -226,14 +226,14 @@ export function PartyList({ onAddParty }: PartyListProps) {
           <>
             {/* Party Header */}
             <div className="p-4 border-b">
-              <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <h3 className="text-xl font-semibold">{selectedParty.name}</h3>
                   <Button variant="ghost" size="sm">
                     <Edit className="h-4 w-4" />
                   </Button>
                 </div>
-                <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
                   <Button variant="ghost" size="sm">
                     <MessageSquare className="h-4 w-4" />
                   </Button>
@@ -248,19 +248,19 @@ export function PartyList({ onAddParty }: PartyListProps) {
                   </Button>
                 </div>
               </div>
-            </div>
-
+          </div>
+          
             {/* Transactions Section */}
             <div className="p-4">
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-lg font-medium">Transactions</h4>
-                <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
                   <Button variant="ghost" size="sm">
                     <Search className="h-4 w-4" />
                   </Button>
                   <Button variant="ghost" size="sm">
                     <Printer className="h-4 w-4" />
-                  </Button>
+              </Button>
                   <Button variant="ghost" size="sm">
                     <Download className="h-4 w-4" />
                   </Button>
@@ -316,13 +316,13 @@ export function PartyList({ onAddParty }: PartyListProps) {
                           </span>
                           <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
                             <MoreHorizontal className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
+              </Button>
+            </div>
+          </div>
+        </div>
                   ))}
-                </div>
-              </div>
+          </div>
+        </div>
             </div>
           </>
         ) : (

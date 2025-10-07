@@ -104,12 +104,12 @@ export const sidebarData: SidebarData = {
             },
             {
               title: 'Delivery Challan',
-              url: '/sales/delivery',
+              url: '/sales/delivery-challan',
               
             },
             {
               title: 'Sale Return/ Credit Note',
-              url: '/sales/return',
+              url: '/sales/sale-return',
              
             },
           ],

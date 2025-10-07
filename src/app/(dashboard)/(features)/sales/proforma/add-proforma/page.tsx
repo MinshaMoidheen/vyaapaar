@@ -103,16 +103,10 @@ export default function AddProformaPage() {
             </Button>
             <h1 className="text-lg font-semibold">Add Proforma</h1>
           </div>
-          <div className="flex items-center space-x-4">
+          {/* <div className="flex items-center space-x-4">
             <span className="text-sm font-medium">Proforma</span>
-            <div className="flex items-center space-x-2">
-              <span className="text-sm">Credit</span>
-              <button onClick={() => setCreditMode(!creditMode)} className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${creditMode ? 'bg-blue-600' : 'bg-gray-200'}`}>
-                <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${creditMode ? 'translate-x-6' : 'translate-x-1'}`} />
-              </button>
-              <span className="text-sm">Cash</span>
-            </div>
-          </div>
+           
+          </div> */}
         </div>
       </div>
 

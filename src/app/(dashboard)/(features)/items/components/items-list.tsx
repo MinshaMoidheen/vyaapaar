@@ -434,7 +434,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
                           <Filter className="h-3 w-3" />
                   </div>
                   </div>
-                    </div>
+                  </div>
                     
                     {/* Table Body */}
                     <div className="divide-y">
@@ -451,7 +451,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
                           <div className="grid grid-cols-2 gap-4 text-sm">
                             <div className="font-medium text-gray-900 truncate">{item.name}</div>
                             <div className="text-gray-600">{item.stock}</div>
-                    </div>
+                  </div>
                           <div className="flex justify-end mt-1">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -482,8 +482,8 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
                         </DropdownMenuContent>
                       </DropdownMenu>
                           </div>
-                        </div>
-                      ))}
+                    </div>
+              ))}
                     </div>
         </div>
       )}
@@ -640,7 +640,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
                       className="pl-10"
                     />
                   </div>
-                  <Button 
+              <Button
                     onClick={handleAddService} 
                     className="bg-orange-600 hover:bg-orange-700 text-white"
                   >
@@ -717,7 +717,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
                     </div>
                     <Button variant="ghost" size="sm">
                       <Download className="h-4 w-4" />
-                    </Button>
+              </Button>
                   </div>
                 </div>
 
@@ -779,7 +779,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
                       className="pl-10"
                     />
                   </div>
-                  <Button 
+                  <Button
                     onClick={handleAddCategory} 
                     className="bg-orange-600 hover:bg-orange-700 text-white"
                   >
@@ -972,10 +972,10 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
                       <div>UNITS</div>
                       <div>CONVERSION</div>
                     </div>
-                  </div>
+        </div>
                   <div className="p-8 text-center text-gray-500">
                     No Rows To Show
-                  </div>
+          </div>
           </div>
         </div>
       </div>
