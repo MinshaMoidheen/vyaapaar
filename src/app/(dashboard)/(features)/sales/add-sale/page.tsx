@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -18,7 +18,8 @@ import {
   Calculator,
   Settings,
   Share2,
-  Save
+  Save,
+  Download
 } from 'lucide-react'
 
 interface InvoiceItem {
@@ -51,6 +52,10 @@ export default function AddSalePage() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
   const [selectedDocument, setSelectedDocument] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
+  
+  // PDF generation state
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
+  const invoiceRef = useRef<HTMLDivElement>(null)
   
   const [items, setItems] = useState<InvoiceItem[]>([
     { id: 1, item: '', qty: '', unit: 'NONE', price: '', discountPercent: '', discountAmount: '', taxPercent: 'Select', taxAmount: '', amount: '' }
@@ -141,6 +146,137 @@ export default function AddSalePage() {
 
   const removeDocument = () => {
     setSelectedDocument(null)
+  }
+
+  // PDF generation functions
+  const generatePDF = async () => {
+    if (!invoiceRef.current) return
+
+    setIsGeneratingPDF(true)
+    try {
+      const html2canvas = (await import('html2canvas')).default
+      const jsPDF = (await import('jspdf')).default
+
+      // Create a temporary visible element for rendering
+      const tempDiv = document.createElement('div')
+      tempDiv.style.position = 'absolute'
+      tempDiv.style.left = '-9999px'
+      tempDiv.style.top = '0'
+      tempDiv.style.width = '800px'
+      tempDiv.style.backgroundColor = '#ffffff'
+      tempDiv.style.padding = '32px'
+      tempDiv.style.fontFamily = 'Arial, sans-serif'
+      tempDiv.style.color = '#000000'
+      
+      // Clone the invoice content
+      tempDiv.innerHTML = invoiceRef.current.innerHTML
+      document.body.appendChild(tempDiv)
+
+      // Wait for rendering
+      await new Promise(resolve => setTimeout(resolve, 200))
+
+      const canvas = await html2canvas(tempDiv, {
+        useCORS: true,
+        allowTaint: true,
+        background: '#ffffff',
+        logging: false
+      })
+
+      // Clean up
+      document.body.removeChild(tempDiv)
+
+      // Check if canvas has valid data
+      console.log('Canvas dimensions:', canvas.width, 'x', canvas.height)
+      if (canvas.width === 0 || canvas.height === 0) {
+        throw new Error('Canvas rendering failed')
+      }
+
+      const imgData = canvas.toDataURL('image/jpeg', 0.95)
+      console.log('Image data length:', imgData.length)
+      
+      // Validate the data URL
+      if (!imgData || imgData === 'data:,') {
+        throw new Error('Invalid image data generated')
+      }
+
+      const pdf = new jsPDF('p', 'mm', 'a4')
+      
+      const imgWidth = 210
+      const pageHeight = 295
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+      let heightLeft = imgHeight
+
+      let position = 0
+
+      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight)
+      heightLeft -= pageHeight
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight
+        pdf.addPage()
+        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight)
+        heightLeft -= pageHeight
+      }
+
+      pdf.save(`invoice-${invoiceNumber}.pdf`)
+    } catch (error) {
+      console.error('Error generating PDF:', error)
+      alert('Error generating PDF. Please try again.')
+    } finally {
+      setIsGeneratingPDF(false)
+    }
+  }
+
+  const handleSave = () => {
+    // Prepare invoice data
+    const invoiceData = {
+      invoiceNo: invoiceNumber,
+      date: invoiceDate,
+      customerName: customerName || 'Minsha',
+      phoneNo: phoneNo || '6235875797',
+      stateOfSupply,
+      items: items.filter(item => item.item.trim() !== '').map(item => ({
+        id: item.id,
+        name: item.item,
+        hsn: '44',
+        qty: parseFloat(item.qty) || 1,
+        unit: item.unit,
+        price: parseFloat(item.price) || 0,
+        discountPercent: parseFloat(item.discountPercent) || 0,
+        discountAmount: parseFloat(item.discountAmount) || 0,
+        taxPercent: parseFloat(item.taxPercent) || 0,
+        taxAmount: parseFloat(item.taxAmount) || 0,
+        amount: parseFloat(calculateAmount(item))
+      })),
+      description,
+      total: parseFloat(totals.totalAmount),
+      totalDiscount: parseFloat(totals.totalDiscount),
+      totalTax: parseFloat(totals.totalTax),
+      roundOff: roundOff,
+      roundOffValue: parseFloat(roundOffValue),
+      creditMode
+    }
+
+    // Save data to sessionStorage for the invoice success page
+    sessionStorage.setItem('invoiceData', JSON.stringify(invoiceData))
+    
+    // Navigate to invoice success page
+    window.location.href = '/sales/invoice-success'
+  }
+
+  // Convert number to words (simplified version)
+  const numberToWords = (num: number): string => {
+    const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']
+    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']
+    const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen']
+    
+    if (num === 0) return 'Zero'
+    if (num < 10) return ones[num]
+    if (num < 20) return teens[num - 10]
+    if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 ? ' ' + ones[num % 10] : '')
+    if (num < 1000) return ones[Math.floor(num / 100)] + ' Hundred' + (num % 100 ? ' ' + numberToWords(num % 100) : '')
+    
+    return 'Amount in words'
   }
 
   return (
@@ -560,10 +696,178 @@ export default function AddSalePage() {
                 <Share2 className="h-4 w-4" />
                 <span>Share</span>
               </Button>
-              <Button className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2">
-                <Save className="h-4 w-4" />
-                <span>Save</span>
+              <Button 
+                onClick={handleSave}
+                disabled={isGeneratingPDF}
+                className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2"
+              >
+                {isGeneratingPDF ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    <span>Generating PDF...</span>
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4" />
+                    <span>Save & View Invoice</span>
+                  </>
+                )}
               </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Hidden Invoice Template for PDF Generation */}
+      <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', visibility: 'hidden' }}>
+        <div ref={invoiceRef} className="bg-white p-8 w-[800px] text-black flex flex-col" style={{ fontFamily: 'Arial, sans-serif', minHeight: '800px' }}>
+          <div className="flex-1">
+            {/* Invoice Header */}
+            <div className="flex justify-between items-start mb-6">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">My Company</h1>
+              <p className="text-gray-600">Phone no.: {phoneNo || '6235875797'}</p>
+            </div>
+            <div className="text-right">
+              <div className="w-24 h-24 bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center text-gray-500 text-sm">
+                LOGO
+              </div>
+            </div>
+          </div>
+          
+          {/* Purple line separator */}
+          <div className="w-full h-1 bg-purple-600 mb-6"></div>
+          
+          {/* Invoice Title */}
+          <div className="text-center mb-8">
+            <h2 className="text-4xl font-bold text-gray-900">Invoice</h2>
+          </div>
+          
+          {/* Bill To and Invoice Details */}
+          <div className="flex justify-between items-start mb-8">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Bill To</h3>
+              <p className="text-gray-700">{customerName || 'Minsha'}</p>
+            </div>
+            <div className="text-right">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Invoice Details</h3>
+              <p className="text-gray-700">Invoice No. #{invoiceNumber}</p>
+              <p className="text-gray-700">Date: {invoiceDate}</p>
+            </div>
+          </div>
+          
+          {/* Items Table */}
+          <div className="mb-8">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-purple-600 text-white">
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">#</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Item name</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">HSN/ SAC</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Quantity</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Unit</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Price/ Unit</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Discount</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.filter(item => item.item.trim() !== '').length > 0 ? (
+                  items.filter(item => item.item.trim() !== '').map((item, index) => (
+                    <tr key={item.id}>
+                      <td className="border border-gray-300 px-4 py-3">{index + 1}</td>
+                      <td className="border border-gray-300 px-4 py-3">{item.item}</td>
+                      <td className="border border-gray-300 px-4 py-3">44</td>
+                      <td className="border border-gray-300 px-4 py-3">{item.qty || '1'}</td>
+                      <td className="border border-gray-300 px-4 py-3">{item.unit}</td>
+                      <td className="border border-gray-300 px-4 py-3">₹ {parseFloat(item.price || '0').toFixed(2)}</td>
+                      <td className="border border-gray-300 px-4 py-3">
+                        ₹ {parseFloat(item.discountAmount || '0').toFixed(2)} ({item.discountPercent || '0'}%)
+                      </td>
+                      <td className="border border-gray-300 px-4 py-3">₹ {calculateAmount(item)}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-3">1</td>
+                    <td className="border border-gray-300 px-4 py-3">Sample Item</td>
+                    <td className="border border-gray-300 px-4 py-3">44</td>
+                    <td className="border border-gray-300 px-4 py-3">1</td>
+                    <td className="border border-gray-300 px-4 py-3">PCS</td>
+                    <td className="border border-gray-300 px-4 py-3">₹ 433.00</td>
+                    <td className="border border-gray-300 px-4 py-3">₹ 142.89 (33%)</td>
+                    <td className="border border-gray-300 px-4 py-3">₹ 290.11</td>
+                  </tr>
+                )}
+                {/* Total Row */}
+                <tr className="bg-gray-100">
+                  <td className="border border-gray-300 px-4 py-3 font-semibold">Total</td>
+                  <td className="border border-gray-300 px-4 py-3"></td>
+                  <td className="border border-gray-300 px-4 py-3"></td>
+                  <td className="border border-gray-300 px-4 py-3 font-semibold">{totals.totalQty}</td>
+                  <td className="border border-gray-300 px-4 py-3"></td>
+                  <td className="border border-gray-300 px-4 py-3"></td>
+                  <td className="border border-gray-300 px-4 py-3 font-semibold">₹ {totals.totalDiscount}</td>
+                  <td className="border border-gray-300 px-4 py-3 font-semibold">₹ {totals.totalAmount}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          {/* Amount Summary */}
+          <div className="flex justify-between items-start">
+            <div className="w-1/2">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Amount in words</h3>
+              <p className="text-gray-700">{numberToWords(Math.floor(parseFloat(totals.totalAmount)))} Rupees only</p>
+            </div>
+            <div className="w-1/2 text-right">
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-gray-700">Sub Total:</span>
+                  <span className="text-gray-900">₹ {totals.totalAmount}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-700">Discount:</span>
+                  <span className="text-gray-900">₹ {totals.totalDiscount}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-700">Round off:</span>
+                  <span className="text-gray-900">- ₹ {roundOffValue}</span>
+                </div>
+                <div className="flex justify-between bg-purple-100 px-2 py-1 rounded">
+                  <span className="font-semibold text-gray-900">Total:</span>
+                  <span className="font-semibold text-gray-900">₹ {totals.totalAmount}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-700">Paid:</span>
+                  <span className="text-gray-900">₹ 0.00</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-700">Balance:</span>
+                  <span className="text-gray-900">₹ {totals.totalAmount}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-700">You Saved:</span>
+                  <span className="text-gray-900">₹ {totals.totalDiscount}</span>
+                </div>
+              </div>
+              <div className="mt-4 text-right">
+                <p className="text-gray-700">For : My Company</p>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          {/* Terms and Signature */}
+          <div className="flex justify-between items-end mt-auto pt-8">
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-2">Terms & Conditions</h4>
+              <p className="text-sm text-gray-600">Payment due within 30 days</p>
+            </div>
+            <div className="w-32 h-16 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+              <div className="text-center">
+                <span className="text-xs text-gray-500">Authorized Signatory</span>
+              </div>
             </div>
           </div>
         </div>

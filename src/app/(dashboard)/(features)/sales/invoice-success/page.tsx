@@ -38,44 +38,83 @@ export default function InvoiceSuccessPage() {
     invoiceNo: '01',
     date: '2025-10-06',
     customerName: 'Sample Customer',
+    phoneNo: '',
+    stateOfSupply: '',
     items: [
       {
         id: 1,
         name: 'Sample Item',
-        hsn: '-',
-        qty: 10,
-        price: 100,
-        amount: 1000
+        hsn: '44',
+        qty: 1,
+        unit: 'PCS',
+        price: 433,
+        discountPercent: 33,
+        discountAmount: 142.89,
+        taxPercent: 0,
+        taxAmount: 0,
+        amount: 290.11
       }
     ],
-    subtotal: 1000,
-    total: 1000,
+    subtotal: 433,
+    total: 290.11,
     received: 0,
-    balance: 1000
+    balance: 290.11,
+    totalDiscount: 142.89,
+    totalTax: 0,
+    roundOff: true,
+    roundOffValue: 0.11,
+    creditMode: true,
+    description: ''
   })
 
   // Load invoice data from sessionStorage on component mount
   useEffect(() => {
-    const storedData = sessionStorage.getItem('invoiceData')
+    // Check for data from any of the add pages
+    const dataKeys = ['invoiceData', 'challanData', 'estimateData', 'orderData', 'proformaData', 'returnData']
+    let storedData = null
+    let dataKey = null
+    
+    for (const key of dataKeys) {
+      const data = sessionStorage.getItem(key)
+      if (data) {
+        storedData = data
+        dataKey = key
+        break
+      }
+    }
+    
     if (storedData) {
       try {
         const data = JSON.parse(storedData)
         setInvoiceData({
-          invoiceNo: '01',
-          date: new Date().toISOString().split('T')[0],
-          customerName: data.customerName,
-          items: data.items.map((item: any) => ({
+          invoiceNo: data.invoiceNo || data.challanNo || data.estimateNumber || data.orderNo || data.proformaNumber || data.refNo || '01',
+          date: data.date || data.challanDate || data.estimateDate || data.orderDate || data.proformaDate || data.returnDate || new Date().toISOString().split('T')[0],
+          customerName: data.customerName || 'Sample Customer',
+          phoneNo: data.phoneNo || '',
+          stateOfSupply: data.stateOfSupply || '',
+          items: data.items ? data.items.map((item: any) => ({
             id: item.id,
-            name: item.name,
-            hsn: '-',
-            qty: item.qty,
-            price: item.price,
-            amount: item.amount
-          })),
-          subtotal: data.subtotal,
-          total: data.totalAmount,
-          received: data.receivedAmount,
-          balance: data.balanceAmount
+            name: item.name || item.item,
+            hsn: item.hsn || '44',
+            qty: item.qty || 1,
+            unit: item.unit || 'PCS',
+            price: item.price || 0,
+            discountPercent: item.discountPercent || 0,
+            discountAmount: item.discountAmount || 0,
+            taxPercent: item.taxPercent || 0,
+            taxAmount: item.taxAmount || 0,
+            amount: item.amount || 0
+          })) : [],
+          subtotal: data.total || data.totals?.totalAmount || 0,
+          total: data.total || data.totals?.totalAmount || 0,
+          received: 0,
+          balance: data.total || data.totals?.totalAmount || 0,
+          totalDiscount: data.totalDiscount || 0,
+          totalTax: data.totalTax || 0,
+          roundOff: data.roundOff || false,
+          roundOffValue: data.roundOffValue || 0,
+          creditMode: data.creditMode || true,
+          description: data.description || ''
         })
       } catch (error) {
         console.error('Error parsing invoice data:', error)
@@ -111,6 +150,17 @@ export default function InvoiceSuccessPage() {
     setIsSignatureModalOpen(false)
   }
 
+  // Clear session storage data
+  const clearSessionData = () => {
+    sessionStorage.removeItem('invoiceData')
+    sessionStorage.removeItem('challanData')
+    sessionStorage.removeItem('estimateData')
+    sessionStorage.removeItem('orderData')
+    sessionStorage.removeItem('proformaData')
+    sessionStorage.removeItem('returnData')
+    alert('Session data cleared successfully!')
+  }
+
   // Download PDF function
   const downloadPDF = async () => {
     if (!invoiceRef.current) return
@@ -129,7 +179,8 @@ export default function InvoiceSuccessPage() {
       const canvas = await html2canvas(element, {
         useCORS: true,
         allowTaint: true,
-        background: '#ffffff'
+        background: '#ffffff',
+        logging: false
       })
 
       // Get canvas dimensions
@@ -159,6 +210,14 @@ export default function InvoiceSuccessPage() {
       
       // Download the PDF
       pdf.save(filename)
+      
+      // Clear session storage after successful PDF generation
+      sessionStorage.removeItem('invoiceData')
+      sessionStorage.removeItem('challanData')
+      sessionStorage.removeItem('estimateData')
+      sessionStorage.removeItem('orderData')
+      sessionStorage.removeItem('proformaData')
+      sessionStorage.removeItem('returnData')
     } catch (error) {
       console.error('Error generating PDF:', error)
       alert('Error generating PDF. Please try again.')
@@ -180,17 +239,41 @@ export default function InvoiceSuccessPage() {
           <title>Invoice ${invoiceData.invoiceNo}</title>
           <style>
             /* Basic print styles to preserve layout */
-            body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; margin: 0; padding: 24px; }
+            body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; margin: 0; padding: 24px; background-color: #ffffff; }
             .grid { display: grid; }
           </style>
         </head>
         <body>
           <div>${content}</div>
-          <script>window.focus(); window.print(); window.close();<\/script>
+          <script>
+            window.focus(); 
+            window.print(); 
+            window.close();
+            // Clear session storage after printing
+            if (window.opener) {
+              window.opener.postMessage('clearSessionStorage', '*');
+            }
+          <\/script>
         </body>
       </html>
     `)
     printWindow.document.close()
+    
+    // Listen for message from print window to clear session storage
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data === 'clearSessionStorage') {
+        // Clear all invoice-related session storage data
+        sessionStorage.removeItem('invoiceData')
+        sessionStorage.removeItem('challanData')
+        sessionStorage.removeItem('estimateData')
+        sessionStorage.removeItem('orderData')
+        sessionStorage.removeItem('proformaData')
+        sessionStorage.removeItem('returnData')
+        window.removeEventListener('message', handleMessage)
+      }
+    }
+    
+    window.addEventListener('message', handleMessage)
   }
 
   const formatAmountInWords = (amount: number) => {
@@ -205,12 +288,13 @@ export default function InvoiceSuccessPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" style={{ backgroundColor: '#ffffff', minHeight: '100vh' }}>
       {/* Invoice Card */}
-      <Card ref={invoiceRef} className="max-w-4xl mx-auto">
-        <CardContent className="p-8">
-          {/* Company Header */}
-          <div className="flex justify-between items-start mb-8">
+      <Card ref={invoiceRef} className="max-w-4xl mx-auto" style={{ backgroundColor: '#ffffff' }}>
+        <CardContent className="p-8 flex flex-col" style={{ backgroundColor: '#ffffff', minHeight: '800px' }}>
+          <div className="flex-1">
+            {/* Company Header */}
+            <div className="flex justify-between items-start mb-8">
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">{companyDetails.name}</h2>
               <p className="text-gray-600">Phone no: {companyDetails.phone}</p>
@@ -322,9 +406,10 @@ export default function InvoiceSuccessPage() {
           <div className="text-center mb-6">
             <p className="text-gray-600">Thanks for doing business with us!</p>
           </div>
+          </div>
 
           {/* Terms and Signature */}
-          <div className="flex justify-between items-end">
+          <div className="flex justify-between items-end mt-auto pt-8">
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">Terms & Conditions</h4>
               <p className="text-sm text-gray-600">Payment due within 30 days</p>
@@ -372,6 +457,14 @@ export default function InvoiceSuccessPage() {
         <Button variant="outline" className="border-purple-600 text-purple-600 hover:bg-purple-50">
           <MessageSquare className="mr-2 h-4 w-4" />
           Share on WhatsApp
+        </Button>
+        <Button 
+          variant="outline" 
+          className="border-red-600 text-red-600 hover:bg-red-50"
+          onClick={clearSessionData}
+        >
+          <X className="mr-2 h-4 w-4" />
+          Clear Data
         </Button>
       </div>
 

@@ -77,6 +77,34 @@ export default function AddSaleOrderPage() {
 	 const calculateTotalPayment = () => paymentTypes.reduce((sum, p) => sum + (parseFloat(p.amount) || 0), 0)
 	 const totalPayment = calculateTotalPayment()
 
+	 const handleSave = () => {
+		 // Prepare order data for invoice success page
+		 const orderData = {
+			 orderNo,
+			 orderDate,
+			 dueDate,
+			 customerName,
+			 phoneNo,
+			 stateOfSupply,
+			 creditMode,
+			 roundOff,
+			 roundOffValue,
+			 total,
+			 items,
+			 paymentTypes,
+			 totalPayment,
+			 description,
+			 selectedImage,
+			 selectedDocument
+		 }
+		 
+		 // Store data in sessionStorage for invoice success page
+		 sessionStorage.setItem('orderData', JSON.stringify(orderData))
+		 
+		 // Navigate to invoice success page
+		 window.location.href = '/sales/invoice-success'
+	 }
+
 	 const addNewRow = () => {
 		 const newId = Math.max(...items.map(item => item.id)) + 1
 		 setItems([...items, {
@@ -614,9 +642,9 @@ export default function AddSaleOrderPage() {
               <Button variant="outline">
                 Cancel
               </Button>
-              <Button className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2">
+              <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2">
                 <Save className="h-4 w-4" />
-                <span>Save Estimate</span>
+                <span>Save & View Invoice</span>
               </Button>
             </div>
           </div>

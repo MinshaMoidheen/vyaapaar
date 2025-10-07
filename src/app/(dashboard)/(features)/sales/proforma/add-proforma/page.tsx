@@ -73,9 +73,26 @@ export default function AddProformaPage() {
   }
 
   const handleSave = () => {
-    const data = { customerName, proformaNumber, proformaDate, validUntil, stateOfSupply, items, totals, description, image: selectedImage?.name, roundOff, roundOffValue, total }
-    console.log('Saving proforma:', data)
-    router.push('/sales/proforma')
+    const proformaData = { 
+      customerName, 
+      proformaNumber, 
+      proformaDate, 
+      validUntil, 
+      stateOfSupply, 
+      items, 
+      totals, 
+      description, 
+      image: selectedImage?.name, 
+      roundOff, 
+      roundOffValue, 
+      total 
+    }
+    
+    // Store data in sessionStorage for invoice success page
+    sessionStorage.setItem('proformaData', JSON.stringify(proformaData))
+    
+    // Navigate to invoice success page
+    router.push('/sales/invoice-success')
   }
 
   const handleCancel = () => router.push('/sales/proforma')
@@ -304,7 +321,7 @@ export default function AddProformaPage() {
               <Button variant="outline" onClick={handleCancel}>Cancel</Button>
               <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2">
                 <Save className="h-4 w-4" />
-                <span>Save Proforma</span>
+                <span>Save & View Invoice</span>
               </Button>
             </div>
           </div>

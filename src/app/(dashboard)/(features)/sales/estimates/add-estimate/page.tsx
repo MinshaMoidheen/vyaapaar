@@ -125,8 +125,12 @@ export default function AddEstimatePage() {
       roundOffValue,
       total
     }
-    console.log('Saving estimate:', estimateData)
-    router.push('/sales/estimates')
+    
+    // Store data in sessionStorage for invoice success page
+    sessionStorage.setItem('estimateData', JSON.stringify(estimateData))
+    
+    // Navigate to invoice success page
+    router.push('/sales/invoice-success')
   }
 
   const handleCancel = () => {
@@ -479,7 +483,7 @@ export default function AddEstimatePage() {
               </Button>
               <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2">
                 <Save className="h-4 w-4" />
-                <span>Save Estimate</span>
+                <span>Save & View Invoice</span>
               </Button>
             </div>
           </div>

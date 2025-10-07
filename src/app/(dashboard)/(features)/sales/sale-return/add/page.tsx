@@ -146,22 +146,27 @@ export default function AddSaleReturnPage() {
 	 }
 
 	 const handleSave = () => {
-		 // Save logic here
-		 console.log('Saving sale return:', {
-			 customerName,
-			 phoneNo,
+		 // Prepare return data for invoice success page
+		 const returnData = {
 			 refNo,
 			 returnDate,
 			 dueDate,
+			 customerName,
+			 phoneNo,
 			 stateOfSupply,
 			 returnReason,
 			 items,
 			 description,
-			 total
-		 })
+			 total,
+			 selectedImage,
+			 selectedDocument
+		 }
 		 
-		 // Navigate back to returns list
-		 router.push('/sales/sale-return')
+		 // Store data in sessionStorage for invoice success page
+		 sessionStorage.setItem('returnData', JSON.stringify(returnData))
+		 
+		 // Navigate to invoice success page
+		 router.push('/sales/invoice-success')
 	 }
 
 	 const handleBack = () => {
@@ -558,7 +563,7 @@ export default function AddSaleReturnPage() {
 					 </Button>
 					 <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2">
 						 <Save className="h-4 w-4" />
-						 <span>Save</span>
+						 <span>Save & View Invoice</span>
 					 </Button>
 				 </div>
 			 </div>

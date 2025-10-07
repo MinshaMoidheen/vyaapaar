@@ -148,24 +148,31 @@ export default function AddDeliveryChallanPage() {
 	 }
 
 	 const handleSave = () => {
-		 // Save logic here
-		 console.log('Saving delivery challan:', {
-			 customerName,
-			 phoneNo,
+		 // Prepare challan data for invoice success page
+		 const challanData = {
 			 challanNo,
 			 challanDate,
 			 deliveryDate,
+			 customerName,
+			 phoneNo,
 			 stateOfSupply,
 			 vehicleNo,
 			 driverName,
 			 driverPhone,
+			 roundOff,
+			 roundOffValue,
+			 total,
 			 items,
 			 description,
-			 total
-		 })
+			 selectedImage,
+			 selectedDocument
+		 }
 		 
-		 // Navigate back to challans list
-		 router.push('/sales/delivery-challan')
+		 // Store data in sessionStorage for invoice success page
+		 sessionStorage.setItem('challanData', JSON.stringify(challanData))
+		 
+		 // Navigate to invoice success page
+		 router.push('/sales/invoice-success')
 	 }
 
 	 const handleBack = () => {
@@ -595,7 +602,7 @@ export default function AddDeliveryChallanPage() {
 					 </Button>
 					 <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2">
 						 <Save className="h-4 w-4" />
-						 <span>Save</span>
+						 <span>Save & View Invoice</span>
 					 </Button>
 				 </div>
 			 </div>
