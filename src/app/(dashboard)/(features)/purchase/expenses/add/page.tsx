@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Save, X, FileText, Image as ImageIcon, Plus } from 'lucide-react'
+import { Checkbox } from '@/components/ui/checkbox'
 import { useRouter } from 'next/navigation'
 
 interface ExpenseItem {
@@ -383,8 +384,18 @@ export default function AddExpensePage() {
 
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
-              <Label className="text-sm">Round Off</Label>
-              <Input value={roundOffValue} onChange={(e) => setRoundOffValue(e.target.value)} className="w-16 h-8" />
+              <Checkbox 
+                id="round-off" 
+                checked={roundOff} 
+                onCheckedChange={(checked) => setRoundOff(checked as boolean)} 
+              />
+              <Label htmlFor="round-off" className="text-sm">Round Off</Label>
+              <Input 
+                value={roundOffValue} 
+                onChange={(e) => setRoundOffValue(e.target.value)} 
+                className="w-16 h-8" 
+                disabled={!roundOff}
+              />
             </div>
             <div className="flex items-center space-x-2">
               <Label className="text-sm font-medium">Total</Label>
