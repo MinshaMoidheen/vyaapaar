@@ -68,6 +68,40 @@ export default function AddExpensePage() {
   }
   const totalPayment = paymentTypes.reduce((sum, p) => sum + (parseFloat(p.amount) || 0), 0)
 
+  const handleSave = () => {
+    const data = {
+      type: 'purchase-expense',
+      category,
+      expenseNo,
+      billDate,
+      stateOfSupply,
+      gstEnabled,
+      items: items.filter(i => i.item.trim() !== '').map(i => ({
+        id: i.id,
+        name: i.item,
+        qty: parseFloat(i.qty) || 0,
+        price: parseFloat(i.price) || 0,
+        discountPercent: parseFloat(i.discountPercent) || 0,
+        discountAmount: parseFloat(i.discountAmount) || 0,
+        taxPercent: parseFloat(i.taxPercent) || 0,
+        taxAmount: parseFloat(i.taxAmount) || 0,
+        amount: parseFloat(calculateAmount(i)) || 0,
+      })),
+      totals,
+      description,
+      roundOff,
+      roundOffValue: parseFloat(roundOffValue) || 0,
+      paymentTypes,
+      totalPayment,
+      partyName: partyName || undefined,
+    }
+    try {
+      sessionStorage.setItem('purchaseExpenseData', JSON.stringify(data))
+      sessionStorage.setItem('purchaseData', JSON.stringify(data))
+    } catch {}
+    window.location.href = '/sales/invoice-success'
+  }
+
   const addNewRow = () => {
     const newId = Math.max(...items.map(i => i.id)) + 1
     setItems([...items, { id: newId, item: '', qty: '', price: '', discountPercent: '', discountAmount: '', taxPercent: 'Select', taxAmount: '', amount: '' }])
@@ -403,9 +437,9 @@ export default function AddExpensePage() {
             </div>
             <div className="flex space-x-2">
               <Button variant="outline">Cancel</Button>
-              <Button className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2">
+              <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2">
                 <Save className="h-4 w-4" />
-                <span>Save</span>
+                <span>Save & View Invoice</span>
               </Button>
             </div>
           </div>

@@ -43,6 +43,41 @@ export default function AddPurchaseOrderPage() {
   }
   const totalPayment = paymentTypes.reduce((sum, p) => sum + (parseFloat(p.amount) || 0), 0)
 
+  const handleSave = () => {
+    const data = {
+      type: 'purchase-order',
+      party,
+      orderNo,
+      orderDate,
+      dueDate,
+      stateOfSupply,
+      items: rows.filter(r => r.item.trim() !== '').map(r => ({
+        id: r.id,
+        name: r.item,
+        qty: parseFloat(r.qty) || 0,
+        unit: r.unit,
+        price: parseFloat(r.price) || 0,
+        discountPercent: parseFloat(r.discountPercent) || 0,
+        discountAmount: parseFloat(r.discountAmount) || 0,
+        taxPercent: parseFloat(r.taxPercent) || 0,
+        taxAmount: parseFloat(r.taxAmount) || 0,
+        amount: parseFloat(calcAmount(r)) || 0,
+      })),
+      totals,
+      description,
+      roundOff,
+      roundOffValue: parseFloat(roundOffValue) || 0,
+      paymentTypes,
+      totalPayment,
+    }
+    try {
+      sessionStorage.setItem('purchaseOrderData', JSON.stringify(data))
+      // also store under generic key for invoice-success compatibility
+      sessionStorage.setItem('purchaseData', JSON.stringify(data))
+    } catch {}
+    window.location.href = '/sales/invoice-success'
+  }
+
   const addRow = () => {
     const newId = Math.max(...rows.map(r => r.id)) + 1
     setRows([...rows, { id: newId, item: '', qty: '', unit: 'NONE', price: '', discountPercent: '', discountAmount: '', taxPercent: 'Select', taxAmount: '', amount: '' }])
@@ -261,7 +296,7 @@ export default function AddPurchaseOrderPage() {
             </div>
             <div className="flex space-x-2">
               <Button variant="outline" onClick={() => router.push('/purchase/order')}>Cancel</Button>
-              <Button className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2"><Save className="h-4 w-4" /><span>Save</span></Button>
+              <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2"><Save className="h-4 w-4" /><span>Save & View Invoice</span></Button>
             </div>
           </div>
         </div>

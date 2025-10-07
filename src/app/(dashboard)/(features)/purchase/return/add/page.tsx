@@ -62,6 +62,42 @@ export default function AddPurchaseReturnPage() {
     const reader = new FileReader(); reader.onload = (ev) => setImagePreview(ev.target?.result as string); reader.readAsDataURL(file)
   }
 
+  const handleSave = () => {
+    const data = {
+      type: 'purchase-return',
+      party,
+      phoneNo,
+      returnNo,
+      billNo,
+      billDate,
+      date,
+      stateOfSupply,
+      items: rows.filter(r => r.item.trim() !== '').map(r => ({
+        id: r.id,
+        name: r.item,
+        qty: parseFloat(r.qty) || 0,
+        unit: r.unit,
+        price: parseFloat(r.price) || 0,
+        discountPercent: parseFloat(r.discountPercent) || 0,
+        discountAmount: parseFloat(r.discountAmount) || 0,
+        taxPercent: parseFloat(r.taxPercent) || 0,
+        taxAmount: parseFloat(r.taxAmount) || 0,
+        amount: parseFloat(calcAmount(r)) || 0,
+      })),
+      totals,
+      description,
+      roundOff,
+      roundOffValue: parseFloat(roundOffValue) || 0,
+      paymentTypes,
+      totalPayment,
+    }
+    try {
+      sessionStorage.setItem('purchaseReturnData', JSON.stringify(data))
+      sessionStorage.setItem('purchaseData', JSON.stringify(data))
+    } catch {}
+    window.location.href = '/sales/invoice-success'
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="p-6 space-y-6">
@@ -245,7 +281,7 @@ export default function AddPurchaseReturnPage() {
             </div>
             <div className="flex space-x-2">
               <Button variant="outline" onClick={() => router.push('/purchase/return')}>Cancel</Button>
-              <Button className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2"><Save className="h-4 w-4" /><span>Save</span></Button>
+              <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2"><Save className="h-4 w-4" /><span>Save & View Invoice</span></Button>
             </div>
           </div>
         </div>
