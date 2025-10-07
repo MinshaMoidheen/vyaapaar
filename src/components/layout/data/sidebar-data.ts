@@ -116,8 +116,34 @@ export const sidebarData: SidebarData = {
         },
         {
           title: 'Purchase & Expense',
-          url: '/purchase',
           icon: IconShoppingCart,
+          items: [
+            {
+              title: 'Purchase Bills',
+              url: '/purchase/bills',
+              
+            },
+            {
+              title: 'Payment-Out',
+              url: '/purchase/payment-out',
+             
+            },
+            {
+              title: 'Expenses',
+              url: '/purchase/expenses',
+              
+            },
+            {
+              title: 'Purchase Order',
+              url: '/purchase/order',
+              
+            },
+            {
+              title: 'Purchase Return/ Dr. Note',
+              url: '/purchase/return',
+              
+            },
+          ],
         },
         {
           title: 'Grow Your Business',
