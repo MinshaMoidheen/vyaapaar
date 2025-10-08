@@ -11,6 +11,16 @@ import {
   IconPlus,
   IconBrandWhatsapp,
   IconNetwork,
+  IconChartBar,
+  IconReceipt,
+  IconCalendar,
+  IconFileText,
+  IconTrendingDown,
+  IconCash,
+  IconScale,
+  IconReportAnalytics,
+  IconUser,
+  IconUsersGroup,
 } from '@tabler/icons-react'
 import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
 import { type SidebarData } from '../types'
@@ -172,6 +182,88 @@ export const sidebarData: SidebarData = {
             },
           ],
         },
+        // {
+        //   title: 'Reports',
+        //   icon: IconChartBar,
+        //   items: [
+        //     {
+        //       title: 'Sale',
+        //       url: '/reports/sale',
+        //       icon: IconReceipt,
+        //     },
+        //     {
+        //       title: 'Purchase',
+        //       url: '/reports/purchase',
+        //       icon: IconShoppingCart,
+        //     },
+        //     {
+        //       title: 'Day book',
+        //       url: '/reports/day-book',
+        //       icon: IconCalendar,
+        //     },
+        //     {
+        //       title: 'All Transactions',
+        //       url: '/reports/all-transactions',
+        //       icon: IconFileText,
+        //     },
+        //     {
+        //       title: 'Profit And Loss',
+        //       url: '/reports/profit-loss',
+        //       icon: IconTrendingUp,
+        //     },
+        //     {
+        //       title: 'Bill Wise Profit',
+        //       url: '/reports/bill-wise-profit',
+        //       icon: IconReceipt,
+        //     },
+        //     {
+        //       title: 'Cash flow',
+        //       url: '/reports/cash-flow',
+        //       icon: IconCash,
+        //     },
+        //     {
+        //       title: 'Trial Balance Report',
+        //       url: '/reports/trial-balance',
+        //       icon: IconScale,
+        //       badge: '•',
+        //     },
+        //     {
+        //       title: 'Balance Sheet',
+        //       url: '/reports/balance-sheet',
+        //       icon: IconReportAnalytics,
+        //     },
+        //     {
+        //       title: 'Party Statement',
+        //       url: '/reports/party-statement',
+        //       icon: IconUser,
+        //     },
+        //     {
+        //       title: 'Party wise Profit & Loss',
+        //       url: '/reports/party-profit-loss',
+        //       icon: IconTrendingDown,
+        //     },
+        //     {
+        //       title: 'All parties',
+        //       url: '/reports/all-parties',
+        //       icon: IconUsersGroup,
+        //     },
+        //     {
+        //       title: 'Party Report By Item',
+        //       url: '/reports/party-report-by-item',
+        //       icon: IconFileText,
+        //     },
+        //     {
+        //       title: 'Sale Purchase By Party',
+        //       url: '/reports/sale-purchase-by-party',
+        //       icon: IconUser,
+        //     },
+        //     {
+        //       title: 'Sale Purchase By Party Group',
+        //       url: '/reports/sale-purchase-by-party-group',
+        //       icon: IconUsersGroup,
+        //     },
+        //   ],
+        // },
         {
           title: 'Settings',
           url: '/settings',
