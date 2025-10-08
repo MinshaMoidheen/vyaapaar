@@ -152,8 +152,25 @@ export const sidebarData: SidebarData = {
         },
         {
           title: 'Cash & Bank',
-          url: '/cash-bank',
           icon: IconBuilding,
+          items: [
+            {
+              title: 'Bank Accounts',
+              url: '/cash-bank/bank-accounts',
+            },
+            {
+              title: 'Cash In Hand',
+              url: '/cash-bank/cash-in-hand',
+            },
+            {
+              title: 'Cheques',
+              url: '/cash-bank/cheques',
+            },
+            {
+              title: 'Loan Accounts',
+              url: '/cash-bank/loan-accounts',
+            },
+          ],
         },
         {
           title: 'Settings',
