@@ -225,7 +225,7 @@ export default function EditSaleOrderPage() {
 
 	 return (
 		 <div className="min-h-screen bg-gray-50">
-			 <div className="bg-white border-b border-gray-200 px-4 py-3">
+			 <div className="border-b border-gray-200 px-4 py-3">
 			 <div className="flex items-center justify-between">
 				 <div className="flex items-center space-x-4">
 					 <Button variant="ghost" size="sm" onClick={handleBack} className="flex items-center space-x-2">
@@ -237,7 +237,7 @@ export default function EditSaleOrderPage() {
 				 <div className="flex items-center space-x-4">
 					 <span className="text-sm">Credit</span>
 					 <button onClick={() => setCreditMode(!creditMode)} className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${creditMode ? 'bg-blue-600' : 'bg-gray-200'}`}>
-						 <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${creditMode ? 'translate-x-6' : 'translate-x-1'}`} />
+						 <span className={`inline-block h-4 w-4 transform rounded-full transition-transform ${creditMode ? 'translate-x-6' : 'translate-x-1'}`} />
 					 </button>
 					 <span className="text-sm">Cash</span>
 				 </div>
@@ -357,7 +357,7 @@ export default function EditSaleOrderPage() {
 									 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
 								 </tr>
 							 </thead>
-							 <tbody className="bg-white divide-y divide-gray-200">
+							 <tbody className="divide-y divide-gray-200">
 								 {items.map((item, index) => (
 									 <tr key={item.id}>
 										 <td className="px-4 py-3 text-sm text-gray-900">{index + 1}</td>
@@ -500,7 +500,7 @@ export default function EditSaleOrderPage() {
 		 <div className="grid grid-cols-2 gap-8">
 			 {/* Left Column - Payment Types */}
 			 <div className="space-y-5">
-				 <div className="border rounded-md p-4 bg-white">
+				 <div className="border rounded-md p-4">
 					 <div className="space-y-4">
 						 {paymentTypes.map((payment, index) => (
 							 <div key={payment.id} className="space-y-2">

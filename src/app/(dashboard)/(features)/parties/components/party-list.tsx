@@ -133,7 +133,7 @@ export function PartyList({ onAddParty }: PartyListProps) {
   return (
     <div className="flex h-full">
       {/* Left Panel - Party List */}
-      <div className="w-1/3 border-r bg-white">
+      <div className="w-1/3 border-r">
         {/* Header */}
         <div className="p-4 border-b">
          
@@ -221,7 +221,7 @@ export function PartyList({ onAddParty }: PartyListProps) {
       </div>
 
       {/* Right Panel - Party Details */}
-      <div className="flex-1 bg-white">
+      <div className="flex-1">
         {selectedParty ? (
           <>
             {/* Party Header */}

@@ -21,6 +21,13 @@ import {
   IconReportAnalytics,
   IconUser,
   IconUsersGroup,
+  IconTools,
+  IconBarcode,
+  IconUpload,
+  IconDownload,
+  IconDatabase,
+  IconFileSpreadsheet,
+  IconRefresh,
 } from '@tabler/icons-react'
 import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
 import { type SidebarData } from '../types'
@@ -179,6 +186,62 @@ export const sidebarData: SidebarData = {
             {
               title: 'Loan Accounts',
               url: '/cash-bank/loan-accounts',
+            },
+          ],
+        },
+        {
+          title: 'Utilities',
+          icon: IconTools,
+          items: [
+            // {
+            //   title: 'Bulk GST Update',
+            //   url: '/utilities/bulk-gst-update',
+            //   icon: IconRefresh,
+            // },
+            {
+              title: 'Import Items',
+              url: '/utilities/import-items',
+              icon: IconUpload,
+            },
+            {
+              title: 'Set Up My Business',
+              url: '/utilities/setup-business',
+              icon: IconBuilding,
+            },
+            {
+              title: 'Accountant Access',
+              url: '/utilities/accountant-access',
+              icon: IconUser,
+            },
+            {
+              title: 'Barcode Generator',
+              url: '/utilities/barcode-generator',
+              icon: IconBarcode,
+            },
+            {
+              title: 'Update Items In Bulk',
+              url: '/utilities/update-items-bulk',
+              icon: IconRefresh,
+            },
+            {
+              title: 'Import From Tally',
+              url: '/utilities/import-from-tally',
+              icon: IconDatabase,
+            },
+            {
+              title: 'Import Parties',
+              url: '/utilities/import-parties',
+              icon: IconUsers,
+            },
+            {
+              title: 'Exports To Tally',
+              url: '/utilities/export-to-tally',
+              icon: IconDownload,
+            },
+            {
+              title: 'Export Items',
+              url: '/utilities/export-items',
+              icon: IconFileSpreadsheet,
             },
           ],
         },

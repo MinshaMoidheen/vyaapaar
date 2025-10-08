@@ -170,7 +170,7 @@ export default function AddPurchaseOrderPage() {
                     <th className="px-4 py-3"></th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-200">
                   {rows.map((r, idx) => (
                     <tr key={r.id}>
                       <td className="px-4 py-3 text-sm text-gray-900">{idx + 1}</td>

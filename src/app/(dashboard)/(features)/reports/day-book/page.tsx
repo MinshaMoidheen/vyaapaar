@@ -197,7 +197,7 @@ export default function DayBookPage() {
         </Card>
 
         {/* Summary Footer */}
-        <div className="mt-6 p-4 bg-white rounded-lg border">
+        <div className="mt-6 p-4 rounded-lg border">
           <div className="flex justify-between items-center">
             <div className="flex gap-6">
               <div className="text-green-600 font-semibold">

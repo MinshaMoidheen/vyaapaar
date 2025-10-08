@@ -377,7 +377,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
         <TabsContent value="products" className="space-y-0">
           <div className="flex h-[calc(100vh-150px)]">
             {/* Left Panel - Items List */}
-            <div className="w-1/3 border-r bg-white">
+            <div className="w-1/3 border-r">
               {/* Header */}
               <div className="p-3 border-b">
                 <div className="flex items-center gap-2 mb-2">
@@ -491,7 +491,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
             </div>
 
             {/* Right Panel - Item Details */}
-            <div className="flex-1 bg-white">
+            <div className="flex-1 ">
               {selectedItem ? (
                 <>
                   {/* Item Header */}
@@ -629,7 +629,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
         <TabsContent value="services" className="space-y-0">
           <div className="flex h-[calc(100vh-150px)]">
             {/* Left Panel - Services List */}
-            <div className="w-1/3 border-r bg-white">
+            <div className="w-1/3 border-r">
               {/* Header */}
               <div className="p-3 border-b">
                 <div className="flex items-center gap-2 mb-2">
@@ -682,7 +682,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
             </div>
 
             {/* Right Panel - Service Details */}
-            <div className="flex-1 bg-white">
+            <div className="flex-1">
               <div className="p-6 border-b">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
@@ -768,7 +768,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
         <TabsContent value="category" className="space-y-0">
           <div className="flex h-[calc(100vh-150px)]">
             {/* Left Panel - Categories List */}
-            <div className="w-1/3 border-r bg-white">
+            <div className="w-1/3 border-r">
               {/* Header */}
               <div className="p-3 border-b">
                 <div className="flex items-center gap-2 mb-2">
@@ -815,7 +815,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
             </div>
 
             {/* Right Panel - Category Items */}
-            <div className="flex-1 bg-white">
+            <div className="flex-1">
               {/* <div className="p-6 border-b">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold text-gray-900 uppercase">ITEMS NOT IN ANY CATEGORY</h2>
@@ -871,7 +871,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
         <TabsContent value="units" className="space-y-0">
           <div className="flex h-[calc(100vh-150px)]">
             {/* Left Panel - Units List */}
-            <div className="w-1/3 border-r bg-white">
+            <div className="w-1/3 border-r">
               {/* Header */}
               <div className="p-3 border-b">
                 <div className="flex items-center gap-2 mb-2">
@@ -944,7 +944,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
             </div>
 
             {/* Right Panel - Unit Conversions */}
-            <div className="flex-1 bg-white">
+            <div className="flex-1 ">
               {/* <div className="p-6 border-b">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold text-gray-900 uppercase">Unit Conversions</h2>

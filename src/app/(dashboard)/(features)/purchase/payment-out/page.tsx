@@ -112,7 +112,7 @@ export default function PaymentOutPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Header Bar */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
+      <div className="border-b border-gray-200 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <h1 className="text-xl font-semibold text-gray-900">Payment-Out</h1>
@@ -143,7 +143,7 @@ export default function PaymentOutPage() {
           // Data State
           <div className="space-y-6">
             {/* Comprehensive Filter Bar */}
-            <div className="bg-white p-4 rounded-lg border">
+            <div className=" p-4 rounded-lg border">
               <div className="flex flex-wrap items-center gap-4 mb-4">
                 {/* This Month Dropdown */}
                 <Select value={filterMonth} onValueChange={setFilterMonth}>
@@ -326,7 +326,7 @@ export default function PaymentOutPage() {
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
+                    <tbody className="divide-y divide-gray-200">
                       {filteredPayments.map((payment, index) => (
                         <tr key={payment.id} className="hover:bg-gray-50">
                           <td className="px-4 py-3 text-sm text-gray-900">{index + 1}</td>

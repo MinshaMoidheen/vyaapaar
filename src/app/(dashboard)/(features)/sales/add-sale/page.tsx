@@ -284,7 +284,7 @@ export default function AddSalePage() {
      
 
       {/* Page Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
+      <div className="border-b border-gray-200 px-4 py-3">
         <div className="flex items-center justify-between">
           {/* <div className="flex items-center space-x-4">
             <h1 className="text-lg font-semibold">Sale #1</h1>
@@ -302,7 +302,7 @@ export default function AddSalePage() {
                 }`}
               >
                 <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  className={`inline-block h-4 w-4 transform rounded-full transition-transform ${
                     creditMode ? 'translate-x-6' : 'translate-x-1'
                   }`}
                 />
@@ -422,7 +422,7 @@ export default function AddSalePage() {
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-200">
                   {items.map((item, index) => (
                     <tr key={item.id}>
                       <td className="px-4 py-3 text-sm text-gray-900">{index + 1}</td>
@@ -720,7 +720,7 @@ export default function AddSalePage() {
 
       {/* Hidden Invoice Template for PDF Generation */}
       <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', visibility: 'hidden' }}>
-        <div ref={invoiceRef} className="bg-white p-8 w-[800px] text-black flex flex-col" style={{ fontFamily: 'Arial, sans-serif', minHeight: '800px' }}>
+        <div ref={invoiceRef} className="p-8 w-[800px] text-black flex flex-col" style={{ fontFamily: 'Arial, sans-serif', minHeight: '800px' }}>
           <div className="flex-1">
             {/* Invoice Header */}
             <div className="flex justify-between items-start mb-6">

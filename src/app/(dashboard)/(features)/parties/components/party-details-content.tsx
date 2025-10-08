@@ -38,7 +38,7 @@ export function PartyDetailsContent({ onAddParty }: PartyDetailsContentProps) {
           </div>
           
           {/* Plus icon in bottom right */}
-          <div className="absolute bottom-2 right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-md">
+          <div className="absolute bottom-2 right-2 w-6 h-6 rounded-full flex items-center justify-center shadow-md">
             <Plus className="h-3 w-3 text-gray-600" />
           </div>
         </div>
