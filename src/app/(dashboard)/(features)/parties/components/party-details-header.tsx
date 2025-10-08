@@ -14,7 +14,7 @@ export function PartyDetailsHeader({ onAddParty }: PartyDetailsHeaderProps) {
         <h1 className="text-3xl font-bold tracking-tight">Parties</h1>
         
       </div>
-      <Button onClick={onAddParty} className="bg-red-600 hover:bg-red-700">
+      <Button onClick={onAddParty}>
         <Plus className="mr-2 h-4 w-4" />
         Add Party
       </Button>
