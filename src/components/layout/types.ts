@@ -19,10 +19,11 @@ interface BaseNavItem {
 type NavLink = BaseNavItem & {
   url: string
   items?: never
+  onClick?: string
 }
 
 type NavCollapsible = BaseNavItem & {
-  items: (BaseNavItem & { url: string })[]
+  items: (BaseNavItem & { url: string; onClick?: string })[]
   url?: never
 }
 

@@ -163,27 +163,25 @@ export default function AddEstimatePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Header */}
       <div className="border-b border-gray-200 px-4 py-3">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
           <div className="flex items-center space-x-4">
             <Button variant="ghost" size="sm" onClick={handleCancel}>
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <h1 className="text-lg font-semibold">Add Estimate</h1>
+            <h1 className="text-lg md:text-xl font-semibold">Add Estimate</h1>
           </div>
-          
-         
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="p-6 space-y-6">
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6">
         {/* Customer and Estimate Details */}
         <Card>
-          <CardContent className="p-6">
-            <div className="grid grid-cols-2 gap-8">
+          <CardContent className="p-4 md:p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
               {/* Customer Details */}
               <div className="space-y-4">
                 <h3 className="text-sm font-medium text-gray-900">Customer/Party Details</h3>
@@ -197,7 +195,7 @@ export default function AddEstimatePage() {
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
                       placeholder="Search by name or phone"
-                      className="pr-8"
+                      className="pr-8 text-sm"
                     />
                     <Search className="absolute right-2 top-2.5 h-4 w-4 text-gray-400" />
                   </div>
@@ -208,32 +206,40 @@ export default function AddEstimatePage() {
               {/* Estimate Details */}
               <div className="space-y-4">
                 <h3 className="text-sm font-medium text-gray-900">Estimate Details</h3>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label className="text-sm font-medium">Ref Number</Label>
                     <Input
                       value={estimateNumber}
                       onChange={(e) => setEstimateNumber(e.target.value)}
                       placeholder="Enter estimate number"
-                      className="mt-1"
+                      className="mt-1 text-sm"
                     />
                   </div>
                   <div>
-                    <Label className="text-sm font-medium">Invoice Date</Label>
+                    <Label className="text-sm font-medium">Estimate Date</Label>
                     <Input
                       type="date"
                       value={estimateDate}
                       onChange={(e) => setEstimateDate(e.target.value)}
-                      className="mt-1"
+                      className="mt-1 text-sm"
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-sm font-medium">Valid Until</Label>
+                    <Input
+                      type="date"
+                      value={validUntil}
+                      onChange={(e) => setValidUntil(e.target.value)}
+                      className="mt-1 text-sm"
+                    />
+                  </div>
                   <div>
                     <Label className="text-sm font-medium">State of supply</Label>
                     <Select value={stateOfSupply} onValueChange={setStateOfSupply}>
-                      <SelectTrigger className="mt-1">
+                      <SelectTrigger className="mt-1 text-sm">
                         <SelectValue placeholder="Select" />
                       </SelectTrigger>
                       <SelectContent>
@@ -252,43 +258,43 @@ export default function AddEstimatePage() {
         <Card>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
+              <table className="w-full min-w-[800px]">
+                <thead>
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ITEM</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QTY</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UNIT</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PRICE/UNIT</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">DISCOUNT</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GST</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AMOUNT</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[150px]">ITEM</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QTY</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UNIT</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">PRICE/UNIT</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">DISCOUNT</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GST</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AMOUNT</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {items.map((item, index) => (
                     <tr key={item.id}>
-                      <td className="px-4 py-3 text-sm text-gray-900">{index + 1}</td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm text-gray-900">{index + 1}</td>
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <Input
                           value={item.item}
                           onChange={(e) => updateItem(item.id, 'item', e.target.value)}
                           placeholder="Enter item name"
-                          className="border-0 focus:ring-0 p-0"
+                          className="border-0 focus:ring-0 p-0 text-xs md:text-sm"
                         />
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <Input
                           value={item.qty}
                           onChange={(e) => updateItem(item.id, 'qty', e.target.value)}
                           placeholder="0"
-                          className="border-0 focus:ring-0 p-0 w-16"
+                          className="border-0 focus:ring-0 p-0 w-12 md:w-16 text-xs md:text-sm"
                         />
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <Select value={item.unit} onValueChange={(value) => updateItem(item.id, 'unit', value)}>
-                          <SelectTrigger className="border-0 focus:ring-0 p-0 h-auto">
+                          <SelectTrigger className="border-0 focus:ring-0 p-0 h-auto text-xs">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -299,25 +305,25 @@ export default function AddEstimatePage() {
                           </SelectContent>
                         </Select>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <Input
                           value={item.price}
                           onChange={(e) => updateItem(item.id, 'price', e.target.value)}
                           placeholder="0.00"
-                          className="border-0 focus:ring-0 p-0 w-20"
+                          className="border-0 focus:ring-0 p-0 w-16 md:w-20 text-xs"
                         />
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <Input
                           value={item.discount}
                           onChange={(e) => updateItem(item.id, 'discount', e.target.value)}
                           placeholder="0"
-                          className="border-0 focus:ring-0 p-0 w-16 text-xs"
+                          className="border-0 focus:ring-0 p-0 w-12 md:w-16 text-xs"
                         />
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <Select value={item.gst} onValueChange={(value) => updateItem(item.id, 'gst', value)}>
-                          <SelectTrigger className="border-0 focus:ring-0 p-0 h-auto text-xs w-16">
+                          <SelectTrigger className="border-0 focus:ring-0 p-0 h-auto text-xs w-12 md:w-16">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -330,14 +336,14 @@ export default function AddEstimatePage() {
                           </SelectContent>
                         </Select>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <Input
                           value={calculateAmount(item)}
                           readOnly
-                          className="border-0 focus:ring-0 p-0 w-20 bg-gray-50"
+                          className="border-0 focus:ring-0 p-0 w-16 md:w-20 text-xs"
                         />
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         {items.length > 1 && (
                           <Button
                             variant="ghost"
@@ -352,21 +358,22 @@ export default function AddEstimatePage() {
                     </tr>
                   ))}
                 </tbody>
-                <tfoot className="bg-gray-50">
+                <tfoot 
+                >
                   <tr>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-900">TOTAL</td>
-                    <td className="px-4 py-3"></td>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-900">{totals.totalQty}</td>
-                    <td className="px-4 py-3"></td>
-                    <td className="px-4 py-3"></td>
-                    <td className="px-4 py-3"></td>
-                    <td className="px-4 py-3"></td>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-900">{totals.totalAmount}</td>
-                    <td className="px-4 py-3">
+                    <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm font-medium text-gray-900">TOTAL</td>
+                    <td className="px-2 md:px-4 py-2 md:py-3"></td>
+                    <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm font-medium text-gray-900">{totals.totalQty}</td>
+                    <td className="px-2 md:px-4 py-2 md:py-3"></td>
+                    <td className="px-2 md:px-4 py-2 md:py-3"></td>
+                    <td className="px-2 md:px-4 py-2 md:py-3"></td>
+                    <td className="px-2 md:px-4 py-2 md:py-3"></td>
+                    <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm font-medium text-gray-900">{totals.totalAmount}</td>
+                    <td className="px-2 md:px-4 py-2 md:py-3">
                       <Button
                         onClick={addNewRow}
                         size="sm"
-                        className="bg-blue-600 hover:bg-blue-700"
+                        className="text-xs px-2 py-1"
                       >
                         ADD ROW
                       </Button>
@@ -379,14 +386,14 @@ export default function AddEstimatePage() {
         </Card>
 
         {/* Bottom Section */}
-        <div className="flex justify-between items-start">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start space-y-6 lg:space-y-0">
           {/* Additional Options */}
           <div className="flex flex-col space-y-3">
             <div className="space-y-2">
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-2 text-xs"
                 onClick={() => setShowDescription(!showDescription)}
               >
                 <FileText className="h-4 w-4" />
@@ -397,7 +404,7 @@ export default function AddEstimatePage() {
                   value={description}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
                   placeholder="Enter description..."
-                  className="w-64"
+                  className="w-full sm:w-64 text-sm"
                   rows={3}
                 />
               )}
@@ -408,7 +415,7 @@ export default function AddEstimatePage() {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-2 text-xs"
                   onClick={() => document.getElementById('image-upload')?.click()}
                 >
                   <Image className="h-4 w-4" />
@@ -433,7 +440,7 @@ export default function AddEstimatePage() {
                 className="hidden"
               />
               {imagePreview && (
-                <div className="relative w-64">
+                <div className="relative w-full sm:w-64">
                   <img
                     src={imagePreview}
                     alt="Preview"
@@ -455,35 +462,37 @@ export default function AddEstimatePage() {
           </div>
 
           {/* Summary and Actions */}
-          <div className="flex items-center space-x-6">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="roundOff"
-                checked={roundOff}
-                onCheckedChange={(checked) => setRoundOff(checked === true)}
-              />
-              <Label htmlFor="roundOff" className="text-sm">Round Off</Label>
-              <Input
-                value={roundOffValue}
-                onChange={(e) => setRoundOffValue(e.target.value)}
-                className="w-16 h-8"
-              />
+          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-start sm:items-center lg:items-start xl:items-center space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-0 lg:space-y-4 xl:space-y-0 xl:space-x-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="roundOff"
+                  checked={roundOff}
+                  onCheckedChange={(checked) => setRoundOff(checked === true)}
+                />
+                <Label htmlFor="roundOff" className="text-xs sm:text-sm">Round Off</Label>
+                <Input
+                  value={roundOffValue}
+                  onChange={(e) => setRoundOffValue(e.target.value)}
+                  className="w-16 h-8 text-xs"
+                />
+              </div>
+              <div className="flex items-center space-x-2">
+                <Label className="text-xs sm:text-sm font-medium">Total</Label>
+                <Input
+                  value={total}
+                  onChange={(e) => setTotal(e.target.value)}
+                  className="w-20 sm:w-24 h-8 text-xs"
+                />
+              </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <Label className="text-sm font-medium">Total</Label>
-              <Input
-                value={total}
-                onChange={(e) => setTotal(e.target.value)}
-                className="w-24 h-8"
-              />
-            </div>
-            <div className="flex space-x-2">
-              <Button variant="outline" onClick={handleCancel}>
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
+              <Button variant="outline" onClick={handleCancel} className="text-xs w-full sm:w-auto">
                 Cancel
               </Button>
-              <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2">
+              <Button onClick={handleSave} className="flex items-center space-x-2 text-xs w-full sm:w-auto">
                 <Save className="h-4 w-4" />
-                <span>Save & View Invoice</span>
+                <span>Save & View Estimate</span>
               </Button>
             </div>
           </div>

@@ -236,7 +236,7 @@ export default function SalesPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <h1 className="text-3xl font-bold tracking-tight">Sale Invoices</h1>
+          <h1 className="text-3xl font-bold tracking-tight md:text-sm">Sale Invoices</h1>
         </div>
         <div className="flex space-x-2">
           <Button 
@@ -248,7 +248,7 @@ export default function SalesPage() {
           </Button>
           <Button 
             onClick={() => router.push('/sales/add-sale')}
-            className="bg-red-600 hover:bg-red-700"
+           
           >
             <Plus className="mr-2 h-4 w-4" />
             Add Sale
@@ -331,7 +331,7 @@ export default function SalesPage() {
             {/* Create Invoice Button */}
             <Button 
               onClick={createInvoice}
-              className="w-full bg-red-600 hover:bg-red-700 text-lg py-6"
+              className="w-full text-lg py-6"
             >
               Create Your First Invoice
             </Button>

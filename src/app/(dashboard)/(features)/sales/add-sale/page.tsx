@@ -280,21 +280,16 @@ export default function AddSalePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
      
 
       {/* Page Header */}
       <div className="border-b border-gray-200 px-4 py-3">
-        <div className="flex items-center justify-between">
-          {/* <div className="flex items-center space-x-4">
-            <h1 className="text-lg font-semibold">Sale #1</h1>
-            
-          </div> */}
-          
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
           <div className="flex items-center space-x-4">
             <span className="text-sm font-medium">Sale</span>
             <div className="flex items-center space-x-2">
-              <span className="text-sm">Credit</span>
+              <span className="text-xs sm:text-sm">Credit</span>
               <button
                 onClick={() => setCreditMode(!creditMode)}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
@@ -307,18 +302,18 @@ export default function AddSalePage() {
                   }`}
                 />
               </button>
-              <span className="text-sm">Cash</span>
+              <span className="text-xs sm:text-sm">Cash</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="p-6 space-y-6">
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6">
         {/* Customer and Invoice Details */}
         <Card>
-          <CardContent className="p-6">
-            <div className="grid grid-cols-2 gap-8">
+          <CardContent className="p-4 md:p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
               {/* Customer Details */}
               <div className="space-y-4">
                 <h3 className="text-sm font-medium text-gray-900">Customer/Party Details</h3>
@@ -332,7 +327,7 @@ export default function AddSalePage() {
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
                       placeholder="Search by name or phone"
-                      className="pr-8"
+                      className="pr-8 text-sm"
                     />
                     <Search className="absolute right-2 top-2.5 h-4 w-4 text-gray-400" />
                   </div>
@@ -344,7 +339,7 @@ export default function AddSalePage() {
                     value={phoneNo}
                     onChange={(e) => setPhoneNo(e.target.value)}
                     placeholder="Enter phone number"
-                    className="mt-1"
+                    className="mt-1 text-sm"
                   />
                 </div>
               </div>
@@ -352,14 +347,14 @@ export default function AddSalePage() {
               {/* Invoice Details */}
               <div className="space-y-4">
                 <h3 className="text-sm font-medium text-gray-900">Invoice Details</h3>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label className="text-sm font-medium">Invoice Number</Label>
                     <Input
                       value={invoiceNumber}
                       onChange={(e) => setInvoiceNumber(e.target.value)}
                       placeholder="Enter invoice number"
-                      className="mt-1"
+                      className="mt-1 text-sm"
                     />
                   </div>
                   <div>
@@ -368,14 +363,14 @@ export default function AddSalePage() {
                       type="date"
                       value={invoiceDate}
                       onChange={(e) => setInvoiceDate(e.target.value)}
-                      className="mt-1"
+                      className="mt-1 text-sm"
                     />
                   </div>
                 </div>
                 <div>
                   <Label className="text-sm font-medium">State of supply</Label>
                   <Select value={stateOfSupply} onValueChange={setStateOfSupply}>
-                    <SelectTrigger className="mt-1">
+                    <SelectTrigger className="mt-1 text-sm">
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent>
@@ -393,58 +388,58 @@ export default function AddSalePage() {
         <Card>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
+              <table className="w-full min-w-[800px]">
+                <thead>
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ITEM</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QTY</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UNIT</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[150px]">ITEM</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QTY</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UNIT</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px]">
                       PRICE/UNIT
                       <div className="text-xs text-gray-400 font-normal">Without Tax</div>
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
                       DISCOUNT
-                      <div className="flex space-x-2">
+                      <div className="flex space-x-1 md:space-x-2">
                         <span className="text-xs text-gray-400 font-normal">%</span>
-                        <span className="text-xs text-gray-400 font-normal">AMOUNT</span>
+                        <span className="text-xs text-gray-400 font-normal">AMT</span>
                       </div>
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
                       TAX
-                      <div className="flex space-x-2">
+                      <div className="flex space-x-1 md:space-x-2">
                         <span className="text-xs text-gray-400 font-normal">%</span>
-                        <span className="text-xs text-gray-400 font-normal">AMOUNT</span>
+                        <span className="text-xs text-gray-400 font-normal">AMT</span>
                       </div>
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AMOUNT</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AMOUNT</th>
+                    <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {items.map((item, index) => (
                     <tr key={item.id}>
-                      <td className="px-4 py-3 text-sm text-gray-900">{index + 1}</td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm text-gray-900">{index + 1}</td>
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <Input
                           value={item.item}
                           onChange={(e) => updateItem(item.id, 'item', e.target.value)}
                           placeholder="Enter item name"
-                          className="border-0 focus:ring-0 p-0"
+                          className="border-0 focus:ring-0 p-0 text-xs md:text-sm"
                         />
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <Input
                           value={item.qty}
                           onChange={(e) => updateItem(item.id, 'qty', e.target.value)}
                           placeholder="0"
-                          className="border-0 focus:ring-0 p-0 w-16"
+                          className="border-0 focus:ring-0 p-0 w-12 md:w-16 text-xs md:text-sm"
                         />
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <Select value={item.unit} onValueChange={(value) => updateItem(item.id, 'unit', value)}>
-                          <SelectTrigger className="border-0 focus:ring-0 p-0 h-auto">
+                          <SelectTrigger className="border-0 focus:ring-0 p-0 h-auto text-xs">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -455,13 +450,13 @@ export default function AddSalePage() {
                           </SelectContent>
                         </Select>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <div className="flex flex-col space-y-1">
                           <Input
                             value={item.price}
                             onChange={(e) => updateItem(item.id, 'price', e.target.value)}
                             placeholder="0.00"
-                            className="border-0 focus:ring-0 p-0 w-20"
+                            className="border-0 focus:ring-0 p-0 w-16 md:w-20 text-xs"
                           />
                           <Select>
                             <SelectTrigger className="border-0 focus:ring-0 p-0 h-auto text-xs">
@@ -474,26 +469,26 @@ export default function AddSalePage() {
                           </Select>
                         </div>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <div className="flex space-x-1">
                           <Input
                             value={item.discountPercent}
                             onChange={(e) => updateItem(item.id, 'discountPercent', e.target.value)}
                             placeholder="0"
-                            className="border-0 focus:ring-0 p-0 w-12 text-xs"
+                            className="border-0 focus:ring-0 p-0 w-8 md:w-12 text-xs"
                           />
                           <Input
                             value={item.discountAmount}
                             onChange={(e) => updateItem(item.id, 'discountAmount', e.target.value)}
                             placeholder="0.00"
-                            className="border-0 focus:ring-0 p-0 w-16 text-xs"
+                            className="border-0 focus:ring-0 p-0 w-12 md:w-16 text-xs"
                           />
                         </div>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <div className="flex space-x-1">
                           <Select value={item.taxPercent} onValueChange={(value) => updateItem(item.id, 'taxPercent', value)}>
-                            <SelectTrigger className="border-0 focus:ring-0 p-0 h-auto text-xs w-12">
+                            <SelectTrigger className="border-0 focus:ring-0 p-0 h-auto text-xs w-8 md:w-12">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
@@ -509,18 +504,18 @@ export default function AddSalePage() {
                             value={item.taxAmount}
                             onChange={(e) => updateItem(item.id, 'taxAmount', e.target.value)}
                             placeholder="0.00"
-                            className="border-0 focus:ring-0 p-0 w-16 text-xs"
+                            className="border-0 focus:ring-0 p-0 w-12 md:w-16 text-xs"
                           />
                         </div>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         <Input
                           value={calculateAmount(item)}
                           readOnly
-                          className="border-0 focus:ring-0 p-0 w-20 bg-gray-50"
+                          className="border-0 focus:ring-0 p-0 w-16 md:w-20 text-xs"
                         />
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-2 md:px-4 py-2 md:py-3">
                         {items.length > 1 && (
                           <Button
                             variant="ghost"
@@ -535,21 +530,21 @@ export default function AddSalePage() {
                     </tr>
                   ))}
                 </tbody>
-                <tfoot className="bg-gray-50">
+                <tfoot>
                   <tr>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-900">TOTAL</td>
-                    <td className="px-4 py-3"></td>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-900">{totals.totalQty}</td>
-                    <td className="px-4 py-3"></td>
-                    <td className="px-4 py-3"></td>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-900">{totals.totalDiscount}</td>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-900">{totals.totalTax}</td>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-900">{totals.totalAmount}</td>
-                    <td className="px-4 py-3">
+                    <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm font-medium text-gray-900">TOTAL</td>
+                    <td className="px-2 md:px-4 py-2 md:py-3"></td>
+                    <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm font-medium text-gray-900">{totals.totalQty}</td>
+                    <td className="px-2 md:px-4 py-2 md:py-3"></td>
+                    <td className="px-2 md:px-4 py-2 md:py-3"></td>
+                    <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm font-medium text-gray-900">{totals.totalDiscount}</td>
+                    <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm font-medium text-gray-900">{totals.totalTax}</td>
+                    <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm font-medium text-gray-900">{totals.totalAmount}</td>
+                    <td className="px-2 md:px-4 py-2 md:py-3">
                       <Button
                         onClick={addNewRow}
                         size="sm"
-                        className="bg-blue-600 hover:bg-blue-700"
+                        className="text-xs px-2 py-1"
                       >
                         ADD ROW
                       </Button>
@@ -562,7 +557,7 @@ export default function AddSalePage() {
         </Card>
 
         {/* Bottom Section */}
-        <div className="flex justify-between items-start">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start space-y-6 lg:space-y-0">
           {/* Additional Options */}
           <div className="flex flex-col space-y-3">
             {/* Description */}
@@ -570,7 +565,7 @@ export default function AddSalePage() {
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-2 text-xs"
                 onClick={handleAddDescription}
               >
                 <FileText className="h-4 w-4" />
@@ -581,7 +576,7 @@ export default function AddSalePage() {
                   value={description}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
                   placeholder="Enter description..."
-                  className="w-64"
+                  className="w-full sm:w-64 text-sm"
                   rows={3}
                 />
               )}
@@ -593,7 +588,7 @@ export default function AddSalePage() {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-2 cursor-pointer text-xs"
                   asChild
                 >
                   <span>
@@ -610,7 +605,7 @@ export default function AddSalePage() {
                 className="hidden"
               />
               {imagePreview && (
-                <div className="relative w-64">
+                <div className="relative w-full sm:w-64">
                   <img 
                     src={imagePreview} 
                     alt="Preview" 
@@ -634,7 +629,7 @@ export default function AddSalePage() {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="flex items-center space-x-2 cursor-pointer"
+                  className="flex items-center space-x-2 cursor-pointer text-xs"
                   asChild
                 >
                   <span>
@@ -651,8 +646,8 @@ export default function AddSalePage() {
                 className="hidden"
               />
               {selectedDocument && (
-                <div className="flex items-center space-x-2 w-64">
-                  <span className="text-sm text-gray-600 truncate">
+                <div className="flex items-center space-x-2 w-full sm:w-64">
+                  <span className="text-xs sm:text-sm text-gray-600 truncate">
                     {selectedDocument.name}
                   </span>
                   <Button
@@ -669,37 +664,39 @@ export default function AddSalePage() {
           </div>
 
           {/* Summary and Actions */}
-          <div className="flex items-center space-x-6">
-            <div className="flex items-center space-x-2">
-               <Checkbox
-                 id="roundOff"
-                 checked={roundOff}
-                 onCheckedChange={(checked) => setRoundOff(checked === true)}
-               />
-              <Label htmlFor="roundOff" className="text-sm">Round Off</Label>
-              <Input
-                value={roundOffValue}
-                onChange={(e) => setRoundOffValue(e.target.value)}
-                className="w-16 h-8"
-              />
+          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-start sm:items-center lg:items-start xl:items-center space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-0 lg:space-y-4 xl:space-y-0 xl:space-x-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="roundOff"
+                  checked={roundOff}
+                  onCheckedChange={(checked) => setRoundOff(checked === true)}
+                />
+                <Label htmlFor="roundOff" className="text-xs sm:text-sm">Round Off</Label>
+                <Input
+                  value={roundOffValue}
+                  onChange={(e) => setRoundOffValue(e.target.value)}
+                  className="w-16 h-8 text-xs"
+                />
+              </div>
+              <div className="flex items-center space-x-2">
+                <Label className="text-xs sm:text-sm font-medium">Total</Label>
+                <Input
+                  value={total}
+                  onChange={(e) => setTotal(e.target.value)}
+                  className="w-20 sm:w-24 h-8 text-xs"
+                />
+              </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <Label className="text-sm font-medium">Total</Label>
-              <Input
-                value={total}
-                onChange={(e) => setTotal(e.target.value)}
-                className="w-24 h-8"
-              />
-            </div>
-            <div className="flex space-x-2">
-              <Button variant="outline" className="flex items-center space-x-2">
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
+              <Button variant="outline" className="flex items-center space-x-2 text-xs w-full sm:w-auto">
                 <Share2 className="h-4 w-4" />
                 <span>Share</span>
               </Button>
               <Button 
                 onClick={handleSave}
                 disabled={isGeneratingPDF}
-                className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2"
+                className="flex items-center space-x-2 text-xs w-full sm:w-auto"
               >
                 {isGeneratingPDF ? (
                   <>

@@ -99,7 +99,7 @@ export default function SaleReportsPage() {
           </div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold">Sale Invoices</h1>
-            <Button className="bg-red-600 hover:bg-red-700">
+            <Button>
               <Plus className="w-4 h-4 mr-2" />
               Add Sale
             </Button>

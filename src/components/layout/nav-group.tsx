@@ -62,18 +62,41 @@ const NavBadge = ({ children }: { children: ReactNode }) => (
 
 const SidebarMenuLink = ({ item, pathname }: { item: NavLink; pathname: string }) => {
   const { setOpenMobile } = useSidebar()
+  
+  const handleClick = async () => {
+    setOpenMobile(false)
+    
+    if (item.onClick === 'exportItems') {
+      // Import the export function dynamically to avoid SSR issues
+      const { exportItemsToExcel } = await import('@/lib/export-utils')
+      const success = exportItemsToExcel()
+      if (!success) {
+        alert('Error exporting items. Please try again.')
+      }
+    }
+  }
+
   return (
     <SidebarMenuItem>
       <SidebarMenuButton
-        asChild
+        asChild={!item.onClick}
         isActive={checkIsActive(pathname, item)}
         tooltip={item.title}
+        onClick={item.onClick ? handleClick : undefined}
       >
-        <Link href={item.url} onClick={() => setOpenMobile(false)} className="flex items-center gap-3">
-          {item.icon && <item.icon className="h-4 w-4" />}
-          <span>{item.title}</span>
-          {item.badge && <NavBadge>{item.badge}</NavBadge>}
-        </Link>
+        {item.onClick ? (
+          <button className="flex items-center gap-3 w-full text-left">
+            {item.icon && <item.icon className="h-4 w-4" />}
+            <span>{item.title}</span>
+            {item.badge && <NavBadge>{item.badge}</NavBadge>}
+          </button>
+        ) : (
+          <Link href={item.url} onClick={() => setOpenMobile(false)} className="flex items-center gap-3">
+            {item.icon && <item.icon className="h-4 w-4" />}
+            <span>{item.title}</span>
+            {item.badge && <NavBadge>{item.badge}</NavBadge>}
+          </Link>
+        )}
       </SidebarMenuButton>
     </SidebarMenuItem>
   )
@@ -104,20 +127,44 @@ const SidebarMenuCollapsible = ({
         </CollapsibleTrigger>
         <CollapsibleContent className='CollapsibleContent'>
           <SidebarMenuSub>
-            {item.items.map((subItem) => (
-              <SidebarMenuSubItem key={subItem.title}>
-                <SidebarMenuSubButton
-                  asChild
-                  isActive={checkIsActive(pathname, subItem)}
-                >
-                  <Link href={subItem.url} onClick={() => setOpenMobile(false)} className="flex items-center gap-3">
-                    {subItem.icon && <subItem.icon className="h-4 w-4" />}
-                    <span>{subItem.title}</span>
-                    {subItem.badge && <NavBadge>{subItem.badge}</NavBadge>}
-                  </Link>
-                </SidebarMenuSubButton>
-              </SidebarMenuSubItem>
-            ))}
+            {item.items.map((subItem) => {
+              const handleSubItemClick = async () => {
+                setOpenMobile(false)
+                
+                if (subItem.onClick === 'exportItems') {
+                  // Import the export function dynamically to avoid SSR issues
+                  const { exportItemsToExcel } = await import('@/lib/export-utils')
+                  const success = exportItemsToExcel()
+                  if (!success) {
+                    alert('Error exporting items. Please try again.')
+                  }
+                }
+              }
+
+              return (
+                <SidebarMenuSubItem key={subItem.title}>
+                  <SidebarMenuSubButton
+                    asChild={!subItem.onClick}
+                    isActive={checkIsActive(pathname, subItem)}
+                    onClick={subItem.onClick ? handleSubItemClick : undefined}
+                  >
+                    {subItem.onClick ? (
+                      <button className="flex items-center gap-3 w-full text-left">
+                        {subItem.icon && <subItem.icon className="h-4 w-4" />}
+                        <span>{subItem.title}</span>
+                        {subItem.badge && <NavBadge>{subItem.badge}</NavBadge>}
+                      </button>
+                    ) : (
+                      <Link href={subItem.url} onClick={() => setOpenMobile(false)} className="flex items-center gap-3">
+                        {subItem.icon && <subItem.icon className="h-4 w-4" />}
+                        <span>{subItem.title}</span>
+                        {subItem.badge && <NavBadge>{subItem.badge}</NavBadge>}
+                      </Link>
+                    )}
+                  </SidebarMenuSubButton>
+                </SidebarMenuSubItem>
+              )
+            })}
           </SidebarMenuSub>
         </CollapsibleContent>
       </SidebarMenuItem>
@@ -152,20 +199,47 @@ const SidebarMenuCollapsedDropdown = ({
             {item.title} {item.badge ? `(${item.badge})` : ''}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {item.items.map((sub) => (
-            <DropdownMenuItem key={`${sub.title}-${sub.url}`} asChild>
-              <Link
-                href={sub.url}
-                className={`flex items-center gap-3 ${checkIsActive(pathname, sub) ? 'bg-secondary' : ''}`}
+          {item.items.map((sub) => {
+            const handleSubClick = async () => {
+              if (sub.onClick === 'exportItems') {
+                // Import the export function dynamically to avoid SSR issues
+                const { exportItemsToExcel } = await import('@/lib/export-utils')
+                const success = exportItemsToExcel()
+                if (!success) {
+                  alert('Error exporting items. Please try again.')
+                }
+              }
+            }
+
+            return (
+              <DropdownMenuItem 
+                key={`${sub.title}-${sub.url}`} 
+                asChild={!sub.onClick}
+                onClick={sub.onClick ? handleSubClick : undefined}
               >
-                {sub.icon && <sub.icon className="h-4 w-4" />}
-                <span className='max-w-52 text-wrap'>{sub.title}</span>
-                {sub.badge && (
-                  <span className='ml-auto text-xs'>{sub.badge}</span>
+                {sub.onClick ? (
+                  <button className={`flex items-center gap-3 w-full text-left ${checkIsActive(pathname, sub) ? 'bg-secondary' : ''}`}>
+                    {sub.icon && <sub.icon className="h-4 w-4" />}
+                    <span className='max-w-52 text-wrap'>{sub.title}</span>
+                    {sub.badge && (
+                      <span className='ml-auto text-xs'>{sub.badge}</span>
+                    )}
+                  </button>
+                ) : (
+                  <Link
+                    href={sub.url}
+                    className={`flex items-center gap-3 ${checkIsActive(pathname, sub) ? 'bg-secondary' : ''}`}
+                  >
+                    {sub.icon && <sub.icon className="h-4 w-4" />}
+                    <span className='max-w-52 text-wrap'>{sub.title}</span>
+                    {sub.badge && (
+                      <span className='ml-auto text-xs'>{sub.badge}</span>
+                    )}
+                  </Link>
                 )}
-              </Link>
-            </DropdownMenuItem>
-          ))}
+              </DropdownMenuItem>
+            )
+          })}
         </DropdownMenuContent>
       </DropdownMenu>
     </SidebarMenuItem>
