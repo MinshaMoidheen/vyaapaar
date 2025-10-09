@@ -176,331 +176,338 @@ export default function EditPurchaseBillPage() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <Button variant="ghost" onClick={handleBack}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
-          </Button>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Edit Purchase Bill</h1>
-            <p className="text-gray-600">Update purchase bill details</p>
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+          <div className="flex items-center space-x-2 md:space-x-4">
+            <Button variant="ghost" onClick={handleBack} className="text-xs md:text-sm">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back
+            </Button>
+            <div>
+              <h1 className="text-xl md:text-3xl font-bold text-foreground">Edit Purchase Bill</h1>
+              <p className="text-sm md:text-base text-muted-foreground">Update purchase bill details</p>
+            </div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
+              <Calculator className="h-4 w-4" />
+            </Button>
+            <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
+              <Settings className="h-4 w-4" />
+            </Button>
           </div>
         </div>
-        <div className="flex items-center space-x-2">
-          <Button variant="ghost" size="sm">
-            <Calculator className="h-4 w-4" />
-          </Button>
-          <Button variant="ghost" size="sm">
-            <Settings className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Form */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Party and Bill Details */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Party & Bill Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Party Details */}
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="party">Party *</Label>
-                    <Select value={party} onValueChange={setParty}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select Party" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="abc-suppliers">ABC Suppliers</SelectItem>
-                        <SelectItem value="xyz-traders">XYZ Traders</SelectItem>
-                        <SelectItem value="def-enterprises">DEF Enterprises</SelectItem>
-                      </SelectContent>
-                    </Select>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+          {/* Main Form */}
+          <div className="lg:col-span-2 space-y-4 md:space-y-6">
+            {/* Party and Bill Details */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm md:text-base">Party & Bill Details</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 md:space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                  {/* Party Details */}
+                  <div className="space-y-3 md:space-y-4">
+                    <div>
+                      <Label htmlFor="party" className="text-sm md:text-base">Party *</Label>
+                      <Select value={party} onValueChange={setParty}>
+                        <SelectTrigger className="text-sm md:text-base">
+                          <SelectValue placeholder="Select Party" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="abc-suppliers">ABC Suppliers</SelectItem>
+                          <SelectItem value="xyz-traders">XYZ Traders</SelectItem>
+                          <SelectItem value="def-enterprises">DEF Enterprises</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label htmlFor="phoneNo" className="text-sm md:text-base">Phone No.</Label>
+                      <Input
+                        id="phoneNo"
+                        value={phoneNo}
+                        onChange={(e) => setPhoneNo(e.target.value)}
+                        placeholder="Enter phone number"
+                        className="text-sm md:text-base"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <Label htmlFor="phoneNo">Phone No.</Label>
-                    <Input
-                      id="phoneNo"
-                      value={phoneNo}
-                      onChange={(e) => setPhoneNo(e.target.value)}
-                      placeholder="Enter phone number"
-                    />
+
+                  {/* Bill Details */}
+                  <div className="space-y-3 md:space-y-4">
+                    <div>
+                      <Label htmlFor="billNumber" className="text-sm md:text-base">Bill Number</Label>
+                      <Input
+                        id="billNumber"
+                        value={billNumber}
+                        onChange={(e) => setBillNumber(e.target.value)}
+                        placeholder="Enter bill number"
+                        className="text-sm md:text-base"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="billDate" className="text-sm md:text-base">Bill Date</Label>
+                      <Input
+                        id="billDate"
+                        type="date"
+                        value={billDate}
+                        onChange={(e) => setBillDate(e.target.value)}
+                        className="text-sm md:text-base"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="stateOfSupply" className="text-sm md:text-base">State of supply</Label>
+                      <Select value={stateOfSupply} onValueChange={setStateOfSupply}>
+                        <SelectTrigger className="text-sm md:text-base">
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="delhi">Delhi</SelectItem>
+                          <SelectItem value="mumbai">Mumbai</SelectItem>
+                          <SelectItem value="bangalore">Bangalore</SelectItem>
+                          <SelectItem value="chennai">Chennai</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
 
-                {/* Bill Details */}
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="billNumber">Bill Number</Label>
-                    <Input
-                      id="billNumber"
-                      value={billNumber}
-                      onChange={(e) => setBillNumber(e.target.value)}
-                      placeholder="Enter bill number"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="billDate">Bill Date</Label>
-                    <Input
-                      id="billDate"
-                      type="date"
-                      value={billDate}
-                      onChange={(e) => setBillDate(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="stateOfSupply">State of supply</Label>
-                    <Select value={stateOfSupply} onValueChange={setStateOfSupply}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="delhi">Delhi</SelectItem>
-                        <SelectItem value="mumbai">Mumbai</SelectItem>
-                        <SelectItem value="bangalore">Bangalore</SelectItem>
-                        <SelectItem value="chennai">Chennai</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Items Table */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Items</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left py-2 px-2 w-12">#</th>
-                      <th className="text-left py-2 px-2">ITEM</th>
-                      <th className="text-left py-2 px-2 w-20">QTY</th>
-                      <th className="text-left py-2 px-2 w-24">UNIT</th>
-                      <th className="text-left py-2 px-2 w-32">PRICE/UNIT (Without Tax)</th>
-                      <th className="text-left py-2 px-2 w-24">DISCOUNT (%)</th>
-                      <th className="text-left py-2 px-2 w-28">DISCOUNT (AMOUNT)</th>
-                      <th className="text-left py-2 px-2 w-24">TAX (%)</th>
-                      <th className="text-left py-2 px-2 w-24">TAX (AMOUNT)</th>
-                      <th className="text-left py-2 px-2 w-24">AMOUNT</th>
-                      <th className="text-left py-2 px-2 w-12"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {items.map((item, index) => (
-                      <tr key={item.id} className="border-b">
-                        <td className="py-2 px-2">{index + 1}</td>
-                        <td className="py-2 px-2">
-                          <Input
-                            value={item.item}
-                            onChange={(e) => updateItem(item.id, 'item', e.target.value)}
-                            placeholder="Enter item name"
-                            className="w-full"
-                          />
-                        </td>
-                        <td className="py-2 px-2">
-                          <Input
-                            value={item.qty}
-                            onChange={(e) => updateItem(item.id, 'qty', e.target.value)}
-                            placeholder="0"
-                            className="w-full"
-                          />
-                        </td>
-                        <td className="py-2 px-2">
-                          <Select value={item.unit} onValueChange={(value) => updateItem(item.id, 'unit', value)}>
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="NONE">NONE</SelectItem>
-                              <SelectItem value="PCS">PCS</SelectItem>
-                              <SelectItem value="KG">KG</SelectItem>
-                              <SelectItem value="LTR">LTR</SelectItem>
-                              <SelectItem value="MTR">MTR</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </td>
-                        <td className="py-2 px-2">
-                          <Input
-                            value={item.price}
-                            onChange={(e) => updateItem(item.id, 'price', e.target.value)}
-                            placeholder="0.00"
-                            className="w-full"
-                          />
-                        </td>
-                        <td className="py-2 px-2">
-                          <Input
-                            value={item.discountPercent}
-                            onChange={(e) => updateItem(item.id, 'discountPercent', e.target.value)}
-                            placeholder="0"
-                            className="w-full"
-                          />
-                        </td>
-                        <td className="py-2 px-2">
-                          <Input
-                            value={item.discountAmount}
-                            onChange={(e) => updateItem(item.id, 'discountAmount', e.target.value)}
-                            placeholder="0.00"
-                            className="w-full"
-                          />
-                        </td>
-                        <td className="py-2 px-2">
-                          <Select value={item.taxPercent} onValueChange={(value) => updateItem(item.id, 'taxPercent', value)}>
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="Select">Select</SelectItem>
-                              <SelectItem value="0">0%</SelectItem>
-                              <SelectItem value="5">5%</SelectItem>
-                              <SelectItem value="12">12%</SelectItem>
-                              <SelectItem value="18">18%</SelectItem>
-                              <SelectItem value="28">28%</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </td>
-                        <td className="py-2 px-2">
-                          <Input
-                            value={item.taxAmount}
-                            placeholder="0.00"
-                            className="w-full"
-                            readOnly
-                          />
-                        </td>
-                        <td className="py-2 px-2">
-                          <Input
-                            value={item.amount}
-                            placeholder="0.00"
-                            className="w-full"
-                            readOnly
-                          />
-                        </td>
-                        <td className="py-2 px-2">
-                          {items.length > 1 && (
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => removeRow(item.id)}
-                              className="text-red-600 hover:text-red-700"
-                            >
-                              <X className="h-4 w-4" />
-                            </Button>
-                          )}
-                        </td>
+            {/* Items Table */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm md:text-base">Items</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[800px]">
+                    <thead>
+                      <tr className="border-b bg-muted/50">
+                        <th className="text-left py-2 px-2 w-12 text-xs font-medium text-muted-foreground">#</th>
+                        <th className="text-left py-2 px-2 min-w-[150px] text-xs font-medium text-muted-foreground">ITEM</th>
+                        <th className="text-left py-2 px-2 w-20 text-xs font-medium text-muted-foreground">QTY</th>
+                        <th className="text-left py-2 px-2 w-24 text-xs font-medium text-muted-foreground">UNIT</th>
+                        <th className="text-left py-2 px-2 w-32 text-xs font-medium text-muted-foreground">PRICE/UNIT</th>
+                        <th className="text-left py-2 px-2 w-24 text-xs font-medium text-muted-foreground">DISCOUNT (%)</th>
+                        <th className="text-left py-2 px-2 w-28 text-xs font-medium text-muted-foreground">DISCOUNT (AMT)</th>
+                        <th className="text-left py-2 px-2 w-24 text-xs font-medium text-muted-foreground">TAX (%)</th>
+                        <th className="text-left py-2 px-2 w-24 text-xs font-medium text-muted-foreground">TAX (AMT)</th>
+                        <th className="text-left py-2 px-2 w-24 text-xs font-medium text-muted-foreground">AMOUNT</th>
+                        <th className="text-left py-2 px-2 w-12 text-xs font-medium text-muted-foreground"></th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              
-              <div className="mt-4">
-                <Button variant="outline" onClick={addNewRow} className="w-full">
-                  <Plus className="mr-2 h-4 w-4" />
-                  ADD ROW
-                </Button>
-              </div>
+                    </thead>
+                    <tbody>
+                      {items.map((item, index) => (
+                        <tr key={item.id} className="border-b hover:bg-muted/30">
+                          <td className="py-2 px-2 text-xs md:text-sm text-foreground">{index + 1}</td>
+                          <td className="py-2 px-2">
+                            <Input
+                              value={item.item}
+                              onChange={(e) => updateItem(item.id, 'item', e.target.value)}
+                              placeholder="Enter item name"
+                              className="w-full text-xs md:text-sm"
+                            />
+                          </td>
+                          <td className="py-2 px-2">
+                            <Input
+                              value={item.qty}
+                              onChange={(e) => updateItem(item.id, 'qty', e.target.value)}
+                              placeholder="0"
+                              className="w-full text-xs md:text-sm"
+                            />
+                          </td>
+                          <td className="py-2 px-2">
+                            <Select value={item.unit} onValueChange={(value) => updateItem(item.id, 'unit', value)}>
+                              <SelectTrigger className="text-xs">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="NONE">NONE</SelectItem>
+                                <SelectItem value="PCS">PCS</SelectItem>
+                                <SelectItem value="KG">KG</SelectItem>
+                                <SelectItem value="LTR">LTR</SelectItem>
+                                <SelectItem value="MTR">MTR</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </td>
+                          <td className="py-2 px-2">
+                            <Input
+                              value={item.price}
+                              onChange={(e) => updateItem(item.id, 'price', e.target.value)}
+                              placeholder="0.00"
+                              className="w-full text-xs md:text-sm"
+                            />
+                          </td>
+                          <td className="py-2 px-2">
+                            <Input
+                              value={item.discountPercent}
+                              onChange={(e) => updateItem(item.id, 'discountPercent', e.target.value)}
+                              placeholder="0"
+                              className="w-full text-xs"
+                            />
+                          </td>
+                          <td className="py-2 px-2">
+                            <Input
+                              value={item.discountAmount}
+                              onChange={(e) => updateItem(item.id, 'discountAmount', e.target.value)}
+                              placeholder="0.00"
+                              className="w-full text-xs"
+                            />
+                          </td>
+                          <td className="py-2 px-2">
+                            <Select value={item.taxPercent} onValueChange={(value) => updateItem(item.id, 'taxPercent', value)}>
+                              <SelectTrigger className="text-xs">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="Select">Select</SelectItem>
+                                <SelectItem value="0">0%</SelectItem>
+                                <SelectItem value="5">5%</SelectItem>
+                                <SelectItem value="12">12%</SelectItem>
+                                <SelectItem value="18">18%</SelectItem>
+                                <SelectItem value="28">28%</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </td>
+                          <td className="py-2 px-2">
+                            <Input
+                              value={item.taxAmount}
+                              placeholder="0.00"
+                              className="w-full text-xs bg-muted/50"
+                              readOnly
+                            />
+                          </td>
+                          <td className="py-2 px-2">
+                            <Input
+                              value={item.amount}
+                              placeholder="0.00"
+                              className="w-full text-xs bg-muted/50"
+                              readOnly
+                            />
+                          </td>
+                          <td className="py-2 px-2">
+                            {items.length > 1 && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => removeRow(item.id)}
+                                className="text-red-600 hover:text-red-700 h-6 w-6 p-0"
+                              >
+                                <X className="h-3 w-3" />
+                              </Button>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                
+                <div className="mt-4">
+                  <Button variant="outline" onClick={addNewRow} className="w-full text-xs md:text-sm">
+                    <Plus className="mr-2 h-4 w-4" />
+                    <span className="hidden sm:inline">ADD ROW</span>
+                    <span className="sm:hidden">ADD</span>
+                  </Button>
+                </div>
 
-              {/* Total Row */}
-              <div className="mt-4 border-t pt-4">
-                <div className="flex justify-between items-center">
-                  <div className="flex space-x-8">
-                    <span className="font-medium">TOTAL</span>
-                    <span>QTY: {totals.totalQty}</span>
-                    <span>TAX (AMOUNT): ₹{totals.totalTax}</span>
-                    <span>AMOUNT: ₹{totals.totalAmount}</span>
+                {/* Total Row */}
+                <div className="mt-4 border-t pt-4">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0">
+                    <div className="flex flex-wrap gap-2 sm:gap-8 text-xs md:text-sm">
+                      <span className="font-medium text-foreground">TOTAL</span>
+                      <span className="text-muted-foreground">QTY: {totals.totalQty}</span>
+                      <span className="text-muted-foreground">TAX: ₹{totals.totalTax}</span>
+                      <span className="font-semibold text-foreground">AMOUNT: ₹{totals.totalAmount}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
         </div>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Payment and Totals */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Payment & Totals</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="paymentType">Payment Type</Label>
-                <Select value={paymentType} onValueChange={setPaymentType}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Cash">Cash</SelectItem>
-                    <SelectItem value="Bank Transfer">Bank Transfer</SelectItem>
-                    <SelectItem value="Cheque">Cheque</SelectItem>
-                    <SelectItem value="UPI">UPI</SelectItem>
-                    <SelectItem value="Card">Card</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="text-sm text-blue-600 hover:text-blue-700 cursor-pointer">
-                + Add Payment type
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="roundOff"
-                  checked={roundOff}
-                  onCheckedChange={(checked) => setRoundOff(checked === true)}
-                />
-                <Label htmlFor="roundOff">Round Off</Label>
-                <Input
-                  value={roundOffValue}
-                  onChange={(e) => setRoundOffValue(e.target.value)}
-                  className="w-20 h-8"
-                />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <Label className="text-lg font-semibold">Total</Label>
-                <Input
-                  value={total}
-                  onChange={(e) => setTotal(e.target.value)}
-                  className="w-24 h-8"
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Action Buttons */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                <Button variant="outline" className="w-full">
-                  <Upload className="mr-2 h-4 w-4" />
-                  Upload Bill
-                </Button>
-                
-                <div className="flex space-x-2">
-                  <Button variant="outline" className="flex-1">
-                    <Share2 className="mr-2 h-4 w-4" />
-                    Share
-                  </Button>
-                  <Button onClick={handleSave} className="flex-1 bg-blue-600 hover:bg-blue-700">
-                    <Save className="mr-2 h-4 w-4" />
-                    Save Changes
-                  </Button>
+          {/* Sidebar */}
+          <div className="space-y-4 md:space-y-6">
+            {/* Payment and Totals */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm md:text-base">Payment & Totals</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 md:space-y-4">
+                <div>
+                  <Label htmlFor="paymentType" className="text-sm md:text-base">Payment Type</Label>
+                  <Select value={paymentType} onValueChange={setPaymentType}>
+                    <SelectTrigger className="text-sm md:text-base">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Cash">Cash</SelectItem>
+                      <SelectItem value="Bank Transfer">Bank Transfer</SelectItem>
+                      <SelectItem value="Cheque">Cheque</SelectItem>
+                      <SelectItem value="UPI">UPI</SelectItem>
+                      <SelectItem value="Card">Card</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+                
+                <div className="text-xs md:text-sm text-primary hover:text-primary/80 cursor-pointer">
+                  + Add Payment type
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="roundOff"
+                    checked={roundOff}
+                    onCheckedChange={(checked) => setRoundOff(checked === true)}
+                  />
+                  <Label htmlFor="roundOff" className="text-sm md:text-base">Round Off</Label>
+                  <Input
+                    value={roundOffValue}
+                    onChange={(e) => setRoundOffValue(e.target.value)}
+                    className="w-16 h-8 text-xs"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Label className="text-sm md:text-lg font-semibold text-foreground">Total</Label>
+                  <Input
+                    value={total}
+                    onChange={(e) => setTotal(e.target.value)}
+                    className="w-20 md:w-24 h-8 text-xs"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Action Buttons */}
+            <Card>
+              <CardContent className="p-4 md:p-6">
+                <div className="space-y-3 md:space-y-4">
+                  <Button variant="outline" className="w-full text-xs md:text-sm">
+                    <Upload className="mr-2 h-4 w-4" />
+                    Upload Bill
+                  </Button>
+                  
+                  <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                    <Button variant="outline" className="flex-1 text-xs md:text-sm">
+                      <Share2 className="mr-2 h-4 w-4" />
+                      Share
+                    </Button>
+                    <Button onClick={handleSave} className="flex-1 bg-primary hover:bg-primary/90 text-xs md:text-sm">
+                      <Save className="mr-2 h-4 w-4" />
+                      <span className="hidden sm:inline">Save Changes</span>
+                      <span className="sm:hidden">Save</span>
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>

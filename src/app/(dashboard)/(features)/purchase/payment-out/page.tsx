@@ -95,8 +95,8 @@ export default function PaymentOutPage() {
 
   const filteredPayments = payments.filter(payment => {
     const matchesSearch = payment.paymentNo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payment.party.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payment.paymentType.toLowerCase().includes(searchTerm.toLowerCase())
+    payment.party.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    payment.paymentType.toLowerCase().includes(searchTerm.toLowerCase())
     
     const matchesTransactionType = filterTransactionType === 'all_transaction' || 
       filterTransactionType === 'payment_out'
@@ -109,45 +109,53 @@ export default function PaymentOutPage() {
     return matchesSearch && matchesTransactionType && matchesPayment
   })
 
+  const handleViewPayment = (paymentId: number) => {
+    router.push(`/purchase/payment-out/detail/${paymentId}`)
+  }
+
+  const handleEditPayment = (paymentId: number) => {
+    router.push(`/purchase/payment-out/edit/${paymentId}`)
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Top Header Bar */}
-      <div className="border-b border-gray-200 px-6 py-4">
-        <div className="flex items-center justify-between">
+      <div className="border-b border-border px-4 py-3 md:px-6 md:py-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
           <div className="flex items-center space-x-2">
-            <h1 className="text-xl font-semibold text-gray-900">Payment-Out</h1>
-          </div>
+            <h1 className="text-lg md:text-xl font-semibold text-foreground">Payment-Out</h1>
+        </div>
         </div>
       </div>
 
-      <div className="p-6">
-        {!hasPayments ? (
+      <div className="p-4 md:p-6">
+      {!hasPayments ? (
           // Empty State
-          <div className="flex flex-col items-center justify-center py-12">
+          <div className="flex flex-col items-center justify-center py-8 md:py-12">
             <div className="text-center">
-              <div className="mx-auto h-24 w-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                <CreditCard className="h-12 w-12 text-gray-400" />
-              </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No Payment-Out Available</h3>
-              <p className="text-gray-500 mb-6">Start by adding your first payment-out.</p>
-              <Button 
-                onClick={() => router.push('/purchase/payment-out/add')}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
+              <div className="mx-auto h-20 w-20 md:h-24 md:w-24 bg-muted rounded-full flex items-center justify-center mb-4">
+                <CreditCard className="h-10 w-10 md:h-12 md:w-12 text-muted-foreground" />
+          </div>
+              <h3 className="text-base md:text-lg font-medium text-foreground mb-2">No Payment-Out Available</h3>
+              <p className="text-muted-foreground mb-6">Start by adding your first payment-out.</p>
+          <Button 
+            onClick={() => router.push('/purchase/payment-out/add')}
+                className="bg-primary hover:bg-primary/90 text-white w-full sm:w-auto"
+          >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Payment-Out
-              </Button>
+          </Button>
             </div>
-          </div>
-        ) : (
+        </div>
+      ) : (
           // Data State
           <div className="space-y-6">
             {/* Comprehensive Filter Bar */}
-            <div className=" p-4 rounded-lg border">
-              <div className="flex flex-wrap items-center gap-4 mb-4">
+            <div className="bg-card p-3 md:p-4 rounded-lg border border-border">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap items-center gap-3 md:gap-4 mb-3 md:mb-4">
                 {/* This Month Dropdown */}
                 <Select value={filterMonth} onValueChange={setFilterMonth}>
-                  <SelectTrigger className="w-32">
+                  <SelectTrigger className="w-full sm:w-32 text-xs md:text-sm">
                     <SelectValue placeholder="This Month" />
                   </SelectTrigger>
                   <SelectContent>
@@ -160,19 +168,19 @@ export default function PaymentOutPage() {
 
                 {/* Date Range Picker */}
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-600">Between</span>
-                  <Button variant="outline" className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" /> {fromDate}
+                  <span className="text-xs md:text-sm text-muted-foreground">Between</span>
+                  <Button variant="outline" className="flex items-center gap-1 h-8 text-xs md:text-sm">
+                    <Calendar className="h-3 w-3 md:h-4 md:w-4" /> {fromDate}
                   </Button>
-                  <span className="text-sm text-gray-600">To</span>
-                  <Button variant="outline" className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" /> {toDate}
+                  <span className="text-xs md:text-sm text-muted-foreground">To</span>
+                  <Button variant="outline" className="flex items-center gap-1 h-8 text-xs md:text-sm">
+                    <Calendar className="h-3 w-3 md:h-4 md:w-4" /> {toDate}
                   </Button>
                 </div>
 
                 {/* ALL FIRMS Dropdown */}
                 <Select value={filterFirm} onValueChange={setFilterFirm}>
-                  <SelectTrigger className="w-32">
+                  <SelectTrigger className="w-full sm:w-32 text-xs md:text-sm">
                     <SelectValue placeholder="ALL FIRMS" />
                   </SelectTrigger>
                   <SelectContent>
@@ -184,7 +192,7 @@ export default function PaymentOutPage() {
 
                 {/* ALL USERS Dropdown */}
                 <Select value={filterUser} onValueChange={setFilterUser}>
-                  <SelectTrigger className="w-32">
+                  <SelectTrigger className="w-full sm:w-32 text-xs md:text-sm">
                     <SelectValue placeholder="ALL USERS" />
                   </SelectTrigger>
                   <SelectContent>
@@ -193,7 +201,7 @@ export default function PaymentOutPage() {
                     <SelectItem value="user_2">User 2</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
+                  </div>
 
               {/* Second Row - Payment-Out and All Payment */}
               {/* <div className="flex items-center gap-4 mb-4">
@@ -242,148 +250,156 @@ export default function PaymentOutPage() {
               </div> */}
 
               {/* Search Bar and Add Button Row */}
-              <div className="flex items-center justify-between">
-                <div className="relative flex-1 max-w-sm">
-                  <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 md:gap-4">
+                <div className="relative flex-1 max-w-sm w-full">
+                  <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     placeholder="Search payments..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-8"
+                    className="pl-8 text-sm md:text-base bg-background text-foreground border-border"
                   />
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
                   <Button 
                     onClick={() => setHasPayments(!hasPayments)}
                     variant="outline"
                     size="sm"
+                    className="w-full sm:w-auto text-xs md:text-sm"
                   >
                     {hasPayments ? 'Show Empty State' : 'Show With Data'}
                   </Button>
                   <Button 
                     onClick={() => router.push('/purchase/payment-out/add')}
-                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                    className="bg-primary hover:bg-primary/90 text-white w-full sm:w-auto"
                   >
                     <Plus className="h-4 w-4 mr-2" />
-                    Add Payment-Out
+                    <span className="hidden sm:inline">Add Payment-Out</span>
+                    <span className="sm:hidden">Add</span>
                   </Button>
                 </div>
-              </div>
-            </div>
+          </div>
+          </div>
 
             {/* Table */}
-            <Card>
-              <CardContent className="p-0">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="bg-gray-50">
+          <Card>
+            <CardContent className="p-0">
+              <div className="overflow-x-auto">
+                  <table className="w-full min-w-[600px]">
+                    <thead className="bg-muted/50">
                       <tr>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-[40px]">
                           <div className="flex items-center space-x-1">
                             <span>#</span>
                           </div>
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      </th>
+                        <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-[100px]">
                           <div className="flex items-center space-x-1">
                             <span>DATE</span>
-                            <Filter className="h-3 w-3 text-gray-500" />
+                            <Filter className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
                           </div>
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      </th>
+                        <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-[120px]">
                           <div className="flex items-center space-x-1">
                             <span>PAYMENT NO.</span>
-                            <Filter className="h-3 w-3 text-gray-500" />
+                            <Filter className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
                           </div>
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      </th>
+                        <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider min-w-[150px]">
                           <div className="flex items-center space-x-1">
                             <span>PARTY NAME</span>
-                            <Filter className="h-3 w-3 text-gray-500" />
+                            <Filter className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
                           </div>
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      </th>
+                        <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-[120px]">
                           <div className="flex items-center space-x-1">
                             <span>PAYMENT TYPE</span>
-                            <Filter className="h-3 w-3 text-gray-500" />
+                            <Filter className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
                           </div>
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      </th>
+                        <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-[100px]">
                           <div className="flex items-center space-x-1">
                             <span>AMOUNT</span>
-                            <Filter className="h-3 w-3 text-gray-500" />
+                            <Filter className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
                           </div>
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      </th>
+                        <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-[100px]">
                           <div className="flex items-center space-x-1">
                             <span>STATUS</span>
-                            <Filter className="h-3 w-3 text-gray-500" />
+                            <Filter className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
                           </div>
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      </th>
+                        <th className="px-2 md:px-4 py-2 md:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-[120px]">
                           <div className="flex items-center space-x-1">
                             <span>ACTIONS</span>
                           </div>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
+                      </th>
+                    </tr>
+                  </thead>
+                    <tbody className="divide-y divide-border">
                       {filteredPayments.map((payment, index) => (
-                        <tr key={payment.id} className="hover:bg-gray-50">
-                          <td className="px-4 py-3 text-sm text-gray-900">{index + 1}</td>
-                          <td className="px-4 py-3 text-sm text-gray-900">{payment.date}</td>
-                          <td className="px-4 py-3 text-sm text-gray-900">{payment.paymentNo}</td>
-                          <td className="px-4 py-3 text-sm text-gray-900">{payment.party}</td>
-                          <td className="px-4 py-3 text-sm text-gray-900">{payment.paymentType}</td>
-                          <td className="px-4 py-3 text-sm text-gray-900">₹ {payment.amount.toFixed(2)}</td>
-                          <td className="px-4 py-3">
-                            <Badge className={getStatusColor(payment.status)}>
-                              {payment.status}
-                            </Badge>
-                          </td>
-                          <td className="px-4 py-3">
-                            <div className="flex items-center space-x-2">
-                              <Button variant="ghost" size="sm">
-                                <Printer className="h-4 w-4" />
+                        <tr key={payment.id} className="hover:bg-muted/30">
+                          <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm text-foreground">{index + 1}</td>
+                          <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm text-foreground">{payment.date}</td>
+                          <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm text-foreground">{payment.paymentNo}</td>
+                          <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm text-foreground">{payment.party}</td>
+                          <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm text-foreground">{payment.paymentType}</td>
+                          <td className="px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm text-foreground">₹ {payment.amount.toFixed(2)}</td>
+                          <td className="px-2 md:px-4 py-2 md:py-3">
+                          <Badge className={getStatusColor(payment.status)}>
+                            {payment.status}
+                          </Badge>
+                        </td>
+                          <td className="px-2 md:px-4 py-2 md:py-3">
+                            <div className="flex items-center space-x-1 md:space-x-2">
+                              <Button variant="ghost" size="sm" className="h-7 w-7 md:h-8 md:w-8 p-0">
+                                <Printer className="h-3 w-3 md:h-4 md:w-4" />
                               </Button>
-                              <Button variant="ghost" size="sm">
-                                <Share2 className="h-4 w-4" />
+                              <Button variant="ghost" size="sm" className="h-7 w-7 md:h-8 md:w-8 p-0">
+                                <Share2 className="h-3 w-3 md:h-4 md:w-4" />
                               </Button>
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                  <Button variant="ghost" size="sm">
-                                    <MoreHorizontal className="h-4 w-4" />
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                  <DropdownMenuItem>
-                                    <Eye className="h-4 w-4 mr-2" />
-                                    View
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>
-                                    <Edit className="h-4 w-4 mr-2" />
-                                    Edit
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>
-                                    <Download className="h-4 w-4 mr-2" />
-                                    Download
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem className="text-red-600">
-                                    <Trash2 className="h-4 w-4 mr-2" />
-                                    Delete
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
+                                  <Button variant="ghost" size="sm" className="h-7 w-7 md:h-8 md:w-8 p-0">
+                                    <MoreHorizontal className="h-3 w-3 md:h-4 md:w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                  <DropdownMenuItem 
+                                    className="text-xs md:text-sm cursor-pointer"
+                                    onClick={() => handleViewPayment(payment.id)}
+                                  >
+                                    <Eye className="h-3 w-3 md:h-4 md:w-4 mr-2" />
+                                View
+                              </DropdownMenuItem>
+                                  <DropdownMenuItem 
+                                    className="text-xs md:text-sm cursor-pointer"
+                                    onClick={() => handleEditPayment(payment.id)}
+                                  >
+                                    <Edit className="h-3 w-3 md:h-4 md:w-4 mr-2" />
+                                Edit
+                              </DropdownMenuItem>
+                                  <DropdownMenuItem className="text-xs md:text-sm">
+                                    <Download className="h-3 w-3 md:h-4 md:w-4 mr-2" />
+                                Download
+                              </DropdownMenuItem>
+                                  <DropdownMenuItem className="text-red-600 text-xs md:text-sm">
+                                    <Trash2 className="h-3 w-3 md:h-4 md:w-4 mr-2" />
+                                Delete
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                             </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
           </div>
-        )}
+      )}
       </div>
     </div>
   )

@@ -139,237 +139,239 @@ export default function PurchaseBillDetailPage() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <Button variant="ghost" onClick={handleBack}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
-          </Button>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Purchase Bill Details</h1>
-            <p className="text-gray-600">Bill #{billData.billNo}</p>
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+          <div className="flex items-center space-x-2 md:space-x-4">
+            <Button variant="ghost" onClick={handleBack} className="text-xs md:text-sm">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back
+            </Button>
+            <div>
+              <h1 className="text-xl md:text-3xl font-bold text-foreground">Purchase Bill Details</h1>
+              <p className="text-sm md:text-base text-muted-foreground">Bill #{billData.billNo}</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button variant="outline" onClick={handleEdit} className="text-xs md:text-sm">
+              <Edit className="mr-2 h-4 w-4" />
+              Edit
+            </Button>
+            <Button variant="outline" onClick={handlePrint} className="text-xs md:text-sm">
+              <Printer className="mr-2 h-4 w-4" />
+              Print
+            </Button>
+            <Button variant="outline" onClick={handleDownload} className="text-xs md:text-sm">
+              <Download className="mr-2 h-4 w-4" />
+              Download
+            </Button>
+            <Button variant="outline" className="text-xs md:text-sm">
+              <Share2 className="mr-2 h-4 w-4" />
+              Share
+            </Button>
           </div>
         </div>
-        <div className="flex items-center space-x-2">
-          <Button variant="outline" onClick={handleEdit}>
-            <Edit className="mr-2 h-4 w-4" />
-            Edit
-          </Button>
-          <Button variant="outline" onClick={handlePrint}>
-            <Printer className="mr-2 h-4 w-4" />
-            Print
-          </Button>
-          <Button variant="outline" onClick={handleDownload}>
-            <Download className="mr-2 h-4 w-4" />
-            Download
-          </Button>
-          <Button variant="outline">
-            <Share2 className="mr-2 h-4 w-4" />
-            Share
-          </Button>
-        </div>
-      </div>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Bill Number</p>
-                <p className="text-2xl font-bold text-gray-900">{billData.billNo}</p>
-              </div>
-              <ShoppingCart className="h-8 w-8 text-blue-600" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Total Amount</p>
-                <p className="text-2xl font-bold text-green-600">₹{billData.total}</p>
-              </div>
-              <div className="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center">
-                <div className="h-4 w-4 bg-green-600 rounded-full"></div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Items</p>
-                <p className="text-2xl font-bold text-blue-600">{billData.items.length}</p>
-              </div>
-              <div className="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
-                <div className="h-4 w-4 bg-blue-600 rounded-full"></div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Status</p>
-                <Badge className={getStatusColor(billData.status)}>
-                  {billData.status}
-                </Badge>
-              </div>
-              <div className="h-8 w-8 bg-gray-100 rounded-full flex items-center justify-center">
-                <Eye className="h-4 w-4 text-gray-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Content */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Bill Information */}
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           <Card>
-            <CardHeader>
-              <CardTitle>Bill Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">Party</label>
-                    <p className="text-lg font-semibold text-gray-900">{billData.party}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">Phone Number</label>
-                    <p className="text-lg text-gray-900">{billData.phoneNo}</p>
-                  </div>
+            <CardContent className="p-4 md:p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs md:text-sm font-medium text-muted-foreground">Bill Number</p>
+                  <p className="text-lg md:text-2xl font-bold text-foreground">{billData.billNo}</p>
                 </div>
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">Bill Number</label>
-                    <p className="text-lg font-semibold text-gray-900">{billData.billNo}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">Bill Date</label>
-                    <p className="text-lg text-gray-900">{billData.date}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">State of Supply</label>
-                    <p className="text-lg text-gray-900">{billData.stateOfSupply}</p>
-                  </div>
+                <ShoppingCart className="h-6 w-6 md:h-8 md:w-8 text-primary" />
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4 md:p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs md:text-sm font-medium text-muted-foreground">Total Amount</p>
+                  <p className="text-lg md:text-2xl font-bold text-green-600">₹{billData.total}</p>
+                </div>
+                <div className="h-6 w-6 md:h-8 md:w-8 bg-green-100 rounded-full flex items-center justify-center">
+                  <div className="h-3 w-3 md:h-4 md:w-4 bg-green-600 rounded-full"></div>
                 </div>
               </div>
             </CardContent>
           </Card>
-
-          {/* Items Table */}
           <Card>
-            <CardHeader>
-              <CardTitle>Items</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b bg-gray-50">
-                      <th className="text-left py-3 px-4 font-medium text-gray-700">#</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-700">Item</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-700">Qty</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-700">Unit</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-700">Price/Unit</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-700">Discount</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-700">Tax</th>
-                      <th className="text-left py-3 px-4 font-medium text-gray-700">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {billData.items.map((item, index) => (
-                      <tr key={item.id} className="border-b">
-                        <td className="py-3 px-4">{index + 1}</td>
-                        <td className="py-3 px-4 font-medium">{item.item}</td>
-                        <td className="py-3 px-4">{item.qty}</td>
-                        <td className="py-3 px-4">{item.unit}</td>
-                        <td className="py-3 px-4">₹{item.price}</td>
-                        <td className="py-3 px-4">₹{item.discountAmount}</td>
-                        <td className="py-3 px-4">₹{item.taxAmount}</td>
-                        <td className="py-3 px-4 font-semibold">₹{item.amount}</td>
+            <CardContent className="p-4 md:p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs md:text-sm font-medium text-muted-foreground">Items</p>
+                  <p className="text-lg md:text-2xl font-bold text-blue-600">{billData.items.length}</p>
+                </div>
+                <div className="h-6 w-6 md:h-8 md:w-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <div className="h-3 w-3 md:h-4 md:w-4 bg-blue-600 rounded-full"></div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4 md:p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs md:text-sm font-medium text-muted-foreground">Status</p>
+                  <Badge className={`${getStatusColor(billData.status)} text-xs`}>
+                    {billData.status}
+                  </Badge>
+                </div>
+                <div className="h-6 w-6 md:h-8 md:w-8 bg-muted rounded-full flex items-center justify-center">
+                  <Eye className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-4 md:space-y-6">
+            {/* Bill Information */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm md:text-base">Bill Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 md:space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                  <div className="space-y-3 md:space-y-4">
+                    <div>
+                      <label className="text-xs md:text-sm font-medium text-muted-foreground">Party</label>
+                      <p className="text-sm md:text-lg font-semibold text-foreground">{billData.party}</p>
+                    </div>
+                    <div>
+                      <label className="text-xs md:text-sm font-medium text-muted-foreground">Phone Number</label>
+                      <p className="text-sm md:text-lg text-foreground">{billData.phoneNo}</p>
+                    </div>
+                  </div>
+                  <div className="space-y-3 md:space-y-4">
+                    <div>
+                      <label className="text-xs md:text-sm font-medium text-muted-foreground">Bill Number</label>
+                      <p className="text-sm md:text-lg font-semibold text-foreground">{billData.billNo}</p>
+                    </div>
+                    <div>
+                      <label className="text-xs md:text-sm font-medium text-muted-foreground">Bill Date</label>
+                      <p className="text-sm md:text-lg text-foreground">{billData.date}</p>
+                    </div>
+                    <div>
+                      <label className="text-xs md:text-sm font-medium text-muted-foreground">State of Supply</label>
+                      <p className="text-sm md:text-lg text-foreground">{billData.stateOfSupply}</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Items Table */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm md:text-base">Items</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[600px]">
+                    <thead>
+                      <tr className="border-b bg-muted/50">
+                        <th className="text-left py-2 md:py-3 px-2 md:px-4 font-medium text-xs md:text-sm text-muted-foreground w-[40px]">#</th>
+                        <th className="text-left py-2 md:py-3 px-2 md:px-4 font-medium text-xs md:text-sm text-muted-foreground min-w-[150px]">Item</th>
+                        <th className="text-left py-2 md:py-3 px-2 md:px-4 font-medium text-xs md:text-sm text-muted-foreground w-[80px]">Qty</th>
+                        <th className="text-left py-2 md:py-3 px-2 md:px-4 font-medium text-xs md:text-sm text-muted-foreground w-[80px]">Unit</th>
+                        <th className="text-left py-2 md:py-3 px-2 md:px-4 font-medium text-xs md:text-sm text-muted-foreground w-[100px]">Price/Unit</th>
+                        <th className="text-left py-2 md:py-3 px-2 md:px-4 font-medium text-xs md:text-sm text-muted-foreground w-[100px]">Discount</th>
+                        <th className="text-left py-2 md:py-3 px-2 md:px-4 font-medium text-xs md:text-sm text-muted-foreground w-[100px]">Tax</th>
+                        <th className="text-left py-2 md:py-3 px-2 md:px-4 font-medium text-xs md:text-sm text-muted-foreground w-[100px]">Amount</th>
                       </tr>
-                    ))}
-                  </tbody>
-                  <tfoot>
-                    <tr className="bg-gray-50 font-semibold">
-                      <td colSpan={2} className="py-3 px-4">Total</td>
-                      <td className="py-3 px-4">{totals.totalQty}</td>
-                      <td className="py-3 px-4"></td>
-                      <td className="py-3 px-4"></td>
-                      <td className="py-3 px-4">₹{totals.totalDiscount}</td>
-                      <td className="py-3 px-4">₹{totals.totalTax}</td>
-                      <td className="py-3 px-4">₹{totals.totalAmount}</td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
+                    </thead>
+                    <tbody>
+                      {billData.items.map((item, index) => (
+                        <tr key={item.id} className="border-b hover:bg-muted/30">
+                          <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm text-foreground">{index + 1}</td>
+                          <td className="py-2 md:py-3 px-2 md:px-4 font-medium text-xs md:text-sm text-foreground">{item.item}</td>
+                          <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm text-foreground">{item.qty}</td>
+                          <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm text-foreground">{item.unit}</td>
+                          <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm text-foreground">₹{item.price}</td>
+                          <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm text-foreground">₹{item.discountAmount}</td>
+                          <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm text-foreground">₹{item.taxAmount}</td>
+                          <td className="py-2 md:py-3 px-2 md:px-4 font-semibold text-xs md:text-sm text-foreground">₹{item.amount}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    <tfoot>
+                      <tr className="bg-muted/50 font-semibold">
+                        <td colSpan={2} className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm text-foreground">Total</td>
+                        <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm text-foreground">{totals.totalQty}</td>
+                        <td className="py-2 md:py-3 px-2 md:px-4"></td>
+                        <td className="py-2 md:py-3 px-2 md:px-4"></td>
+                        <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm text-foreground">₹{totals.totalDiscount}</td>
+                        <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm text-foreground">₹{totals.totalTax}</td>
+                        <td className="py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm text-foreground">₹{totals.totalAmount}</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
         </div>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Payment Details */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Payment Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <label className="text-sm font-medium text-gray-600">Payment Type</label>
-                <p className="text-lg font-semibold text-gray-900">{billData.paymentType}</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-600">Round Off</label>
-                <p className="text-lg text-gray-900">{billData.roundOff ? 'Yes' : 'No'}</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-600">Round Off Value</label>
-                <p className="text-lg text-gray-900">₹{billData.roundOffValue}</p>
-              </div>
-              <div className="border-t pt-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-semibold text-gray-900">Total Amount</span>
-                  <span className="text-xl font-bold text-green-600">₹{billData.total}</span>
+          {/* Sidebar */}
+          <div className="space-y-4 md:space-y-6">
+            {/* Payment Details */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm md:text-base">Payment Details</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 md:space-y-4">
+                <div>
+                  <label className="text-xs md:text-sm font-medium text-muted-foreground">Payment Type</label>
+                  <p className="text-sm md:text-lg font-semibold text-foreground">{billData.paymentType}</p>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+                <div>
+                  <label className="text-xs md:text-sm font-medium text-muted-foreground">Round Off</label>
+                  <p className="text-sm md:text-lg text-foreground">{billData.roundOff ? 'Yes' : 'No'}</p>
+                </div>
+                <div>
+                  <label className="text-xs md:text-sm font-medium text-muted-foreground">Round Off Value</label>
+                  <p className="text-sm md:text-lg text-foreground">₹{billData.roundOffValue}</p>
+                </div>
+                <div className="border-t pt-3 md:pt-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm md:text-lg font-semibold text-foreground">Total Amount</span>
+                    <span className="text-lg md:text-xl font-bold text-green-600">₹{billData.total}</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-          {/* Actions */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Actions</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Button onClick={handleEdit} className="w-full">
-                <Edit className="mr-2 h-4 w-4" />
-                Edit Bill
-              </Button>
-              <Button variant="outline" onClick={handlePrint} className="w-full">
-                <Printer className="mr-2 h-4 w-4" />
-                Print Bill
-              </Button>
-              <Button variant="outline" onClick={handleDownload} className="w-full">
-                <Download className="mr-2 h-4 w-4" />
-                Download PDF
-              </Button>
-              <Button variant="outline" className="w-full">
-                <Share2 className="mr-2 h-4 w-4" />
-                Share Bill
-              </Button>
-            </CardContent>
-          </Card>
+            {/* Actions */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm md:text-base">Actions</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 md:space-y-3">
+                <Button onClick={handleEdit} className="w-full text-xs md:text-sm">
+                  <Edit className="mr-2 h-4 w-4" />
+                  Edit Bill
+                </Button>
+                <Button variant="outline" onClick={handlePrint} className="w-full text-xs md:text-sm">
+                  <Printer className="mr-2 h-4 w-4" />
+                  Print Bill
+                </Button>
+                <Button variant="outline" onClick={handleDownload} className="w-full text-xs md:text-sm">
+                  <Download className="mr-2 h-4 w-4" />
+                  Download PDF
+                </Button>
+                <Button variant="outline" className="w-full text-xs md:text-sm">
+                  <Share2 className="mr-2 h-4 w-4" />
+                  Share Bill
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>

@@ -13,44 +13,44 @@ export default function PaymentOutDetailPage() {
 
   // In real app, fetch by id. Here we show a simple static layout.
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="border-b border-gray-200 px-4 py-3">
-        <div className="flex items-center justify-between">
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="border-b border-border px-4 py-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
           <div className="flex items-center space-x-4">
             <Button variant="ghost" size="sm" onClick={() => router.push('/purchase/payment-out')}>
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <h1 className="text-lg font-semibold">Payment-Out Details</h1>
+            <h1 className="text-lg md:text-xl font-semibold text-foreground">Payment-Out Details</h1>
           </div>
         </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-4 md:p-6">
         <Card className="max-w-3xl mx-auto">
           <CardHeader>
-            <CardTitle>Payment #{id}</CardTitle>
+            <CardTitle className="text-foreground">Payment #{id}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <Label className="text-sm text-gray-600">Party</Label>
-                <div className="text-gray-900">ABC Suppliers</div>
+                <Label className="text-sm md:text-base text-muted-foreground">Party</Label>
+                <div className="text-sm md:text-lg text-foreground">ABC Suppliers</div>
               </div>
               <div>
-                <Label className="text-sm text-gray-600">Date</Label>
-                <div className="text-gray-900">2025-10-07</div>
+                <Label className="text-sm md:text-base text-muted-foreground">Date</Label>
+                <div className="text-sm md:text-lg text-foreground">2025-10-07</div>
               </div>
               <div>
-                <Label className="text-sm text-gray-600">Payment Type</Label>
-                <div className="text-gray-900">Bank Transfer</div>
+                <Label className="text-sm md:text-base text-muted-foreground">Payment Type</Label>
+                <div className="text-sm md:text-lg text-foreground">Bank Transfer</div>
               </div>
               <div>
-                <Label className="text-sm text-gray-600">Amount</Label>
-                <div className="text-gray-900">₹ 12,000.00</div>
+                <Label className="text-sm md:text-base text-muted-foreground">Amount</Label>
+                <div className="text-sm md:text-lg text-foreground">₹ 12,000.00</div>
               </div>
               <div>
-                <Label className="text-sm text-gray-600">Reference No.</Label>
-                <div className="text-gray-900">TXN123456</div>
+                <Label className="text-sm md:text-base text-muted-foreground">Reference No.</Label>
+                <div className="text-sm md:text-lg text-foreground">TXN123456</div>
               </div>
             </div>
           </CardContent>

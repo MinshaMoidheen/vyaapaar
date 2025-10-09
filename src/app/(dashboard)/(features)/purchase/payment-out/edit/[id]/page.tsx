@@ -25,45 +25,45 @@ export default function EditPaymentOutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="border-b border-gray-200 px-4 py-3">
-        <div className="flex items-center justify-between">
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="border-b border-border px-4 py-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
           <div className="flex items-center space-x-4">
             <Button variant="ghost" size="sm" onClick={() => router.push('/purchase/payment-out')}>
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <h1 className="text-lg font-semibold">Edit Payment-Out</h1>
+            <h1 className="text-lg md:text-xl font-semibold text-foreground">Edit Payment-Out</h1>
           </div>
         </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-4 md:p-6">
         <Card className="max-w-3xl mx-auto">
           <CardHeader>
-            <CardTitle>Payment #{id}</CardTitle>
+            <CardTitle className="text-foreground">Payment #{id}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <Label className="text-sm font-medium">Party</Label>
-                <Input value={partyName} onChange={(e) => setPartyName(e.target.value)} className="mt-1" />
+                <Label className="text-sm md:text-base font-medium text-foreground">Party</Label>
+                <Input value={partyName} onChange={(e) => setPartyName(e.target.value)} className="mt-1 text-sm bg-background text-foreground border-border" />
               </div>
               <div>
-                <Label className="text-sm font-medium">Date</Label>
-                <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="mt-1" />
+                <Label className="text-sm md:text-base font-medium text-foreground">Date</Label>
+                <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="mt-1 text-sm bg-background text-foreground border-border" />
               </div>
               <div>
-                <Label className="text-sm font-medium">Amount</Label>
-                <Input value={amount} onChange={(e) => setAmount(e.target.value)} className="mt-1" />
+                <Label className="text-sm md:text-base font-medium text-foreground">Amount</Label>
+                <Input value={amount} onChange={(e) => setAmount(e.target.value)} className="mt-1 text-sm bg-background text-foreground border-border" />
               </div>
               <div>
-                <Label className="text-sm font-medium">Reference No.</Label>
-                <Input value={reference} onChange={(e) => setReference(e.target.value)} className="mt-1" />
+                <Label className="text-sm md:text-base font-medium text-foreground">Reference No.</Label>
+                <Input value={reference} onChange={(e) => setReference(e.target.value)} className="mt-1 text-sm bg-background text-foreground border-border" />
               </div>
             </div>
 
-            <div className="flex justify-end">
-              <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700">
+            <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3">
+              <Button onClick={handleSave} className="bg-primary hover:bg-primary/90 w-full sm:w-auto text-xs md:text-sm">
                 <Save className="h-4 w-4 mr-2" />
                 Save Changes
               </Button>

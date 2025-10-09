@@ -335,8 +335,57 @@ export const sidebarData: SidebarData = {
         // },
         {
           title: 'Settings',
-          url: '/settings',
+         
           icon: IconSettings,
+           items: [
+           
+            {
+              title: 'General',
+              url: '/settings/general',
+              // icon: IconUpload,
+            },
+            {
+              title: 'Transaction',
+              url: '/settings/transaction',
+              // icon: IconBuilding,
+            },
+            {
+              title: 'Print',
+              url: '/settings/print',
+              // icon: IconUser,
+            },
+            {
+              title: 'Taxes & GST',
+              url: '/settings/taxes-gst',
+              // icon: IconBarcode,
+            },
+            {
+              title: 'Transaction Message',
+              url: '/settings/transaction-message',
+              // icon: IconRefresh,
+            },
+            {
+              title: 'Party',
+              url: '/settings/party',
+              // icon: IconDatabase,
+            },
+            {
+              title: 'Item',
+              url: '/settings/item',
+              // icon: IconUsers,
+            },
+            {
+              title: 'Service Reminder',
+              url: '/settings/service-reminder',
+              // icon: IconDownload,
+            },
+            {
+              title: 'Accounting',
+              url: '/settings/accounting',
+              
+            },
+           
+          ],
         },
         {
           title: 'Help Center',
