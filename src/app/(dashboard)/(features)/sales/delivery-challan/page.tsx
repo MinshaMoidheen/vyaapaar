@@ -146,14 +146,14 @@ export default function DeliveryChallanPage() {
 	 const pendingAmount = challans.filter(c => c.status === 'Pending').reduce((sum, c) => sum + parseFloat(c.totalAmount.replace(/,/g, '')), 0)
 
 	 return (
-		 <div className="min-h-screen bg-gray-50">
+		 <div className="min-h-screen">
 			 <div className="border-b border-gray-200 px-6 py-4">
 				 <div className="flex items-center justify-between">
 					 <div className="flex items-center space-x-4">
 						 <h1 className="text-xl font-semibold text-gray-900">Delivery Challan</h1>
 						
 					 </div>
-					 <Button onClick={handleAddChallan} className="bg-red-600 hover:bg-red-700 text-white">
+					 <Button onClick={handleAddChallan} className="text-white">
 						 <Plus className="h-4 w-4 mr-2" />
 						 Add Delivery Challan
 					 </Button>
@@ -165,7 +165,7 @@ export default function DeliveryChallanPage() {
 					 // Empty State
 					 <div className="flex flex-col items-center justify-center py-12">
 						 <div className="text-center">
-							 <div className="mx-auto h-24 w-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+							 <div className="mx-auto h-24 w-24 rounded-full flex items-center justify-center mb-4">
 								 <Printer className="h-12 w-12 text-gray-400" />
 							 </div>
 							 <h3 className="text-lg font-medium text-gray-900 mb-2">No Delivery Challans</h3>
@@ -250,7 +250,7 @@ export default function DeliveryChallanPage() {
 								 <CardContent className="p-0">
 									 <div className="overflow-x-auto">
 										 <table className="w-full">
-											 <thead className="bg-gray-50">
+											 <thead>
 												 <tr>
 													 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 														 <div className="flex items-center space-x-1">
@@ -293,7 +293,7 @@ export default function DeliveryChallanPage() {
 											 </thead>
 											 <tbody className="divide-y divide-gray-200">
 												 {filteredChallans.map((challan) => (
-													 <tr key={challan.id} className="hover:bg-gray-50">
+													 <tr key={challan.id}>
 														 <td className="px-4 py-3 text-sm text-gray-900">{challan.date}</td>
 														 <td className="px-4 py-3 text-sm text-gray-900">{challan.challanNo}</td>
 														 <td className="px-4 py-3 text-sm text-gray-900">{challan.customerName}</td>

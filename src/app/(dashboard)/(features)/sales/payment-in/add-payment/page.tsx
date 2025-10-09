@@ -126,41 +126,41 @@ export default function AddPaymentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <div className="border-b border-gray-200 px-4 py-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+      <div className="border-b border-border px-4 py-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+          <div className="flex items-center space-x-2 md:space-x-4">
             <Button variant="ghost" size="sm" onClick={handleCancel}>
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <h1 className="text-lg font-semibold">Payment-In</h1>
+            <h1 className="text-lg md:text-xl font-semibold">Payment-In</h1>
           </div>
           
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm">
+          {/* <div className="flex items-center space-x-2">
+            <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
               <Calculator className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
               <Settings className="h-4 w-4" />
             </Button>
             <Button variant="ghost" size="sm" onClick={handleCancel}>
               <X className="h-4 w-4" />
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="p-6 space-y-6">
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6">
         <Card className="max-w-4xl mx-auto">
-          <CardContent className="p-6">
-            <div className="grid grid-cols-2 gap-8">
+          <CardContent className="p-4 md:p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
               {/* Left Column */}
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {/* Party Selection */}
                 <div>
-                  <Label htmlFor="partyName" className="text-sm font-medium">
+                  <Label htmlFor="partyName" className="text-sm md:text-base font-medium">
                     Party *
                   </Label>
                   <div className="relative mt-1">
@@ -169,20 +169,20 @@ export default function AddPaymentPage() {
                       value={partyName}
                       onChange={(e) => setPartyName(e.target.value)}
                       placeholder="Search by Name/Phone"
-                      className="pr-8"
+                      className="pr-8 text-sm md:text-base"
                     />
-                    <Search className="absolute right-2 top-2.5 h-4 w-4 text-gray-400" />
+                    <Search className="absolute right-2 top-2.5 h-4 w-4 text-muted-foreground" />
                   </div>
                 </div>
 
                 {/* Payment Types */}
                 <div>
-                  <Label className="text-sm font-medium mb-3 block">Payment Type</Label>
+                  <Label className="text-sm md:text-base font-medium mb-3 block">Payment Type</Label>
                   <div className="space-y-3">
                     {paymentTypes.map((payment, index) => (
                       <div key={payment.id} className="space-y-2">
                         {/* First row: Payment Type and Amount */}
-                        <div className="flex items-center space-x-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
                           <Select 
                             value={payment.type} 
                             onValueChange={(value) => {
@@ -193,7 +193,7 @@ export default function AddPaymentPage() {
                               updatePaymentType(payment.id, 'type', value)
                             }}
                           >
-                            <SelectTrigger className="w-32">
+                            <SelectTrigger className="w-full sm:w-32 text-sm">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
@@ -206,33 +206,34 @@ export default function AddPaymentPage() {
                               <SelectItem value="Select Type">Select Type</SelectItem>
                             </SelectContent>
                           </Select>
-                          <Input
-                            value={payment.amount}
-                            onChange={(e) => updatePaymentType(payment.id, 'amount', e.target.value)}
-                            placeholder="Amount"
-                            className="flex-1"
-                          />
-                          {paymentTypes.length > 1 && (
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => removePaymentType(payment.id)}
-                              className="h-8 w-8 p-0 text-red-600"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          )}
+                          <div className="flex items-center space-x-2">
+                            <Input
+                              value={payment.amount}
+                              onChange={(e) => updatePaymentType(payment.id, 'amount', e.target.value)}
+                              placeholder="Amount"
+                              className="flex-1 text-sm"
+                            />
+                            {paymentTypes.length > 1 && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => removePaymentType(payment.id)}
+                                className="h-8 w-8 p-0 text-red-600"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            )}
+                          </div>
                         </div>
                         {/* Second row: Reference No (only for second payment type onward) */}
                         {index > 0 && (
-                          <div className="flex items-center space-x-3">
+                          <div className="flex items-center space-x-2">
                             <Input
                               value={payment.referenceNo}
                               onChange={(e) => updatePaymentType(payment.id, 'referenceNo', e.target.value)}
                               placeholder="Reference No."
-                              className="w-32"
+                              className="w-full sm:w-32 text-sm"
                             />
-                            <div className="flex-1"></div>
                           </div>
                         )}
                       </div>
@@ -241,7 +242,7 @@ export default function AddPaymentPage() {
                       variant="outline"
                       size="sm"
                       onClick={addPaymentType}
-                      className="text-blue-600 border-blue-600 hover:bg-blue-50"
+                      className="text-primary border-primary hover:bg-primary/10 text-xs md:text-sm"
                     >
                       + Add Payment type
                     </Button>
@@ -250,8 +251,8 @@ export default function AddPaymentPage() {
 
 
                 {/* Total Payment Display */}
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm font-medium text-gray-700">
+                <div className="bg-muted/50 p-3 rounded-lg">
+                  <p className="text-sm md:text-base font-medium text-foreground">
                     Total payment: ₹{totalPayment.toLocaleString()}
                   </p>
                 </div>
@@ -261,7 +262,7 @@ export default function AddPaymentPage() {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="flex items-center space-x-2"
+                    className="flex items-center space-x-2 text-xs md:text-sm"
                     onClick={() => setShowDescription(!showDescription)}
                   >
                     <FileText className="h-4 w-4" />
@@ -272,7 +273,7 @@ export default function AddPaymentPage() {
                       value={description}
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
                       placeholder="Enter description..."
-                      className="w-full"
+                      className="w-full text-sm"
                       rows={3}
                     />
                   )}
@@ -281,7 +282,7 @@ export default function AddPaymentPage() {
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="flex items-center space-x-2"
+                      className="flex items-center space-x-2 text-xs md:text-sm"
                       onClick={() => document.getElementById('payment-image-upload')?.click()}
                     >
                       <ImageIcon className="h-4 w-4" />
@@ -318,23 +319,23 @@ export default function AddPaymentPage() {
               </div>
 
               {/* Right Column */}
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {/* Receipt Number */}
                 <div>
-                  <Label htmlFor="receiptNo" className="text-sm font-medium">
+                  <Label htmlFor="receiptNo" className="text-sm md:text-base font-medium">
                     Receipt No
                   </Label>
                   <Input
                     id="receiptNo"
                     value={receiptNo}
                     onChange={(e) => setReceiptNo(e.target.value)}
-                    className="mt-1"
+                    className="mt-1 text-sm md:text-base"
                   />
                 </div>
 
                 {/* Date */}
                 <div>
-                  <Label htmlFor="date" className="text-sm font-medium">
+                  <Label htmlFor="date" className="text-sm md:text-base font-medium">
                     Date
                   </Label>
                   <Input
@@ -342,13 +343,13 @@ export default function AddPaymentPage() {
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="mt-1"
+                    className="mt-1 text-sm md:text-base"
                   />
                 </div>
 
                 {/* Received Amount */}
                 <div>
-                  <Label htmlFor="receivedAmount" className="text-sm font-medium">
+                  <Label htmlFor="receivedAmount" className="text-sm md:text-base font-medium">
                     Received
                   </Label>
                   <Input
@@ -356,7 +357,7 @@ export default function AddPaymentPage() {
                     value={receivedAmount}
                     onChange={(e) => setReceivedAmount(e.target.value)}
                     placeholder="Enter received amount"
-                    className="mt-1"
+                    className="mt-1 text-sm md:text-base"
                   />
                 </div>
               </div>
@@ -365,14 +366,14 @@ export default function AddPaymentPage() {
         </Card>
 
         {/* Action Buttons */}
-        <div className="flex justify-center space-x-4">
-          <Button variant="outline" className="flex items-center space-x-2">
+        <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
+          <Button variant="outline" className="flex items-center space-x-2 text-xs md:text-sm w-full sm:w-auto">
             <span>Share</span>
             <X className="h-4 w-4" />
           </Button>
           <Button 
             onClick={handleSave}
-            className="bg-blue-600 hover:bg-blue-700 flex items-center space-x-2"
+            className="bg-primary hover:bg-primary/90 flex items-center space-x-2 text-xs md:text-sm w-full sm:w-auto"
           >
             <Save className="h-4 w-4" />
             <span>Save</span>
@@ -382,52 +383,103 @@ export default function AddPaymentPage() {
 
       {/* Add Bank Account Modal (simple inline) */}
       {isBankModalOpen && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="rounded-lg shadow-lg w-full max-w-4xl">
-            <div className="border-b px-6 py-4 flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Add Bank Account</h2>
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="rounded-lg shadow-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-background">
+            <div className="border-b border-border px-4 md:px-6 py-4 flex items-center justify-between">
+              <h2 className="text-lg md:text-xl font-semibold text-foreground">Add Bank Account</h2>
               <Button variant="ghost" size="sm" onClick={() => setIsBankModalOpen(false)}>
                 <X className="h-4 w-4" />
               </Button>
             </div>
-            <div className="p-6 space-y-6">
-              <div className="grid grid-cols-3 gap-4">
+            <div className="p-4 md:p-6 space-y-4 md:space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                 <div>
-                  <Label className="text-sm font-medium">Account Display Name</Label>
-                  <Input value={bankForm.accountDisplayName} onChange={(e) => setBankForm({ ...bankForm, accountDisplayName: e.target.value })} placeholder="Enter Account Display Name" className="mt-1" />
+                  <Label className="text-sm font-medium text-foreground">Account Display Name</Label>
+                  <Input 
+                    value={bankForm.accountDisplayName} 
+                    onChange={(e) => setBankForm({ ...bankForm, accountDisplayName: e.target.value })} 
+                    placeholder="Enter Account Display Name" 
+                    className="mt-1 text-sm" 
+                  />
                 </div>
                 <div>
-                  <Label className="text-sm font-medium">Opening Balance</Label>
-                  <Input value={bankForm.openingBalance} onChange={(e) => setBankForm({ ...bankForm, openingBalance: e.target.value })} placeholder="Enter Opening Balance" className="mt-1" />
+                  <Label className="text-sm font-medium text-foreground">Opening Balance</Label>
+                  <Input 
+                    value={bankForm.openingBalance} 
+                    onChange={(e) => setBankForm({ ...bankForm, openingBalance: e.target.value })} 
+                    placeholder="Enter Opening Balance" 
+                    className="mt-1 text-sm" 
+                  />
                 </div>
                 <div>
-                  <Label className="text-sm font-medium">As of Date</Label>
-                  <Input type="date" value={bankForm.asOfDate} onChange={(e) => setBankForm({ ...bankForm, asOfDate: e.target.value })} className="mt-1" />
+                  <Label className="text-sm font-medium text-foreground">As of Date</Label>
+                  <Input 
+                    type="date" 
+                    value={bankForm.asOfDate} 
+                    onChange={(e) => setBankForm({ ...bankForm, asOfDate: e.target.value })} 
+                    className="mt-1 text-sm" 
+                  />
                 </div>
                 <div>
-                  <Label className="text-sm font-medium">Account Number</Label>
-                  <Input value={bankForm.accountNumber} onChange={(e) => setBankForm({ ...bankForm, accountNumber: e.target.value })} placeholder="Enter Account Number" className="mt-1" />
+                  <Label className="text-sm font-medium text-foreground">Account Number</Label>
+                  <Input 
+                    value={bankForm.accountNumber} 
+                    onChange={(e) => setBankForm({ ...bankForm, accountNumber: e.target.value })} 
+                    placeholder="Enter Account Number" 
+                    className="mt-1 text-sm" 
+                  />
                 </div>
                 <div>
-                  <Label className="text-sm font-medium">IFSC Code</Label>
-                  <Input value={bankForm.ifsc} onChange={(e) => setBankForm({ ...bankForm, ifsc: e.target.value })} placeholder="Enter IFSC" className="mt-1" />
+                  <Label className="text-sm font-medium text-foreground">IFSC Code</Label>
+                  <Input 
+                    value={bankForm.ifsc} 
+                    onChange={(e) => setBankForm({ ...bankForm, ifsc: e.target.value })} 
+                    placeholder="Enter IFSC" 
+                    className="mt-1 text-sm" 
+                  />
                 </div>
                 <div>
-                  <Label className="text-sm font-medium">UPI ID for QR Code</Label>
-                  <Input value={bankForm.upiId} onChange={(e) => setBankForm({ ...bankForm, upiId: e.target.value })} placeholder="Enter UPI ID" className="mt-1" />
+                  <Label className="text-sm font-medium text-foreground">UPI ID for QR Code</Label>
+                  <Input 
+                    value={bankForm.upiId} 
+                    onChange={(e) => setBankForm({ ...bankForm, upiId: e.target.value })} 
+                    placeholder="Enter UPI ID" 
+                    className="mt-1 text-sm" 
+                  />
                 </div>
                 <div>
-                  <Label className="text-sm font-medium">Bank Name</Label>
-                  <Input value={bankForm.bankName} onChange={(e) => setBankForm({ ...bankForm, bankName: e.target.value })} placeholder="Enter Bank Name" className="mt-1" />
+                  <Label className="text-sm font-medium text-foreground">Bank Name</Label>
+                  <Input 
+                    value={bankForm.bankName} 
+                    onChange={(e) => setBankForm({ ...bankForm, bankName: e.target.value })} 
+                    placeholder="Enter Bank Name" 
+                    className="mt-1 text-sm" 
+                  />
                 </div>
                 <div>
-                  <Label className="text-sm font-medium">Account Holder Name</Label>
-                  <Input value={bankForm.accountHolderName} onChange={(e) => setBankForm({ ...bankForm, accountHolderName: e.target.value })} placeholder="Enter Account Holder Name" className="mt-1" />
+                  <Label className="text-sm font-medium text-foreground">Account Holder Name</Label>
+                  <Input 
+                    value={bankForm.accountHolderName} 
+                    onChange={(e) => setBankForm({ ...bankForm, accountHolderName: e.target.value })} 
+                    placeholder="Enter Account Holder Name" 
+                    className="mt-1 text-sm" 
+                  />
                 </div>
               </div>
-              <div className="flex justify-end space-x-3">
-                <Button variant="outline" onClick={() => setIsBankModalOpen(false)}>Cancel</Button>
-                <Button className="bg-blue-600 hover:bg-blue-700" onClick={saveBankAccount}>Save Details</Button>
+              <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setIsBankModalOpen(false)}
+                  className="w-full sm:w-auto text-xs md:text-sm"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  className="bg-primary hover:bg-primary/90 text-xs md:text-sm w-full sm:w-auto" 
+                  onClick={saveBankAccount}
+                >
+                  Save Details
+                </Button>
               </div>
             </div>
           </div>
