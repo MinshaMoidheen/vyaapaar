@@ -160,19 +160,20 @@ export default function AddItemPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+        <div className="flex items-center space-x-2 md:space-x-4">
           <Button variant="ghost" size="sm" onClick={() => router.back()}>
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Add Item</h1>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Add Item</h1>
           </div>
         </div>
-        <div className="flex space-x-2">
+        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
           <Button 
             variant="outline" 
             onClick={() => router.push('/items')}
+            className="w-full sm:w-auto"
           >
             <X className="mr-2 h-4 w-4" />
             Cancel
@@ -181,14 +182,14 @@ export default function AddItemPage() {
             onClick={handleSaveAndNew}
             disabled={isSubmitting}
             variant="outline"
-            className="text-purple-600 border-purple-600 hover:bg-purple-50"
+            className="text-purple-600 border-purple-600 hover:bg-purple-50 w-full sm:w-auto"
           >
             Save & New
           </Button>
           <Button 
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className="bg-purple-600 hover:bg-purple-700"
+            className="bg-purple-600 hover:bg-purple-700 w-full sm:w-auto"
           >
             <Save className="mr-2 h-4 w-4" />
             {isSubmitting ? 'Saving...' : 'Save'}
@@ -267,10 +268,10 @@ export default function AddItemPage() {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="pricing">Pricing</TabsTrigger>
-            <TabsTrigger value="inventory">Inventory</TabsTrigger>
-            <TabsTrigger value="taxes">Taxes</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3 text-sm md:text-base">
+            <TabsTrigger value="pricing" className="text-xs md:text-sm">Pricing</TabsTrigger>
+            <TabsTrigger value="inventory" className="text-xs md:text-sm">Inventory</TabsTrigger>
+            <TabsTrigger value="taxes" className="text-xs md:text-sm">Taxes</TabsTrigger>
           </TabsList>
 
           <TabsContent value="pricing" className="space-y-4">

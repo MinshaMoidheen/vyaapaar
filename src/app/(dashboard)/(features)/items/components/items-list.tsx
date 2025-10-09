@@ -359,25 +359,29 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
     <div className="space-y-2">
       {/* Top Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-4 bg-gray-100">
-          <TabsTrigger value="products" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-            PRODUCTS
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-gray-100 text-xs md:text-sm">
+          <TabsTrigger value="products" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-xs md:text-sm">
+            <span className="hidden sm:inline">PRODUCTS</span>
+            <span className="sm:hidden">PROD</span>
           </TabsTrigger>
-          <TabsTrigger value="services" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-            SERVICES
+          <TabsTrigger value="services" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-xs md:text-sm">
+            <span className="hidden sm:inline">SERVICES</span>
+            <span className="sm:hidden">SERV</span>
           </TabsTrigger>
-          <TabsTrigger value="category" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-            CATEGORY
+          <TabsTrigger value="category" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-xs md:text-sm">
+            <span className="hidden sm:inline">CATEGORY</span>
+            <span className="sm:hidden">CAT</span>
           </TabsTrigger>
-          <TabsTrigger value="units" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-            UNITS
+          <TabsTrigger value="units" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-xs md:text-sm">
+            <span className="hidden sm:inline">UNITS</span>
+            <span className="sm:hidden">UNIT</span>
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="products" className="space-y-0">
-          <div className="flex h-[calc(100vh-150px)]">
+          <div className="flex flex-col lg:flex-row h-[calc(100vh-150px)]">
             {/* Left Panel - Items List */}
-            <div className="w-1/3 border-r">
+            <div className="w-full lg:w-1/3 border-r border-b lg:border-b-0">
               {/* Header */}
               <div className="p-3 border-b">
                 <div className="flex items-center gap-2 mb-2">
@@ -491,58 +495,58 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
             </div>
 
             {/* Right Panel - Item Details */}
-            <div className="flex-1 ">
+            <div className="flex-1 w-full lg:w-2/3">
               {selectedItem ? (
                 <>
                   {/* Item Header */}
-                  <div className="p-6 border-b">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <h2 className="text-2xl font-bold text-gray-900 uppercase">{selectedItem.name}</h2>
-                        <Button variant="ghost" size="sm">
+                  <div className="p-4 md:p-6 border-b">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0">
+                      <div className="flex items-center gap-2 md:gap-3">
+                        <h2 className="text-lg md:text-2xl font-bold text-gray-900 uppercase">{selectedItem.name}</h2>
+                        <Button variant="ghost" size="sm" className="hidden sm:flex">
                           <ArrowDown className="h-4 w-4" />
                         </Button>
                       </div>
-                      <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                      <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto text-sm md:text-base">
                         ADJUST ITEM
                       </Button>
                     </div>
                     
                     {/* Price Information */}
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-gray-600">SALE PRICE:</span>
-                        <span className="text-lg font-bold text-green-600">{formatPrice(selectedItem.price)} (excl)</span>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                        <span className="text-xs md:text-sm font-medium text-gray-600">SALE PRICE:</span>
+                        <span className="text-base md:text-lg font-bold text-green-600">{formatPrice(selectedItem.price)} (excl)</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-gray-600">PURCHASE PRICE:</span>
-                        <span className="text-lg font-bold text-gray-900">{formatPrice(selectedItem.cost)} (excl)</span>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                        <span className="text-xs md:text-sm font-medium text-gray-600">PURCHASE PRICE:</span>
+                        <span className="text-base md:text-lg font-bold text-gray-900">{formatPrice(selectedItem.cost)} (excl)</span>
                       </div>
                     </div>
                     
                     {/* Stock Information */}
                     <div className="mt-4 space-y-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-gray-600">STOCK QUANTITY:</span>
-                        <span className="text-lg font-bold text-gray-900">{selectedItem.stock}</span>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                        <span className="text-xs md:text-sm font-medium text-gray-600">STOCK QUANTITY:</span>
+                        <span className="text-base md:text-lg font-bold text-gray-900">{selectedItem.stock}</span>
                       </div>
-          <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-gray-600">STOCK VALUE:</span>
-                        <span className="text-lg font-bold text-green-600">₹ {(selectedItem.price * selectedItem.stock).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                        <span className="text-xs md:text-sm font-medium text-gray-600">STOCK VALUE:</span>
+                        <span className="text-base md:text-lg font-bold text-green-600">₹ {(selectedItem.price * selectedItem.stock).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                       </div>
                     </div>
           </div>
           
                   {/* Transactions Section */}
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-gray-900">TRANSACTIONS</h3>
+                  <div className="p-4 md:p-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0">
+                      <h3 className="text-base md:text-lg font-semibold text-gray-900">TRANSACTIONS</h3>
           <div className="flex items-center gap-2">
-                        <div className="relative">
+                        <div className="relative flex-1 sm:flex-none">
                           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                           <Input
                             placeholder="Search transactions..."
-                            className="pl-10 pr-8 w-64"
+                            className="pl-10 pr-8 w-full sm:w-64"
                           />
                           <X className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                         </div>
@@ -551,17 +555,17 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
 
                     {/* Transactions Table */}
                     <div className="border rounded-lg overflow-hidden">
-                      <div className="bg-gray-50 px-4 py-3 border-b">
-                        <div className="grid grid-cols-7 gap-4 text-sm font-medium text-gray-600">
+                      <div className="bg-gray-50 px-2 md:px-4 py-2 md:py-3 border-b">
+                        <div className="grid grid-cols-3 md:grid-cols-7 gap-2 md:gap-4 text-xs md:text-sm font-medium text-gray-600">
                           <div className="flex items-center gap-1">
                             TYPE
                             <Filter className="h-3 w-3" />
                           </div>
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-1 hidden md:flex">
                             INVOICE/...
                             <Filter className="h-3 w-3" />
                           </div>
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-1 hidden md:flex">
                             NAME
                             <Filter className="h-3 w-3" />
                           </div>
@@ -571,14 +575,14 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
                             <Filter className="h-3 w-3" />
                           </div>
                           <div className="flex items-center gap-1">
-                            QUANTITY
+                            QTY
                             <Filter className="h-3 w-3" />
                           </div>
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-1 hidden md:flex">
                             PRICE/U...
                             <Filter className="h-3 w-3" />
                           </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 hidden md:flex">
                             STATUS
                             <Filter className="h-3 w-3" />
                           </div>
@@ -586,20 +590,20 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
                       </div>
                       <div className="divide-y">
                         {transactions.map((transaction) => (
-                          <div key={transaction.id} className="px-4 py-3 hover:bg-gray-50">
-                            <div className="grid grid-cols-7 gap-4 text-sm">
+                          <div key={transaction.id} className="px-2 md:px-4 py-2 md:py-3 hover:bg-gray-50">
+                            <div className="grid grid-cols-3 md:grid-cols-7 gap-2 md:gap-4 text-xs md:text-sm">
                               <div className="flex items-center gap-2">
                                 <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                                 <span className="text-gray-900">Add Adjustment...</span>
                               </div>
-                              <div className="text-gray-900">{transaction.reference}</div>
-                              <div className="text-gray-900">{selectedItem.name}</div>
+                              <div className="text-gray-900 hidden md:block">{transaction.reference}</div>
+                              <div className="text-gray-900 hidden md:block">{selectedItem.name}</div>
                               <div className="text-gray-600">{transaction.date}</div>
                               <div className="text-gray-900">{transaction.quantity} Pac</div>
-                              <div className="text-gray-900 font-medium">
+                              <div className="text-gray-900 font-medium hidden md:block">
                                 ₹ {transaction.price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                               </div>
-                              <div className="flex items-center justify-end">
+                              <div className="flex items-center justify-end hidden md:flex">
                                 <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
                                   <MoreHorizontal className="h-3 w-3" />
                                 </Button>
@@ -627,9 +631,9 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
         </TabsContent>
 
         <TabsContent value="services" className="space-y-0">
-          <div className="flex h-[calc(100vh-150px)]">
+          <div className="flex flex-col lg:flex-row h-[calc(100vh-150px)]">
             {/* Left Panel - Services List */}
-            <div className="w-1/3 border-r">
+            <div className="w-full lg:w-1/3 border-r border-b lg:border-b-0">
               {/* Header */}
               <div className="p-3 border-b">
                 <div className="flex items-center gap-2 mb-2">
@@ -682,7 +686,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
             </div>
 
             {/* Right Panel - Service Details */}
-            <div className="flex-1">
+            <div className="flex-1 w-full lg:w-2/3">
               <div className="p-6 border-b">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
@@ -766,9 +770,9 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
         </TabsContent>
 
         <TabsContent value="category" className="space-y-0">
-          <div className="flex h-[calc(100vh-150px)]">
+          <div className="flex flex-col lg:flex-row h-[calc(100vh-150px)]">
             {/* Left Panel - Categories List */}
-            <div className="w-1/3 border-r">
+            <div className="w-full lg:w-1/3 border-r border-b lg:border-b-0">
               {/* Header */}
               <div className="p-3 border-b">
                 <div className="flex items-center gap-2 mb-2">
@@ -815,7 +819,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
             </div>
 
             {/* Right Panel - Category Items */}
-            <div className="flex-1">
+            <div className="flex-1 w-full lg:w-2/3">
               {/* <div className="p-6 border-b">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold text-gray-900 uppercase">ITEMS NOT IN ANY CATEGORY</h2>
@@ -869,9 +873,9 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
         </TabsContent>
 
         <TabsContent value="units" className="space-y-0">
-          <div className="flex h-[calc(100vh-150px)]">
+          <div className="flex flex-col lg:flex-row h-[calc(100vh-150px)]">
             {/* Left Panel - Units List */}
-            <div className="w-1/3 border-r">
+            <div className="w-full lg:w-1/3 border-r border-b lg:border-b-0">
               {/* Header */}
               <div className="p-3 border-b">
                 <div className="flex items-center gap-2 mb-2">
@@ -944,7 +948,7 @@ export function ItemsList({ onAddItem }: ItemsListProps) {
             </div>
 
             {/* Right Panel - Unit Conversions */}
-            <div className="flex-1 ">
+            <div className="flex-1 w-full lg:w-2/3">
               {/* <div className="p-6 border-b">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold text-gray-900 uppercase">Unit Conversions</h2>

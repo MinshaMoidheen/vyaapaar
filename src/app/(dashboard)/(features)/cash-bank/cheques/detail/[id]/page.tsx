@@ -174,3 +174,4 @@ export default function ChequeDetailPage({ params }: { params: { id: string } })
   )
 }
 
+

@@ -148,7 +148,7 @@ export default function AddPartyPage() {
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Add Party</h1>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Add Party</h1>
             {/* <p className="text-gray-600">Create a new party in your system</p> */}
           </div>
         </div>
@@ -160,18 +160,11 @@ export default function AddPartyPage() {
             <X className="mr-2 h-4 w-4" />
             Cancel
           </Button>
-          <Button 
-            onClick={handleSaveAndNew}
-            disabled={isSubmitting}
-            variant="outline"
-            className="text-purple-600 border-purple-600 hover:bg-purple-50"
-          >
-            Save & New
-          </Button>
+          
           <Button 
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className="bg-purple-600 hover:bg-purple-700"
+            // className="bg-purple-600 hover:bg-purple-700"
           >
             <Save className="mr-2 h-4 w-4" />
             {isSubmitting || isSaving ? 'Saving...' : 'Save'}

@@ -51,35 +51,41 @@ export default function PurchaseBillsPage() {
   )
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="p-6">
+    <div className="min-h-screen bg-background">
+      <div className="p-4 md:p-6">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Purchase Bills</h1>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" className="text-red-500 border-red-500 hover:bg-red-50 hover:text-red-600">
-              <Upload className="mr-2 h-4 w-4" /> Upload Bill
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 md:mb-6 space-y-4 sm:space-y-0">
+          <h1 className="text-xl md:text-2xl font-bold text-foreground">Purchase Bills</h1>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <Button variant="outline" className="text-primary border-primary hover:bg-primary/10 hover:text-primary w-full sm:w-auto">
+              <Upload className="mr-2 h-4 w-4" /> 
+              <span className="hidden sm:inline">Upload Bill</span>
+              <span className="sm:hidden">Upload</span>
             </Button>
-            <Button className="bg-red-500 hover:bg-red-600">
-              <Plus className="mr-2 h-4 w-4" /> Add Purchase
+            <Button className="bg-primary hover:bg-primary/90 w-full sm:w-auto">
+              <Plus className="mr-2 h-4 w-4" /> 
+              <span className="hidden sm:inline">Add Purchase</span>
+              <span className="sm:hidden">Add</span>
             </Button>
           </div>
         </div>
 
         {/* Action Links */}
-        <div className="flex justify-end items-center gap-4 mb-6 text-sm text-gray-600">
-          <div className="flex items-center gap-1 cursor-pointer hover:text-gray-800">
-            <Download className="h-4 w-4" /> Excel Report
+        <div className="flex justify-center sm:justify-end items-center gap-3 md:gap-4 mb-4 md:mb-6 text-sm text-muted-foreground">
+          <div className="flex items-center gap-1 cursor-pointer hover:text-foreground">
+            <Download className="h-4 w-4" /> 
+            <span className="hidden sm:inline">Excel Report</span>
+            <span className="sm:hidden">Excel</span>
           </div>
-          <div className="flex items-center gap-1 cursor-pointer hover:text-gray-800">
+          <div className="flex items-center gap-1 cursor-pointer hover:text-foreground">
             <Printer className="h-4 w-4" /> Print
           </div>
         </div>
 
         {/* Filters */}
-        <div className="flex gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-4 md:mb-6">
           <Select value={filterMonth} onValueChange={setFilterMonth}>
-            <SelectTrigger className="w-32">
+            <SelectTrigger className="w-full sm:w-32">
               <SelectValue placeholder="This Month" />
             </SelectTrigger>
             <SelectContent>
@@ -89,19 +95,25 @@ export default function PurchaseBillsPage() {
             </SelectContent>
           </Select>
 
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600">Between</span>
-            <Button variant="outline" className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" /> 01/10/2025
-            </Button>
-            <span className="text-sm text-gray-600">To</span>
-            <Button variant="outline" className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" /> 31/10/2025
-            </Button>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+            <span className="text-sm text-muted-foreground">Between</span>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" className="flex items-center gap-1 text-xs md:text-sm">
+                <Calendar className="h-3 w-3 md:h-4 md:w-4" /> 
+                <span className="hidden sm:inline">01/10/2025</span>
+                <span className="sm:hidden">01/10</span>
+              </Button>
+              <span className="text-sm text-muted-foreground">To</span>
+              <Button variant="outline" className="flex items-center gap-1 text-xs md:text-sm">
+                <Calendar className="h-3 w-3 md:h-4 md:w-4" /> 
+                <span className="hidden sm:inline">31/10/2025</span>
+                <span className="sm:hidden">31/10</span>
+              </Button>
+            </div>
           </div>
 
           <Select value={filterFirm} onValueChange={setFilterFirm}>
-            <SelectTrigger className="w-32">
+            <SelectTrigger className="w-full sm:w-32">
               <SelectValue placeholder="ALL FIRMS" />
             </SelectTrigger>
             <SelectContent>
@@ -113,25 +125,25 @@ export default function PurchaseBillsPage() {
         </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-6">
           <Card className="bg-green-50 border-green-200">
-            <CardContent className="p-4 flex flex-col items-center justify-center">
-              <p className="text-sm text-gray-600 mb-1">Paid</p>
-              <p className="text-2xl font-bold text-green-700">₹ {paidAmount.toFixed(2)}</p>
+            <CardContent className="p-3 md:p-4 flex flex-col items-center justify-center">
+              <p className="text-xs md:text-sm text-muted-foreground mb-1">Paid</p>
+              <p className="text-lg md:text-2xl font-bold text-green-700">₹ {paidAmount.toFixed(2)}</p>
             </CardContent>
           </Card>
-          <div className="flex items-center justify-center text-3xl font-bold text-gray-500">+</div>
+          <div className="hidden sm:flex items-center justify-center text-2xl md:text-3xl font-bold text-muted-foreground">+</div>
           <Card className="bg-blue-50 border-blue-200">
-            <CardContent className="p-4 flex flex-col items-center justify-center">
-              <p className="text-sm text-gray-600 mb-1">Unpaid</p>
-              <p className="text-2xl font-bold text-blue-700">₹ {unpaidAmount.toFixed(2)}</p>
+            <CardContent className="p-3 md:p-4 flex flex-col items-center justify-center">
+              <p className="text-xs md:text-sm text-muted-foreground mb-1">Unpaid</p>
+              <p className="text-lg md:text-2xl font-bold text-blue-700">₹ {unpaidAmount.toFixed(2)}</p>
             </CardContent>
           </Card>
-          <div className="flex items-center justify-center text-3xl font-bold text-gray-500">=</div>
+          <div className="hidden sm:flex items-center justify-center text-2xl md:text-3xl font-bold text-muted-foreground">=</div>
           <Card className="bg-orange-50 border-orange-200">
-            <CardContent className="p-4 flex flex-col items-center justify-center">
-              <p className="text-sm text-gray-600 mb-1">Total</p>
-              <p className="text-2xl font-bold text-orange-700">₹ {totalAmount.toFixed(2)}</p>
+            <CardContent className="p-3 md:p-4 flex flex-col items-center justify-center">
+              <p className="text-xs md:text-sm text-muted-foreground mb-1">Total</p>
+              <p className="text-lg md:text-2xl font-bold text-orange-700">₹ {totalAmount.toFixed(2)}</p>
             </CardContent>
           </Card>
         </div>
@@ -139,17 +151,17 @@ export default function PurchaseBillsPage() {
         {/* Transactions Table */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-xl">TRANSACTIONS</CardTitle>
+            <CardTitle className="text-lg md:text-xl">TRANSACTIONS</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center py-4">
+            <div className="flex items-center py-3 md:py-4">
               <div className="relative w-full max-w-sm">
-                <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+                <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8"
+                  className="pl-8 text-sm md:text-base"
                 />
               </div>
             </div>
@@ -157,62 +169,62 @@ export default function PurchaseBillsPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-[120px]">
-                      DATE <Filter className="inline-block h-3 w-3 ml-1 text-gray-500" />
+                    <TableHead className="w-[100px] md:w-[120px] text-xs md:text-sm">
+                      DATE <Filter className="inline-block h-3 w-3 ml-1 text-muted-foreground" />
                     </TableHead>
-                    <TableHead>
-                      INVOICE... <Filter className="inline-block h-3 w-3 ml-1 text-gray-500" />
+                    <TableHead className="hidden sm:table-cell text-xs md:text-sm">
+                      INVOICE... <Filter className="inline-block h-3 w-3 ml-1 text-muted-foreground" />
                     </TableHead>
-                    <TableHead>
-                      PARTY NAME <Filter className="inline-block h-3 w-3 ml-1 text-gray-500" />
+                    <TableHead className="text-xs md:text-sm">
+                      PARTY NAME <Filter className="inline-block h-3 w-3 ml-1 text-muted-foreground" />
                     </TableHead>
-                    <TableHead>
-                      TRANSA... <Filter className="inline-block h-3 w-3 ml-1 text-gray-500" />
+                    <TableHead className="hidden md:table-cell text-xs md:text-sm">
+                      TRANSA... <Filter className="inline-block h-3 w-3 ml-1 text-muted-foreground" />
                     </TableHead>
-                    <TableHead>
-                      PAYMENT... <Filter className="inline-block h-3 w-3 ml-1 text-gray-500" />
+                    <TableHead className="hidden lg:table-cell text-xs md:text-sm">
+                      PAYMENT... <Filter className="inline-block h-3 w-3 ml-1 text-muted-foreground" />
                     </TableHead>
-                    <TableHead className="text-right">
-                      AMOUNT <Filter className="inline-block h-3 w-3 ml-1 text-gray-500" />
+                    <TableHead className="text-right text-xs md:text-sm">
+                      AMOUNT <Filter className="inline-block h-3 w-3 ml-1 text-muted-foreground" />
                     </TableHead>
-                    <TableHead className="text-right">
-                      BALANC... <Filter className="inline-block h-3 w-3 ml-1 text-gray-500" />
+                    <TableHead className="hidden sm:table-cell text-right text-xs md:text-sm">
+                      BALANC... <Filter className="inline-block h-3 w-3 ml-1 text-muted-foreground" />
                     </TableHead>
-                    <TableHead className="text-center">
-                      STATUS <Filter className="inline-block h-3 w-3 ml-1 text-gray-500" />
+                    <TableHead className="text-center text-xs md:text-sm">
+                      STATUS <Filter className="inline-block h-3 w-3 ml-1 text-muted-foreground" />
                     </TableHead>
-                    <TableHead className="text-center">Actions</TableHead>
+                    <TableHead className="text-center text-xs md:text-sm">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredTransactions.length > 0 ? (
                     filteredTransactions.map((transaction) => (
                       <TableRow key={transaction.id}>
-                        <TableCell className="font-medium">{transaction.date}</TableCell>
-                        <TableCell>{transaction.invoiceNo}</TableCell>
-                        <TableCell>{transaction.partyName}</TableCell>
-                        <TableCell>{transaction.transaction}</TableCell>
-                        <TableCell>{transaction.payment}</TableCell>
-                        <TableCell className="text-right">₹ {transaction.amount.toFixed(2)}</TableCell>
-                        <TableCell className="text-right">₹ {transaction.balance.toFixed(2)}</TableCell>
+                        <TableCell className="font-medium text-xs md:text-sm">{transaction.date}</TableCell>
+                        <TableCell className="hidden sm:table-cell text-xs md:text-sm">{transaction.invoiceNo}</TableCell>
+                        <TableCell className="text-xs md:text-sm">{transaction.partyName}</TableCell>
+                        <TableCell className="hidden md:table-cell text-xs md:text-sm">{transaction.transaction}</TableCell>
+                        <TableCell className="hidden lg:table-cell text-xs md:text-sm">{transaction.payment}</TableCell>
+                        <TableCell className="text-right text-xs md:text-sm">₹ {transaction.amount.toFixed(2)}</TableCell>
+                        <TableCell className="hidden sm:table-cell text-right text-xs md:text-sm">₹ {transaction.balance.toFixed(2)}</TableCell>
                         <TableCell className="text-center">
                           <Badge 
                             variant={transaction.status === "Unpaid" ? "destructive" : transaction.status === "Paid" ? "default" : "secondary"}
-                            className="bg-blue-100 text-blue-800"
+                            className="bg-blue-100 text-blue-800 text-xs"
                           >
                             {transaction.status}
                           </Badge>
                         </TableCell>
                         <TableCell className="text-center">
-                          <div className="flex items-center justify-center gap-2">
-                            <Button variant="ghost" size="sm">
-                              <Printer className="h-4 w-4" />
+                          <div className="flex items-center justify-center gap-1 md:gap-2">
+                            <Button variant="ghost" size="sm" className="h-7 w-7 md:h-8 md:w-8 p-0">
+                              <Printer className="h-3 w-3 md:h-4 md:w-4" />
                             </Button>
-                            <Button variant="ghost" size="sm">
-                              <Share className="h-4 w-4" />
+                            <Button variant="ghost" size="sm" className="h-7 w-7 md:h-8 md:w-8 p-0">
+                              <Share className="h-3 w-3 md:h-4 md:w-4" />
                             </Button>
-                            <Button variant="ghost" size="sm">
-                              <MoreVertical className="h-4 w-4" />
+                            <Button variant="ghost" size="sm" className="h-7 w-7 md:h-8 md:w-8 p-0">
+                              <MoreVertical className="h-3 w-3 md:h-4 md:w-4" />
                             </Button>
                           </div>
                         </TableCell>

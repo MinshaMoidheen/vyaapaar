@@ -20,49 +20,50 @@ export default function SelectImportMethodPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Top Header Bar */}
-      <div className="border-b border-border px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+      <div className="border-b border-border px-4 md:px-6 py-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+          <div className="flex items-center space-x-2 md:space-x-4">
             <Button 
               variant="ghost" 
               size="sm"
               onClick={() => router.back()}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-sm md:text-base"
             >
               <ArrowLeft className="h-4 w-4" />
-              Import Items
+              <span className="hidden sm:inline">Import Items</span>
+              <span className="sm:hidden">Back</span>
             </Button>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
             <Button 
               onClick={() => router.push('/sales/add-sale')}
-              className=" text-white"
+              className="text-white w-full sm:w-auto"
             >
               <Plus className="h-4 w-4 mr-2" />
-              Add Sale
+              <span className="hidden sm:inline">Add Sale</span>
+              <span className="sm:hidden">Sale</span>
             </Button>
             <Button 
               onClick={() => router.push('/purchase/bills/add')}
-              className="text-white"
+              className="text-white w-full sm:w-auto"
             >
               <Plus className="h-4 w-4 mr-2" />
-              Add Purchase
+              <span className="hidden sm:inline">Add Purchase</span>
+              <span className="sm:hidden">Purchase</span>
             </Button>
-            
           </div>
         </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-4 md:p-6">
         {/* Page Title */}
-        <div className="text-center mb-8">
-          {/* <h1 className="text-4xl font-bold text-foreground mb-4">Import Items</h1> */}
-          <h2 className="text-2xl font-bold text-foreground mb-8">Select Import Method</h2>
+        <div className="text-center mb-6 md:mb-8">
+          <h2 className="text-xl md:text-2xl font-bold text-foreground mb-4 md:mb-8">Select Import Method</h2>
         </div>
 
         {/* Import Method Cards */}
         <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-6 md:mb-8">
             {/* Import From Barcode - Recommended */}
             <Card 
               className={`cursor-pointer transition-all duration-200 ${
@@ -142,9 +143,9 @@ export default function SelectImportMethodPage() {
           </div> */}
 
           {/* Continue Button */}
-          <div className="flex justify-end mt-8">
+          <div className="flex justify-center sm:justify-end mt-6 md:mt-8">
             <Button 
-              className=" text-white px-8 py-2"
+              className="text-white px-6 md:px-8 py-2 w-full sm:w-auto"
                onClick={() => {
                  if (selectedMethod === 'barcode') {
                    router.push('/utilities/import-items/from-barcode')

@@ -6,7 +6,7 @@ import { Network, Users, TrendingUp, Globe } from 'lucide-react'
 
 export default function VyaparNetworkPage() {
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-50 overflow-hidden">
+    <div className="h-screen flex items-center justify-center overflow-hidden">
       <Card className="w-full max-w-md mx-4">
         <CardContent className="p-8 text-center">
           <div className="space-y-6">

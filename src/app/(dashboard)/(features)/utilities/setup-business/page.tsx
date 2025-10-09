@@ -101,10 +101,10 @@ export default function SetupBusinessPage() {
   }
 
   const renderStep1 = () => (
-    <div className="space-y-6">
-      <div className="flex items-center gap-2 mb-6">
+    <div className="space-y-4 md:space-y-6">
+      <div className="flex items-center gap-2 mb-4 md:mb-6">
         <Building className="h-5 w-5 text-primary" />
-        <h2 className="text-xl font-semibold text-foreground">Enter Business Details</h2>
+        <h2 className="text-lg md:text-xl font-semibold text-foreground">Enter Business Details</h2>
       </div>
 
       {/* Company Logo */}
@@ -117,7 +117,7 @@ export default function SetupBusinessPage() {
       </div>
 
       {/* Form Fields */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div className="space-y-2">
           <Label className="text-muted-foreground">Company Name*</Label>
           <Input
@@ -231,17 +231,17 @@ export default function SetupBusinessPage() {
   )
 
   const renderStep2 = () => (
-    <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-foreground mb-6">Set Up Party and Transaction fields</h2>
+    <div className="space-y-4 md:space-y-6">
+      <h2 className="text-lg md:text-xl font-semibold text-foreground mb-4 md:mb-6">Set Up Party and Transaction fields</h2>
       
       {/* Party Fields */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-medium text-foreground">Party Fields</h3>
+          <h3 className="text-base md:text-lg font-medium text-foreground">Party Fields</h3>
           <Info className="h-4 w-4 text-muted-foreground" />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
           {[
             { key: 'drugLicenseNo', label: 'Drug License No' },
             { key: 'ageGender', label: 'Age/Gender' },
@@ -297,13 +297,13 @@ export default function SetupBusinessPage() {
   )
 
   const renderStep3 = () => (
-    <div className="space-y-6">
-      <div className="flex items-center gap-2 mb-6">
-        <h2 className="text-xl font-semibold text-foreground">Set Up Item Fields</h2>
+    <div className="space-y-4 md:space-y-6">
+      <div className="flex items-center gap-2 mb-4 md:mb-6">
+        <h2 className="text-lg md:text-xl font-semibold text-foreground">Set Up Item Fields</h2>
         <Info className="h-4 w-4 text-muted-foreground" />
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
         {[
           { key: 'batchNo', label: 'Batch No.' },
           { key: 'expDate', label: 'Exp. Date' },
@@ -335,45 +335,45 @@ export default function SetupBusinessPage() {
       <Card className="border-2 border-primary/20">
         <CardContent className="p-4 text-sm">
           {/* Company, Invoice Details, and Bill To Section - Three Columns */}
-      <div className="flex justify-between mb-4">
+      <div className="flex flex-col lg:flex-row lg:justify-between mb-4 space-y-4 lg:space-y-0">
         {/* Left Column - My Company and Invoice Details */}
         <div className="flex-1">
           {/* My Company Section */}
           <div className="mb-4">
-            <div className="font-bold text-lg text-foreground">{formData.companyName}</div>
-            <p className="text-muted-foreground">Phone: {formData.phoneNumber}</p>
-            {formData.fssaiNumber && <p className="text-muted-foreground">FSSAI No.: {formData.fssaiNumber}</p>}
-            {formData.drugLicenseNumber && <p className="text-muted-foreground">Drug License Number: {formData.drugLicenseNumber}</p>}
+            <div className="font-bold text-base md:text-lg text-foreground">{formData.companyName}</div>
+            <p className="text-xs md:text-sm text-muted-foreground">Phone: {formData.phoneNumber}</p>
+            {formData.fssaiNumber && <p className="text-xs md:text-sm text-muted-foreground">FSSAI No.: {formData.fssaiNumber}</p>}
+            {formData.drugLicenseNumber && <p className="text-xs md:text-sm text-muted-foreground">Drug License Number: {formData.drugLicenseNumber}</p>}
           </div>
 
           {/* Invoice Details Section - Under My Company */}
           <div>
-            <div className="font-semibold text-foreground">Invoice Details:</div>
-            <p className="text-muted-foreground">No: Sample 01</p>
-            <p className="text-muted-foreground">Date: 08/10/2025</p>
-            {formData.transactionFields.doctorsName && <p className="text-muted-foreground">Doctor's Name: ****</p>}
-            {formData.transactionFields.diagnosis && <p className="text-muted-foreground">Diagnosis: ****</p>}
-            {formData.transactionFields.salesmanName && <p className="text-muted-foreground">Salesman Name: ****</p>}
+            <div className="font-semibold text-sm md:text-base text-foreground">Invoice Details:</div>
+            <p className="text-xs md:text-sm text-muted-foreground">No: Sample 01</p>
+            <p className="text-xs md:text-sm text-muted-foreground">Date: 08/10/2025</p>
+            {formData.transactionFields.doctorsName && <p className="text-xs md:text-sm text-muted-foreground">Doctor's Name: ****</p>}
+            {formData.transactionFields.diagnosis && <p className="text-xs md:text-sm text-muted-foreground">Diagnosis: ****</p>}
+            {formData.transactionFields.salesmanName && <p className="text-xs md:text-sm text-muted-foreground">Salesman Name: ****</p>}
           </div>
         </div>
 
         {/* Right Column - Bill To Section */}
-        <div className="flex-1 text-right">
-          <div className="font-semibold text-foreground">Bill To:</div>
-          <p className="text-muted-foreground">Sample Party</p>
-          <p className="text-muted-foreground">Sample Address</p>
-          <p className="text-muted-foreground">Contact Number: 9333 911 911</p>
-          {formData.partyFields.panNumber && <p className="text-muted-foreground">PAN Number: ****</p>}
-          {formData.partyFields.drugLicenseExpDate && <p className="text-muted-foreground">Drug License Exp. Date: ****</p>}
-          {formData.partyFields.drugLicenseNo && <p className="text-muted-foreground">Drug License No: ****</p>}
-          {formData.partyFields.ageGender && <p className="text-muted-foreground">Age/Gender: ****</p>}
+        <div className="flex-1 lg:text-right">
+          <div className="font-semibold text-sm md:text-base text-foreground">Bill To:</div>
+          <p className="text-xs md:text-sm text-muted-foreground">Sample Party</p>
+          <p className="text-xs md:text-sm text-muted-foreground">Sample Address</p>
+          <p className="text-xs md:text-sm text-muted-foreground">Contact Number: 9333 911 911</p>
+          {formData.partyFields.panNumber && <p className="text-xs md:text-sm text-muted-foreground">PAN Number: ****</p>}
+          {formData.partyFields.drugLicenseExpDate && <p className="text-xs md:text-sm text-muted-foreground">Drug License Exp. Date: ****</p>}
+          {formData.partyFields.drugLicenseNo && <p className="text-xs md:text-sm text-muted-foreground">Drug License No: ****</p>}
+          {formData.partyFields.ageGender && <p className="text-xs md:text-sm text-muted-foreground">Age/Gender: ****</p>}
         </div>
       </div>
 
           {/* Sample Item Table */}
           <div className="mb-4">
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border-collapse">
+              <table className="w-full text-xs md:text-sm border-collapse">
                 <thead>
                   <tr className="bg-muted">
                     <th className="border border-border p-2 text-center">#</th>
@@ -422,28 +422,28 @@ export default function SetupBusinessPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Top Header Bar */}
-      <div className="border-b border-border px-6 py-4">
+      <div className="border-b border-border px-4 md:px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 md:space-x-4">
             <Button 
               variant="ghost" 
               size="sm"
               onClick={() => router.back()}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-sm md:text-base"
             >
               <ArrowLeft className="h-4 w-4" />
-              Set Up My Business
+              <span className="hidden sm:inline">Set Up My Business</span>
+              <span className="sm:hidden">Back</span>
             </Button>
           </div>
-          
         </div>
       </div>
 
-      <div className="flex">
+      <div className="flex flex-col lg:flex-row">
         {/* Main Content Area */}
-        <div className="flex-1 p-6">
+        <div className="flex-1 p-4 md:p-6">
           <div className="max-w-3xl mx-auto">
-            <h1 className="text-3xl font-bold text-foreground mb-6">Set Up My Business on Vyapar</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-4 md:mb-6">Set Up My Business on Vyapar</h1>
             
             <Card className="mb-6">
               <CardContent className="p-6">
@@ -454,19 +454,25 @@ export default function SetupBusinessPage() {
             </Card>
 
             {/* Action Buttons */}
-            <div className="flex justify-between">
+            <div className="flex flex-col sm:flex-row justify-between gap-4">
               <Button 
                 variant="outline" 
                 onClick={handlePreviousStep}
                 disabled={currentStep === 1}
+                className="w-full sm:w-auto"
               >
                 Go Back
               </Button>
               <Button 
                 onClick={handleNextStep}
-                className="bg-primary text-primary-foreground"
+                className="bg-primary text-primary-foreground w-full sm:w-auto"
               >
-                {currentStep === 3 ? 'Finish Set Up' : `Step ${currentStep + 1}: ${currentStep === 1 ? 'Set Up Party & Transaction Fields' : 'Set Up Item Details'}`} 
+                <span className="hidden sm:inline">
+                  {currentStep === 3 ? 'Finish Set Up' : `Step ${currentStep + 1}: ${currentStep === 1 ? 'Set Up Party & Transaction Fields' : 'Set Up Item Details'}`}
+                </span>
+                <span className="sm:hidden">
+                  {currentStep === 3 ? 'Finish' : 'Next'}
+                </span>
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
@@ -474,14 +480,17 @@ export default function SetupBusinessPage() {
         </div>
 
         {/* Right Preview Area - Increased Width */}
-        <div className="w-2/5 p-6 border-l border-border bg-card">
-          {renderInvoicePreview()}
+        <div className="w-full lg:w-2/5 p-4 md:p-6 border-t lg:border-t-0 lg:border-l border-border bg-card">
+          <div className="lg:sticky lg:top-6">
+            <h2 className="text-lg md:text-xl font-bold text-foreground mb-4">Live Invoice Preview</h2>
+            {renderInvoicePreview()}
+          </div>
         </div>
       </div>
 
       {/* Success Modal */}
       <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
-        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl md:max-w-6xl max-h-[90vh] overflow-y-auto mx-4">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-2xl">
               <PartyPopper className="h-6 w-6 text-yellow-500" />

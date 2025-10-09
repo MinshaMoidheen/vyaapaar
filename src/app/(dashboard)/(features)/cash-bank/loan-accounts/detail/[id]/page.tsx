@@ -185,3 +185,4 @@ export default function LoanAccountDetailPage({ params }: { params: { id: string
   )
 }
 
+

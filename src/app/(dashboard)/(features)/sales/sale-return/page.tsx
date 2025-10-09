@@ -167,28 +167,28 @@ export default function SaleReturnPage() {
 	 const totalBalance = returns.reduce((sum, r) => sum + parseFloat(r.balance.replace(/,/g, '')), 0)
 
 	 return (
-		 <div className="min-h-screen bg-gray-50">
+		 <div className="min-h-screen bg-background">
 			 {/* Top Header Bar */}
-			 <div className="border-b border-gray-200 px-6 py-4">
+			 <div className="border-b border-border px-4 md:px-6 py-4">
 				 <div className="flex items-center justify-between">
 					 
 					 <div className="flex items-center space-x-2">
-						 <h1 className="text-xl font-semibold text-gray-900">Sale Return/ Credit Note</h1>
+						 <h1 className="text-lg md:text-xl font-semibold text-foreground">Sale Return/ Credit Note</h1>
 					 </div>
 				 </div>
 			 </div>
 
-			 <div className="p-6">
+			 <div className="p-4 md:p-6">
 				 {!hasReturns ? (
 					 // Empty State
-					 <div className="flex flex-col items-center justify-center py-12">
+					 <div className="flex flex-col items-center justify-center py-8 md:py-12">
 						 <div className="text-center">
-							 <div className="mx-auto h-24 w-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-								 <FileText className="h-12 w-12 text-gray-400" />
+							 <div className="mx-auto h-20 w-20 md:h-24 md:w-24 bg-muted rounded-full flex items-center justify-center mb-4">
+								 <FileText className="h-10 w-10 md:h-12 md:w-12 text-muted-foreground" />
 							 </div>
-							 <h3 className="text-lg font-medium text-gray-900 mb-2">No data is available for Credit Note</h3>
-							 <p className="text-gray-500 mb-6">Please try again after making relevant changes.</p>
-							 <Button onClick={handleAddReturn} className="bg-blue-600 hover:bg-blue-700 text-white">
+							 <h3 className="text-base md:text-lg font-medium text-foreground mb-2">No data is available for Credit Note</h3>
+							 <p className="text-sm md:text-base text-muted-foreground mb-6">Please try again after making relevant changes.</p>
+							 <Button onClick={handleAddReturn} className="bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto">
 								 <Plus className="h-4 w-4 mr-2" />
 								 Add Credit Note
 							 </Button>
@@ -198,11 +198,11 @@ export default function SaleReturnPage() {
 					 // Data State
 					 <div className="space-y-6">
 						 {/* Comprehensive Filter Bar */}
-						 <div className="p-4 rounded-lg border">
-							 <div className="flex flex-wrap items-center gap-4 mb-4">
+						 <div className="p-3 md:p-4 rounded-lg border border-border">
+							 <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 md:gap-4 mb-3 md:mb-4">
 								 {/* This Month Dropdown */}
 								 <Select value={filterMonth} onValueChange={setFilterMonth}>
-									 <SelectTrigger className="w-32">
+									 <SelectTrigger className="w-full sm:w-32">
 										 <SelectValue placeholder="This Month" />
 									 </SelectTrigger>
 									 <SelectContent>
@@ -214,20 +214,26 @@ export default function SaleReturnPage() {
 								 </Select>
 
 								 {/* Date Range Picker */}
-								 <div className="flex items-center space-x-2">
-									 <span className="text-sm text-gray-600">Between</span>
-									 <Button variant="outline" className="flex items-center gap-1">
-										 <Calendar className="h-4 w-4" /> {fromDate}
-									 </Button>
-									 <span className="text-sm text-gray-600">To</span>
-									 <Button variant="outline" className="flex items-center gap-1">
-										 <Calendar className="h-4 w-4" /> {toDate}
-									 </Button>
+								 <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+									 <span className="text-xs md:text-sm text-muted-foreground">Between</span>
+									 <div className="flex items-center space-x-2">
+										 <Button variant="outline" className="flex items-center gap-1 text-xs md:text-sm">
+											 <Calendar className="h-3 w-3 md:h-4 md:w-4" /> 
+											 <span className="hidden sm:inline">{fromDate}</span>
+											 <span className="sm:hidden">{fromDate.split('/')[0]}/{fromDate.split('/')[1]}</span>
+										 </Button>
+										 <span className="text-xs md:text-sm text-muted-foreground">To</span>
+										 <Button variant="outline" className="flex items-center gap-1 text-xs md:text-sm">
+											 <Calendar className="h-3 w-3 md:h-4 md:w-4" /> 
+											 <span className="hidden sm:inline">{toDate}</span>
+											 <span className="sm:hidden">{toDate.split('/')[0]}/{toDate.split('/')[1]}</span>
+										 </Button>
+									 </div>
 								 </div>
 
 								 {/* ALL FIRMS Dropdown */}
 								 <Select value={filterFirm} onValueChange={setFilterFirm}>
-									 <SelectTrigger className="w-32">
+									 <SelectTrigger className="w-full sm:w-32">
 										 <SelectValue placeholder="ALL FIRMS" />
 									 </SelectTrigger>
 									 <SelectContent>
@@ -239,7 +245,7 @@ export default function SaleReturnPage() {
 
 								 {/* ALL USERS Dropdown */}
 								 <Select value={filterUser} onValueChange={setFilterUser}>
-									 <SelectTrigger className="w-32">
+									 <SelectTrigger className="w-full sm:w-32">
 										 <SelectValue placeholder="ALL USERS" />
 									 </SelectTrigger>
 									 <SelectContent>
